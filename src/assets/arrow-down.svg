@@ -1,0 +1,11 @@
+<svg width="54" height="27" viewBox="0 0 54 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="weui:arrow-filled" clip-path="url(#clip0_106_1448)">
+<rect width="27" height="54" transform="translate(54) rotate(90)" fill="white" fill-opacity="0.6"/>
+<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M25.4008 22.8534L12.6725 10.1251L15.854 6.9436L26.9915 18.0811L38.129 6.9436L41.3105 10.1251L28.5823 22.8534C28.1604 23.2752 27.5882 23.5121 26.9915 23.5121C26.3949 23.5121 25.8227 23.2752 25.4008 22.8534Z" fill="black" fill-opacity="0.6"/>
+</g>
+<defs>
+<clipPath id="clip0_106_1448">
+<rect width="27" height="54" fill="white" transform="translate(54) rotate(90)"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,37 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');@font-face {
+  font-family: "SF Pro Display";
+  src: url("sf-pro-display/SFPRODISPLAYREGULAR.OTF");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "SF Pro Bold";
+  src: url("sf-pro-display/SFPRODISPLAYBOLD.OTF");
+}
+@font-face {
+  font-family: "SF Pro 500";
+  src: url("sf-pro-display/SFPRODISPLAYREGULAR.OTF");
+  font-weight: 500;
+}
+
+body {
+  font-family: "SF Pro Display", sans-serif;
+}
+.hero {
+  background: linear-gradient(270deg, rgba(0, 0, 0, 0.34) 0.12%, rgba(0, 0, 0, 0.53) 19.93%, rgba(0, 0, 0, 0.77) 44.33%, rgba(0, 0, 0, 0.77) 99.66%, rgba(0, 0, 0, 0.62) 99.67%, rgba(0, 0, 0, 0.75) 99.68%), url('./assets/Hero.jpg') lightgray 50% / cover no-repeat;
+}
+.bg-about {
+  background: url('./assets/About-us-preview.jpg') lightgray 0.774px -4px / 122.846% 100% no-repeat;
+}
+.bg-service {
+  background: url('./assets/Our-Services-Preview.jpg') lightgray 50% / cover no-repeat;
+}
+html { font-size: 10px; }
+.sf-bold { font-family: "SF Pro Bold"; }
+.sf-500 { font-family: "SF Pro 500"; }
+.poppins { font-family: "Poppins",sans-serif; }
+.manrope-600 { font-family: "Manrope",sans-serif; }
+.manrope-b-700 { font-family: "Manrope",sans-serif; }
+.manrope-5-500 { font-family: "Manrope",sans-serif; }
+.my-shadow {box-shadow: 0px 4px 23px -4px rgba(0, 0, 0, 0.20);}
