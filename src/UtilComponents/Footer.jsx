@@ -1,8 +1,8 @@
 import logo from '../assets/logo-2.png'
-import divider from '../assets/divider.png'
-import leaf from '../assets/leaf.png'
-import phone from '../assets/phone.png'
-import envelope from '../assets/envelope.png'
+import divider from '../assets/divider.svg'
+import leaf from '../assets/leaf.svg'
+import phone from '../assets/phone.svg'
+import envelope from '../assets/envelope.svg'
 import { Link } from 'react-router-dom'
 // px-[clamp(2rem,8.333333333vw,12rem)]
 function Footer() {
