@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom"
+import logo from '../assets/logo.png'
 function Navbar() {
   const xml = 
   <header className="h-[10.6rem] bg-[#fff] flex items-center">
     <nav className="flex justify-between items-center w-full pr-[5.35rem]">
       <div className="flex items-center">
         <div className="img-holder">
-        <img className="block w-[9.87239761352539rem] h-[6.71323013305664rem]" src="./src/assets/logo.png" alt="Error"/>
+        <img className="block w-[9.87239761352539rem] h-[6.71323013305664rem]" src={logo} alt="Error"/>
         </div>
         <h2 className="font-bold text-[2.037rem] leading-[2.4rem] sf-bold">FARM TRACK</h2>
       </div>
@@ -28,23 +29,4 @@ function Navbar() {
   </header>
   return(xml)
 }
-/*
-
-position: absolute;
-width: 126px;
-height: 24px;
-left: 93.53px;
-top: 44.81px;
-
-font-family: 'SF Pro Display';
-font-style: normal;
-font-weight: 700;
-font-size: 20.366px;
-line-height: 24px;
-
-color: #000000;
-
-
-*/ 
-
 export default Navbar
