@@ -1,4 +1,8 @@
-import React from 'react'
+import logo from '../assets/logo-2.png'
+import divider from '../assets/divider.png'
+import leaf from '../assets/leaf.png'
+import phone from '../assets/phone.png'
+import envelope from '../assets/envelope.png'
 import { Link } from 'react-router-dom'
 // px-[clamp(2rem,8.333333333vw,12rem)]
 function Footer() {
@@ -7,7 +11,7 @@ function Footer() {
     <div className="flex items-start justify-between gap-[19.95rem] w-full">
       <div className="flex flex-col  items-start">
         <div className="flex mb-[2rem] items-center">
-          <img src="./src/assets/logo-2.png" alt="error" className='block w-[12.5rem] h-[8.5rem] aspect-[25/17]'/>
+          <img src={logo} alt="error" className='block w-[12.5rem] h-[8.5rem] aspect-[25/17]'/>
           <h2 className='text-[#000] manrope text-[2.3rem] font-[600] leading-[130.435%]'>Farm Track
           </h2>
         </div>
@@ -16,29 +20,29 @@ function Footer() {
 
       <div className="flex flex-col items-start mt-[2.75rem]">
       <h3 className="w-[7.3202rem] min-h-[3.6rem] text-[#fff] manrope-b text-[2rem] font-bold leading-[180%]">Explore</h3>
-      <img src="./src/assets/divider.svg" alt="error" className="w-[4.5rem] h-[4rem]" />
+      <img src={divider} alt="error" className="w-[4.5rem] h-[4rem]" />
       <ul className='flex flex-col gap-[0.5rem]'>
         <li>
-          <span className="inline-block"><img src="./src/assets/leaf.svg" alt="error" className="inline-block min-w-[1.15rem] min-h-[1rem] mr-[1.375rem]" /></span><Link to="#" className='text-[#000] manrope-5 text-[1.5rem] font-[500] leading-[200%]'>About</Link>
+          <span className="inline-block"><img src={leaf} alt="error" className="inline-block min-w-[1.15rem] min-h-[1rem] mr-[1.375rem]" /></span><Link to="#" className='text-[#000] manrope-5 text-[1.5rem] font-[500] leading-[200%]'>About</Link>
         </li>
         <li>
-          <span className="inline-block"><img src="./src/assets/leaf.svg" alt="error" className="inline-block min-w-[1.15rem] min-h-[1rem] mr-[1.375rem]" /></span><Link to="#" className='text-[#000] manrope-5 text-[1.5rem] font-[500] leading-[200%]'>Services</Link>
+          <span className="inline-block"><img src={leaf} alt="error" className="inline-block min-w-[1.15rem] min-h-[1rem] mr-[1.375rem]" /></span><Link to="#" className='text-[#000] manrope-5 text-[1.5rem] font-[500] leading-[200%]'>Services</Link>
         </li>
         <li>
-          <span className="inline-block"><img src="./src/assets/leaf.svg" alt="error" className="inline-block min-w-[1.15rem] min-h-[1rem] mr-[1.375rem]" /></span><Link to="#" className='text-[#000] manrope-5 text-[1.5rem] font-[500] leading-[200%]'>FAQ</Link>
+          <span className="inline-block"><img src={leaf} alt="error" className="inline-block min-w-[1.15rem] min-h-[1rem] mr-[1.375rem]" /></span><Link to="#" className='text-[#000] manrope-5 text-[1.5rem] font-[500] leading-[200%]'>FAQ</Link>
         </li>
       </ul>
       </div>
 
       <div className="flex flex-col items-start pr-[5rem] mt-[2.75rem]">
       <h3 className="min-w-[7.3202rem] min-h-[3.6rem] text-[#fff] manrope-b text-[2rem] font-bold leading-[180%]">Contact</h3>
-      <img src="./src/assets/divider.svg" alt="error" className="w-[4.5rem] h-[4rem]" />
+      <img src={divider} alt="error" className="w-[4.5rem] h-[4rem]" />
       <ul className='flex flex-col gap-[0.5rem]'>
         <li>
-          <span className="inline-block"><img src="./src/assets/phone.svg" alt="error" className="inline-block min-w-[1.416rem] min-h-[1.8rem] mr-[0.891rem]" /></span><Link to="#" className='text-[#000] manrope-5 text-[1.4rem] font-[500] leading-[185.714%]'>07062660660</Link>
+          <span className="inline-block"><img src={phone} alt="error" className="inline-block min-w-[1.416rem] min-h-[1.8rem] mr-[0.891rem]" /></span><Link to="#" className='text-[#000] manrope-5 text-[1.4rem] font-[500] leading-[185.714%]'>07062660660</Link>
         </li>
         <li>
-          <span className="inline-block"><img src="./src/assets/envelope.svg" alt="error" className="inline-block min-w-[1.4rem] min-h-[1.4rem] mr-[0.9rem]" /></span><Link to="#" className='text-[#000] manrope-5 text-[1.5rem] font-[500] leading-[185.714%]'>Services</Link>
+          <span className="inline-block"><img src={envelope} alt="error" className="inline-block min-w-[1.4rem] min-h-[1.4rem] mr-[0.9rem]" /></span><Link to="#" className='text-[#000] manrope-5 text-[1.5rem] font-[500] leading-[185.714%]'>Services</Link>
         </li>
       </ul>
       </div>
