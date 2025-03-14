@@ -7,9 +7,9 @@ import icon4 from '../../assets/Card-icon-4.svg'
 
 function FeaturePreview() {
   const xml = 
-  <div className='w-full px-[clamp(2rem,6.666666667vw,9.6rem)] pt-[5.8rem] bg-[#F4F4F4]'>
-    <h2 className="text-[#1B1B1B] text-[4.0886rem] sp-bold font-bold tracking-[0.0818rem] leading-[207.895%] flex-wrap">SOME OF OUR AMAZING FEATURES</h2>
-    <div className="flex w-full gap-[1.6rem] justify-between">
+  <div className='w-full px-[clamp(2rem,6.666666667vw,9.6rem)] pt-[5.8rem] bg-[#F4F4F4] max-md:text-center'>
+    <h2 className="text-[#1B1B1B] text-[4.0886rem] sp-bold font-bold tracking-[0.0818rem] leading-[207.895%] flex-wrap max-md:text-[3rem]">SOME OF OUR AMAZING FEATURES</h2>
+    <div className="flex w-full gap-[1.6rem] justify-between max-md:flex-col max-md:items-center">
       <FeatureCard 
         icon={icon1}
         cardHeading="Automated Tracking"

@@ -1,0 +1,45 @@
+.hamburger > div::before,
+.hamburger > div::after {
+  transition: all 0.5s linear;
+}
+.hamburger > div {
+  transition: all 0.5s linear 0.5s;
+}
+.toggle:checked + .hamburger > div {
+  background: transparent;
+  transition: transform 0.5s linear;
+}
+.toggle:checked + .hamburger > div::before,
+.toggle:checked + .hamburger > div::after {
+  width: 100%;
+  transition: transform 0.5s linear;
+  transform:  translateY(1rem) rotate(45deg);
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+.toggle:checked + .hamburger > div::after {
+  transform: translateY(-1rem) rotate(-45deg);
+}
+.menu {
+  visibility: hidden;
+  transition: all 0.5s linear;
+}
+.menu > div {
+  transform: translateX(100%);
+  transition: all 0.5s linear;
+}
+.menu > div > div {
+  opacity: 0;
+  transition: all 0.5s linear;
+}
+.toggle:checked ~ .menu {
+  visibility: visible;
+}
+.toggle:checked ~ .menu > div {
+  transform: translateX(0);
+}
+.toggle:checked ~ .menu > div > div {
+  opacity: 1;
+  transition: all 0.5s linear 0.75s;
+}
