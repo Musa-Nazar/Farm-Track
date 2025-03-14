@@ -4,9 +4,6 @@ import leaf from '../assets/leaf.svg'
 import phone from '../assets/phone.svg'
 import envelope from '../assets/envelope.svg'
 import { Link } from 'react-router-dom'
-import leaf from '../assets/leaf.svg'
-import phone from '../assets/phone.svg'
-import envelope from '../assets/envelope.svg'
 function Footer() {
   const xml = 
   <footer className="flex-col bg-[#033D036B] px-[clamp(2rem,8.333333333vw,12rem)] pt-[8.6rem] w-full min-h-[55.1rem] relative max-md:pb-[8rem]">
