@@ -27,6 +27,7 @@
 }
 .menu > div {
   transform: translateX(100%);
+  opacity: 0;
   transition: all 0.5s linear;
 }
 .menu > div > div {
@@ -38,8 +39,9 @@
 }
 .toggle:checked ~ .menu > div {
   transform: translateX(0);
+  opacity: 1;
 }
 .toggle:checked ~ .menu > div > div {
   opacity: 1;
-  transition: all 0.5s linear 0.75s;
+  transition: all 0.5s linear 0.5s;
 }
