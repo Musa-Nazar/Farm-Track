@@ -4,7 +4,7 @@ function FAQ() {
   const xml =
   <div className="px-[clamp(2rem,6.666666667vw,9.6rem)] bg-[#F4F4F4] flex flex-col pb-[6.5rem]">
     <h2 className="text-[#000] text-[3.5rem] font-bold sf-bold leading-[191.429%] mb-[4rem]">FREQUENTLY ASKED QUESTIONS (FAQ)</h2>
-    <div className="flex flex-col gap-[3.9rem] w-[106.5rem]">
+    <div className="flex flex-col gap-[3.9rem] w-[106.5rem] max-w-[100%]">
       <FAQCard text="What is this platform about?"/>
       <FAQCard text="Can I access my farm data remotely?"/>
       <FAQCard text="Does it notify me of bird or fish mortality?"/>
