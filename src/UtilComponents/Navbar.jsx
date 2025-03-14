@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import logo from '../assets/logo.png'
 function Navbar() {
   const [menuToggle,setMenuToggle]= useState(false)
