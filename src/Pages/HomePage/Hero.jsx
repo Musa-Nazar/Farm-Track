@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 function Hero() {
   const xml = 
   <section className="w-full h-[65.8rem] hero flex">
-    <div className="flex flex-col mr-auto mt-[9.9rem] ml-[clamp(2rem,6.666666667vw,9.6rem)] items-start">
+    <div className="flex flex-col mr-auto mt-[9.9rem] max-md:mt-[calc(9.9rem/2)] ml-[clamp(2rem,6.666666667vw,9.6rem)] items-start">
       <h1 className="text-[#fff] text-[7.3rem] font-[500] leading-[143.836%] max-md:text-[3.5rem]">
       Manage Your Poultry and Fish <br />
       Inventory with Ease
