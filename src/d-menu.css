@@ -1,0 +1,38 @@
+.d-toggle:checked + .d-hamburger > div {
+  background-color: #fff;
+  transition: none;
+}
+.d-toggle:checked + .d-hamburger > div::before {
+  transform: translateY(7px) rotate(45deg);
+}
+.d-toggle:checked + .d-hamburger > div::after {
+  transform: translateY(-7px) rotate(-45deg);
+}
+.d-hamburger > div,
+.d-hamburger > div::before,
+.d-hamburger > div::after {
+  transition: all 0.4s linear;
+}
+.d-hamburger > div {
+  transition-delay: 0.2s;
+}
+
+.d-toggle:checked ~ .d-menu > div {
+  opacity: 1;
+}
+.d-toggle:checked ~ .d-menu > div > div {
+  translate: 0 0;
+}
+
+.d-toggle:checked ~ .d-menu,
+.d-toggle:checked ~ .d-menu > div,
+.d-toggle:checked ~ .d-menu > div > div {
+  transition: all 0.4s linear;
+}
+.d-toggle:checked ~ .d-menu {
+  transition: all 0.4s linear;
+}
+.d-toggle:checked ~ .d-menu {
+  transition: all 0.4s linear;
+  visibility: visible;
+}
