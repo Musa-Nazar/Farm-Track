@@ -14,13 +14,15 @@ import DashboardLayout from "../DashboardLayout";
 import Notification from "./Pages/Notification/Notification";
 import Analytic from "./Pages/Analytics/Analytic";
 import SalesAndExpense from "./Pages/Sales/SalesAndExpense";
-import SignUpPage from "./Pages/LoginPage/LoginPage";
+import SignUp from "./Pages/SignUp/SignUp";
+import Login from "./Pages/Login/Login";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route element={<Layout />}>
         <Route index element={<HomePage />}></Route>
-        <Route path="/signup" element={<SignUpPage />}></Route>
+        <Route path="/signup" element={<SignUp />}></Route>
+        <Route path="/login" element={<Login />}></Route>
       </Route>
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<Dashboard />}></Route>

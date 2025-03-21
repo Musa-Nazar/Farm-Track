@@ -22,16 +22,7 @@ body {
   font-family: "SF Pro Display", sans-serif;
 }
 .hero {
-  background: linear-gradient(
-      270deg,
-      rgba(0, 0, 0, 0.34) 0.12%,
-      rgba(0, 0, 0, 0.53) 19.93%,
-      rgba(0, 0, 0, 0.77) 44.33%,
-      rgba(0, 0, 0, 0.77) 99.66%,
-      rgba(0, 0, 0, 0.62) 99.67%,
-      rgba(0, 0, 0, 0.75) 99.68%
-    ),
-    url("./assets/Hero.png") lightgray 50% / cover no-repeat;
+  background: url("./assets/Hero.png") lightgray 50% / cover no-repeat;
 }
 .bg-about {
   background: url("./assets/About-us-preview.jpg") lightgray 0.774px -4px / 122.846%
@@ -105,4 +96,48 @@ input[type="number"] {
       rgba(0, 0, 0, 0.49) 100%
     ),
     url("./assets/ServicesBg.png") lightgray 50% / cover no-repeat;
+}
+.fill {
+  width: 300px;
+  max-width: 100%;
+}
+.radio:checked::before {
+  display: block;
+}
+@media (max-width: 768px) {
+  .bg-about {
+    background: url("./assets/About-us-preview.jpg") lightgray 50% / cover
+      no-repeat;
+  }
+  .red {
+    background: url("./assets/signupimage.png");
+  }
+}
+@media (max-height: 800px) {
+  .signup {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  .mbb {
+    margin-bottom: 2rem;
+  }
+}
+@media (max-height: 600px) {
+  .mbb {
+    margin-bottom: 1rem;
+  }
+  .pll {
+    padding-top: 0.5rem;
+  }
+  .rmm {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+@media (max-width: 768px) {
+  .bgl {
+    background: url("./assets/signupimage.png") #ffffff -67.733px -467.035px /
+      121.348% 100% no-repeat;
+    padding-top: clamp(1rem, 20.44334975369458vh, 16.6rem);
+  }
 }
