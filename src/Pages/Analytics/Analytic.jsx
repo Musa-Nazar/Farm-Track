@@ -3,7 +3,7 @@ import DashboardGap from "../../UtilComponents/DashboardGap";
 import AnalyticContainer from "./AnalyticContainer";
 import AnalyticsCard from "./AnalyticsCard";
 import SalesChart from "./SalesChart";
-import DonutChart from "./DonutChart";
+import AnalyticLineChart from "./AnalyticLineChart";
 
 function Analytic() {
   const xml = (
@@ -42,7 +42,7 @@ function Analytic() {
           <SalesChart />
         </AnalyticContainer>
         <AnalyticContainer cs="mt-[3.6rem] w-full !mx-[0rem] max-md:mt-[0.3rem]">
-          <DonutChart />
+          <AnalyticLineChart />
         </AnalyticContainer>
       </div>
     </div>

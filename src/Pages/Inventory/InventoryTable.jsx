@@ -52,7 +52,7 @@ function InventoryTable() {
     <div className="w-full overflow-x-scroll hide-scrollbar">
       <table className="w-full max-md:w-[80rem] mt-[2.5rem] ">
         <thead className="w-full border-b-[1px] border-b-solid border-b-[rgba(0,0,0,0.60)]">
-          <tr className="grid grid-cols-5">
+          <tr className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_0.3fr]">
             <th className={`${theadStyle}`}>Name</th>
             <th className={theadStyle}>Action</th>
             <th className={theadStyle}>Quantity</th>

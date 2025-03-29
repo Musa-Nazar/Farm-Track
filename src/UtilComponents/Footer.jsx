@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   const xml = (
     <footer className="flex-col bg-[#61A061] px-[clamp(2rem,9.282263630089718vw,12rem)] pt-[8.6rem] w-full min-h-[51.1rem] relative max-md:pb-[5rem] max-md:pt-[0.3rem] max-md:px-[1.6rem] max-md:min-h-[19.6rem]">
-      <div className="flex items-start max-md:items-center justify-between gap-[19.95rem] w-full max-md:flex-wrap max-md:gap-0">
+      <div className="flex items-start max-md:items-center justify-between w-full max-md:flex-wrap max-md:gap-0">
         <div className="flex flex-col  items-start max-md:w-full max-md:flex-none">
           <div className="flex mb-[2rem] items-center max-md:mb-[0.503rem]">
             <img

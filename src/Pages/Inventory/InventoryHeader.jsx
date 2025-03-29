@@ -47,7 +47,7 @@ function InventoryHeader() {
           />
           <label
             htmlFor="searchInventory"
-            className="flex absolute gap-[2.5rem] left-[3.7rem] peer-focus:peer-valid:hidden z-[0]"
+            className="flex absolute gap-[2.5rem] left-[3.7rem] peer-focus:hidden peer-required:hidden z-[0]"
           >
             <img src={search} alt="err" className="w-[2.4rem] aspect-square" />
             <span className="text-[rgba(0,0,0,0.50)] poppins text-[1.6rem] font-[500] leading-normal">

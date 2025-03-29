@@ -11,7 +11,8 @@ function Dashboard() {
         <DashboardContainer gap="gap-[1rem]" p={true}>
           <DashboardBox head="Fish Count" body="150" />
           <DashboardBox head="Bird Count" body="100" />
-          <DashboardBox head="Feed Stock" body="Low Stock" />
+          <DashboardBox head="Feed Stock" body="Low Stock" icon={true} />
+          <DashboardBox head="Total Sales" body="N150,000" />
         </DashboardContainer>
         <DashboardContainer
           mt="mt-[3rem]"

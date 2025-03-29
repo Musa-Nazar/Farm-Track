@@ -21,7 +21,7 @@ function FormTwo({ pageNo }) {
       <h2 className="text-black poppins text-[4rem] font-semibold leading-normal max-md:text-center max-md:text-[2.1713rem] max-md:font-semibold max-md:leading-normal">
         Farm Track
       </h2>
-      <h3 className="text-black/80 poppins text-[1.6rem] font-medium leading-normal mb-[clamp(1rem,7.12890625vh,7.3rem)] max-md:text-center max-md:mb-[clamp(1rem,1.9334975369458127vh,1.57rem)] max-md:text-[1.2407rem]">
+      <h3 className="text-black/80 poppins text-[1.6rem] font-medium leading-normal mb-[clamp(1rem,7.12890625vh,7.3rem)] max-md:text-center max-md:mb-[clamp(1rem,1.9334975369458127vh,1.57rem)] max-md:text-[1.2407rem] mbb">
         Fill in the form
       </h3>
       {/* NAME CONTAINER */}

@@ -1,5 +1,11 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 function LoginForm() {
+  const [formData, setFormData] = useState({});
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({ ...prevState, [name]: value }));
+  }
   const formstyle = {
     form: "flex flex-col w-full overflow-hidden pt-[clamp(1rem,13.0859375vh,13.4rem)] relative pl-[clamp(1rem,3.75vw,5.4rem)] bg-transparent z-10 max-md:pl-0 max-md:pt-[clamp(1rem,12.931034482758621vh,10.5rem)]",
     formHead:
@@ -28,6 +34,7 @@ function LoginForm() {
           type="email"
           name="email"
           id="email"
+          onChange={handleChange}
           className={`${formstyle.input}`}
         />
       </div>
@@ -42,6 +49,7 @@ function LoginForm() {
           type="password"
           name="password"
           id="password"
+          onChange={handleChange}
           className={`${formstyle.input}`}
         />
       </div>

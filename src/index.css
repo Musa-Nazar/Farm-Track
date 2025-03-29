@@ -122,6 +122,14 @@ input[type="number"] {
     margin-bottom: 2rem;
   }
 }
+
+@media (max-width: 768px) {
+  .bgl {
+    background: url("./assets/signupimage.png") #ffffff -67.733px -467.035px /
+      121.348% 100% no-repeat;
+    padding-top: clamp(1rem, 20.44334975369458vh, 16.6rem);
+  }
+}
 @media (max-height: 600px) {
   .mbb {
     margin-bottom: 1rem;
@@ -134,10 +142,11 @@ input[type="number"] {
     margin-bottom: 0;
   }
 }
-@media (max-width: 768px) {
+@media (max-height: 650px) and (max-width: 768) {
+  .svg {
+    translate: 0 -5rem;
+  }
   .bgl {
-    background: url("./assets/signupimage.png") #ffffff -67.733px -467.035px /
-      121.348% 100% no-repeat;
-    padding-top: clamp(1rem, 20.44334975369458vh, 16.6rem);
+    background-position: -67.733px -400px;
   }
 }

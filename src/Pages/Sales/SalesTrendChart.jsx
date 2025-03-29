@@ -1,66 +1,88 @@
 import {
-  BarChart,
-  Bar,
+  LineChart,
+  Line,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
 
 const data = [
-  { name: "Mon", Sales: 2000 },
-  { name: "Tue", Sales: 1000 },
-  { name: "Wed", Sales: 9000 },
-  { name: "Thu", Sales: 4000 },
-  { name: "Fri", Sales: 5000 },
-  { name: "Sat", Sales: 3500 },
+  { day: "Mon", sales: 2000 },
+  { day: "Tue", sales: 1000 },
+  { day: "Wed", sales: 9000 },
+  { day: "Thu", sales: 4000 },
+  { day: "Fri", sales: 5000 },
+  { day: "Sat", sales: 3500 },
 ];
 
 const SalesTrendChart = () => {
   return (
     <>
-      <h2 className="text-black ml-[3.5rem] text-[20px] font-bold sf-bold mb-[3.97rem]">
+      <h2 className="text-black ml-[3.5rem] text-[20px] font-bold sf-bold mb-[3.5rem]">
         Sales Trends
       </h2>
-      <div className="w-full h-[80%]">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={data}
-            margin={{ top: 0, right: 30, left: 27, bottom: 20 }}
-          >
-            {/* Grid Lines */}
-            <CartesianGrid
-              strokeDasharray="0 0"
-              stroke="#ccc"
-              vertical={false}
-            />
-
-            {/* Minor Thin Lines at 500 Intervals */}
-            {Array.from({ length: 20 }, (_, i) => (
-              <ReferenceLine
-                key={i}
-                y={i * 500}
-                stroke="#eee"
-                strokeDasharray="1 1"
-              />
-            ))}
-
-            {/* X and Y Axis */}
-            <XAxis dataKey="name" />
-            <YAxis domain={[0, 10000]} tickCount={6} />
-
-            {/* Tooltip & Legend */}
-            <Tooltip />
-            <Legend />
-
-            {/* Bars */}
-            <Bar dataKey="Sales" fill="#4A9C64" barSize={40} />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+      <ResponsiveContainer width="100%" height={387} className="">
+        <LineChart
+          data={data}
+          margin={{ left: 0, right: 0, top: 0, bottom: 0 }}
+        >
+          {[...Array(9)].map((i, index) => {
+            if ((index + 1) % 2 !== 0) {
+              return (
+                <ReferenceLine
+                  key={index}
+                  y={(index + 1) * 1000}
+                  stroke="#EBEBEB"
+                  strokeDasharray="0 0"
+                />
+              );
+            }
+          })}
+          <CartesianGrid vertical={false} strokeOpacity={0.7} />
+          <Line
+            dataKey="sales"
+            type="monotone"
+            dot={false}
+            stroke="#61A061"
+            strokeWidth={2}
+            activeDot={false}
+          />
+          <XAxis
+            dataKey="day"
+            tick={{
+              color: "#222",
+              textAlign: "center",
+              fontFamily: "Arial",
+              fontSize: "13px",
+              fontStyle: "normal",
+              fontWeight: "400",
+              lineHeight: "normal",
+            }}
+            padding={{ left: 20, right: 20 }}
+          />
+          <YAxis
+            dataKey="sales"
+            strokeOpacity={0}
+            domain={[0, 10000]}
+            tickCount={6}
+            axisLine={false}
+            tick={{
+              color: "#444",
+              textAlign: "left",
+              fontFamily: "Arial",
+              fontSize: "13px",
+              fontStyle: "normal",
+              fontWeight: "400",
+              lineHeight: "normal",
+              padding: " 0 100px",
+            }}
+          />
+          <Tooltip />
+        </LineChart>
+      </ResponsiveContainer>
     </>
   );
 };

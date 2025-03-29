@@ -25,7 +25,7 @@ function SignUp() {
         {/* SECOND FORM */}
         <FormTwo pageNo={pageNo} />
         <svg
-          className="absolute z-0 w-full hidden max-md:block"
+          className="absolute z-0 w-full hidden max-md:block svg"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 375 646"
           fill="none"
