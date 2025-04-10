@@ -7,6 +7,7 @@
 }
 .d-toggle:checked + .d-hamburger > div::after {
   transform: translateY(-7px) rotate(-45deg);
+  width: 100%;
 }
 .d-hamburger > div,
 .d-hamburger > div::before,

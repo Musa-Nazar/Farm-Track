@@ -5,7 +5,10 @@ import image_3 from "../../assets/Service-3.png";
 function Services() {
   const xml = (
     <>
-      <div className="flex w-full h-[255px] max-md:px-[0] max-md:py-[0] justify-center items-center gap-[10px] services-overlay max-md:h-[6.6064rem]">
+      <div
+        className="flex w-full h-[255px] max-md:px-[0] max-md:py-[0] justify-center items-center gap-[10px] services-overlay max-md:h-[6.6064rem]"
+        id="services"
+      >
         <h2 className="text-white text-[30px] font-bold leading-[67px] tracking-[2.4px] max-md:text-[1.6rem] text-center">
           OUR SERVICES
         </h2>

@@ -9,7 +9,7 @@ function FeaturePreview() {
   const xml = (
     <div
       className="w-full px-[clamp(2rem,6.666666667vw,9.6rem)] pt-[5.8rem] bg-[#F4F4F4] max-md:text-center max-md:pt-[2.6rem] max-md:px-[1.6rem]"
-      id="services"
+      id="feature"
     >
       <h2 className="text-[#1B1B1B] font-[SF Pro Display] text-[3rem] font-bold leading-[283%] tracking-[0.06rem] mb-[4.1rem] max-md:text-[1.6rem] max-md:tracking-[0.032rem] max-md:leading-[146.809%] max-md:mb-[5.65rem]">
         SOME OF OUR AMAZING FEATURES

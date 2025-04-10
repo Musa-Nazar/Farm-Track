@@ -1,5 +1,5 @@
 import logo from "../assets/logo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import profileIcon from "../assets/profile-icon-new.png";
 import dashboard from "../assets/dashboard.svg";
 import inventory from "../assets/inventory.svg";
@@ -10,8 +10,12 @@ import notification from "../assets/notification.svg";
 import logout from "../assets/logout.svg";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useMainContext } from "../../MainContext.jsx";
+import { jwtDecode } from "jwt-decode";
+import http from "../../http.js";
 function DashboardNavbar() {
   const [checked, setChecked] = useState(false);
+  const { token, user, setUser } = useMainContext();
   function handleCheck() {
     setChecked(false);
   }
@@ -20,7 +24,7 @@ function DashboardNavbar() {
   }
   function activeLink({ isActive }) {
     return isActive
-      ? "bg-[rgba(75,175,71,0.25)] w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem]"
+      ? "bg-[rgba(75,175,71,0.25)] w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem] mask"
       : "w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem]";
   }
   const [navOpacity, setNavOpacity] = useState(false);
@@ -37,6 +41,7 @@ function DashboardNavbar() {
       .querySelector(".inventory")
       .addEventListener("scroll", changeNavbarOpacity);
   }, [useLocation().pathname]);
+
   const xml = (
     <>
       <header>
@@ -57,9 +62,15 @@ function DashboardNavbar() {
               alt="error"
               className="w-[5rem] aspect-square"
             />
-            <span className="text-[#000] poppins text-[2rem] font-[600] leading-normal">
-              Dew Tee
-            </span>
+            {user ? (
+              <span className="text-[#000] poppins text-[2rem] font-[600] leading-normal">
+                {user.first_name} {user.last_name}
+              </span>
+            ) : (
+              <span className="text-[#000] poppins text-[2rem] font-[600] leading-normal">
+                Dew Tee
+              </span>
+            )}
           </div>
         </nav>
         <nav className="w-[23.1rem] flex-none bg-[#fff] h-dvh flex max-md:hidden">
@@ -156,7 +167,7 @@ function DashboardNavbar() {
             className="d-toggle opacity-0 absolute cursor-pointer z-[10000000] w-[3rem] h-[3rem]"
           />
           <div className="d-hamburger w-[3rem] h-[3rem] bg-gray absolute flex justify-center items-center px-[0.2rem]">
-            <div className="w-full relative h-[0.35rem] bg-black before:content-[''] before:absolute before:w-full before:h-[0.35rem] before:top-[-0.7rem] before:bg-[#000] after:content-[''] after:absolute after:w-full after:h-[0.35rem] after:top-[0.7rem] after:bg-[#000]"></div>
+            <div className="w-full relative h-[0.35rem] bg-black before:content-[''] before:absolute before:w-full before:h-[0.35rem] before:top-[-0.7rem] before:bg-[#000] after:content-[''] after:absolute after:w-[50%] after:right-0 after:h-[0.35rem] after:top-[0.7rem] after:bg-[#000]"></div>
           </div>
           <div className="d-menu w-[100vw] fixed h-[100vh] bg-[rgba(0,0,0,0.2)] top-0 left-0 overflow-hidden transition-all z-[9999] invisible">
             <div className="w-[100%]  h-dvh bg-[rgba(0,0,0,0.1)] opacity-0">

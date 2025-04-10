@@ -6,10 +6,8 @@ function Navbar() {
   function toggleOn() {
     setMenuToggle((prevState) => !prevState);
   }
-  function hamburgerlinkState({ isActive }) {
-    return isActive
-      ? "text-[#61A061] inline-block w-full pl-[1rem] py-[1.5rem] border-b border-dotted border-[rgba(0,0,0,0.1)] text-[1.8rem] hover:text-[#61A061] transition-all duration-[0.5s]"
-      : " inline-block w-full pl-[1rem] py-[1.5rem] border-b border-dotted border-[rgba(0,0,0,0.1)] text-[1.8rem] hover:text-[#61A061] transition-all duration-[0.5s] hover:underline hover:underline-offset-4";
+  function hamburgerlinkState() {
+    return " inline-block w-full pl-[1rem] py-[1.5rem] border-b border-dotted border-[rgba(0,0,0,0.1)] text-[1.8rem] hover:text-[#61A061] transition-all duration-[0.5s]";
   }
   const linkState = (function () {
     return "text-black text-[2.5rem] font-medium leading-normal";
@@ -20,16 +18,18 @@ function Navbar() {
       : document.body.classList.remove("overflow-hidden");
   }, [menuToggle]);
   const xml = (
-    <header className="h-[10.6rem]  bg-[#fff] flex items-center max-md:bg-[#D9D9D9] max-md:h-[4.3rem]">
+    <header className="h-[10.6rem]  bg-[#fff] flex items-center max-md:bg-[#D9D9D9] max-md:h-[4.3rem] sticky top-0 z-10">
       <nav className="flex justify-between items-center w-full pl-[clamp(2rem,4.7vw,6.7rem)]  pr-[clamp(2rem,6.7vw,9.6rem)] max-md:px-[1.3rem]">
         <div className="flex items-center">
-          <div className="img-holder">
-            <img
-              className="block w-[9.87239761352539rem] h-[6.71323013305664rem] max-md:h-[2.9rem] max-md:w-[4.2647rem]"
-              src={logo}
-              alt="Error"
-            />
-          </div>
+          <a href="/">
+            <div className="img-holder">
+              <img
+                className="block w-[9.87239761352539rem] h-[6.71323013305664rem] max-md:h-[2.9rem] max-md:w-[4.2647rem]"
+                src={logo}
+                alt="Error"
+              />
+            </div>
+          </a>
           <h2 className="font-bold text-[2.037rem] leading-[2.4rem] sf-bold max-md:hidden">
             FARM TRACK
           </h2>
@@ -40,23 +40,23 @@ function Navbar() {
         {/* NavLinkS */}
         <ul className="flex gap-[2.7rem] max-md:hidden">
           <li>
-            <a href={"/"} className={linkState}>
+            <a href={"#"} className={linkState}>
               Home
             </a>
           </li>
           <li>
-            <a href={"#services"} className={linkState}>
+            <a href={"#feature"} className={linkState}>
               Features
             </a>
           </li>
           <li>
-            <a href={"#about"} className={linkState}>
+            <a href="#abouts" className={linkState}>
               About
             </a>
           </li>
           <li>
-            <a href={"#contact"} className={linkState}>
-              Contact
+            <a href={"#services"} className={linkState}>
+              Services
             </a>
           </li>
         </ul>
@@ -78,24 +78,36 @@ function Navbar() {
               <div className="w-[55%] bg-white ">
                 <ul className="flex flex-col">
                   <li>
-                    <NavLink className={hamburgerlinkState} to="/">
+                    <a className={hamburgerlinkState()} href="#" id="home">
                       Home
-                    </NavLink>
+                    </a>
                   </li>
                   <li>
-                    <NavLink className={hamburgerlinkState} to="#features">
+                    <a
+                      className={hamburgerlinkState()}
+                      id="features"
+                      href="#feature"
+                    >
                       Features
-                    </NavLink>
+                    </a>
                   </li>
                   <li>
-                    <NavLink className={hamburgerlinkState} to="#contact">
-                      Contact
-                    </NavLink>
+                    <a
+                      className={hamburgerlinkState()}
+                      href="#services"
+                      id="contact"
+                    >
+                      Services
+                    </a>
                   </li>
                   <li>
-                    <NavLink className={hamburgerlinkState} to="#about">
+                    <a
+                      className={hamburgerlinkState()}
+                      href="#abouts"
+                      id="about"
+                    >
                       About
-                    </NavLink>
+                    </a>
                   </li>
                 </ul>
               </div>

@@ -1,4 +1,15 @@
-function FormTwo({ pageNo }) {
+import { useState } from "react";
+
+function FormTwo({
+  pageNo,
+  handleChange,
+  setPageNo,
+  formDataOne,
+  handleFishCount,
+  handleFirstSubmit,
+  handlePoultryCount,
+}) {
+  const [radioState, setRadioState] = useState({});
   const form2styles = {
     label:
       "text-black poppins text-[1.5rem] font-medium leading-normal max-md:poppins max-md:text-[1.2rem] max-md:font-medium max-md:leading-[1.4rem]",
@@ -15,8 +26,9 @@ function FormTwo({ pageNo }) {
     <form
       id="form_2"
       className={`w-full overflow-hidden pl-[clamp(1rem,2.430555555555556vw,3.5rem)] pt-[clamp(1rem,4.751608751608751vh,6.7rem)] relative z-[1] max-md:px-[1.6rem] max-md:pt-[clamp(1rem,11.45320197044335vh,9.5rem)] ${
-        pageNo === 2 ? "block" : "hidden"
+        pageNo === 1 ? "block" : "hidden"
       }`}
+      onSubmit={handleFirstSubmit}
     >
       <h2 className="text-black poppins text-[4rem] font-semibold leading-normal max-md:text-center max-md:text-[2.1713rem] max-md:font-semibold max-md:leading-normal">
         Farm Track
@@ -35,11 +47,12 @@ function FormTwo({ pageNo }) {
           </label>
           <input
             type="text"
-            name="firstname"
+            name="first_name"
             id="firstname"
             required
             placeholder=""
             className={`${form2styles.input}`}
+            onChange={handleChange}
           />
         </div>
         {/* LASTNAME */}
@@ -49,11 +62,12 @@ function FormTwo({ pageNo }) {
           </label>
           <input
             type="text"
-            name="lastname"
+            name="last_name"
             id="lastname"
             placeholder=""
             required
             className={`${form2styles.input}`}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -63,11 +77,12 @@ function FormTwo({ pageNo }) {
         <div className={`${form2styles.radioHolder}`}>
           <input
             type="radio"
-            name="inventory"
+            name="livestock_type"
             id="fish"
             required
-            value="fish"
+            value="Fish"
             className={`${form2styles.radio}`}
+            onChange={handleChange}
           />
           <label htmlFor="Fish" className={`${form2styles.radioLabel}`}>
             Fish
@@ -77,10 +92,11 @@ function FormTwo({ pageNo }) {
         <div className={`${form2styles.radioHolder}`}>
           <input
             type="radio"
-            name="inventory"
+            name="livestock_type"
             id="poultry"
             required
-            value="poultry"
+            value="Poultry"
+            onChange={handleChange}
             className={`${form2styles.radio}`}
           />
           <label htmlFor="poultry" className={`${form2styles.radioLabel}`}>
@@ -91,11 +107,12 @@ function FormTwo({ pageNo }) {
         <div className={`${form2styles.radioHolder}`}>
           <input
             type="radio"
-            name="inventory"
+            name="livestock_type"
             id="both"
             required
-            value="both"
+            value="Both"
             className={`${form2styles.radio}`}
+            onChange={handleChange}
           />
           <label htmlFor="both" className={`${form2styles.radioLabel}`}>
             Both
@@ -105,25 +122,34 @@ function FormTwo({ pageNo }) {
       {/* INVENTORY COUNT */}
       <div className="flex gap-[clamp(1rem,3.5vw,5rem)] mb-[clamp(1rem,4.8828125vh,5rem)] mbb max-md:mb-[2rem]">
         {/* INI FISH COUNT */}
-        <div className={`${form2styles.inputField}`}>
-          <input
-            type="number"
-            name="fishcount"
-            id="fishcount"
-            placeholder="Initial Fish count"
-            className={`${form2styles.input}`}
-          />
-        </div>
+        {(formDataOne.livestock_type === "Fish" ||
+          formDataOne.livestock_type === "Both") && (
+          <div className={`${form2styles.inputField}`}>
+            <input
+              type="number"
+              name="fishcount"
+              id="fishcount"
+              placeholder="Initial Fish count"
+              className={`${form2styles.input}`}
+              onChange={handleFishCount}
+            />
+          </div>
+        )}
         {/* INITIAL BIRD COUNT */}
-        <div className={`${form2styles.inputField}`}>
-          <input
-            type="number"
-            name="birdcount"
-            id="birdcount"
-            placeholder="Initial Bird count"
-            className={`${form2styles.input}`}
-          />
-        </div>
+
+        {(formDataOne.livestock_type === "Poultry" ||
+          formDataOne.livestock_type === "Both") && (
+          <div className={`${form2styles.inputField}`}>
+            <input
+              type="number"
+              name="birdcount"
+              id="birdcount"
+              placeholder="Initial Bird count"
+              className={`${form2styles.input}`}
+              onChange={handlePoultryCount}
+            />
+          </div>
+        )}
       </div>
       {/* NOTIFICATION PANEL */}
       <div className="flex gap-[clamp(1rem,3.5vw,5rem)] mb-[clamp(1rem,6.73828125vh,13.8rem)] max-md:mb-[3rem]">
@@ -134,47 +160,22 @@ function FormTwo({ pageNo }) {
           </label>
           <input
             type="number"
-            name="lowstock"
+            name="low_stock_threshold"
             id="lowstock"
             placeholder=""
             className={`${form2styles.input}`}
+            onChange={handleChange}
           />
         </div>
         {/* EMAIL REPORT */}
-        <div className={`${form2styles.inputField} !gap-[1.5rem]`}>
-          <label htmlFor="email_reminder" className={`${form2styles.label}`}>
-            Email monthly reported
-          </label>
-          <div className="flex gap-[clamp(1rem,6.597222222222222vw,9.5rem)]">
-            <div className={`${form2styles.radioHolder}`}>
-              <input
-                type="radio"
-                name="email_radio"
-                id="yes"
-                value="Yes"
-                className={`${form2styles.radio}`}
-              />
-              <label htmlFor="email_yes">Yes</label>
-            </div>
-            <div className={`${form2styles.radioHolder}`}>
-              <input
-                type="radio"
-                name="email_radio"
-                id="no"
-                value="No"
-                className={`${form2styles.radio}`}
-              />
-              <label htmlFor="email_no">No</label>
-            </div>
-          </div>
-        </div>
+        <div className={`${form2styles.inputField} !gap-[1.5rem]`}></div>
       </div>
       {/* SUBMIT */}
       <div className="flex w-[54.1rem] max-w-[100%]">
         <input
           type="submit"
           value="Submit"
-          className="w-full h-[4.6rem] rounded-[1.5rem] bg-[#61A061] shadow-[0_4px_19px_0_rgba(0,0,0,0.25)] text-white poppins text-[1.4rem] font-medium mr-[1rem]"
+          className="w-full h-[4.6rem] rounded-[1.5rem] bg-[#61A061] shadow-[0_4px_19px_0_rgba(0,0,0,0.25)] text-white poppins text-[1.4rem] font-medium mr-[1rem] outline-0"
         />
       </div>
     </form>

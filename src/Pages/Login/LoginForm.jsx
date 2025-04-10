@@ -1,10 +1,48 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import http from "../../../http";
+import { useMainContext } from "../../../MainContext";
+import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
 function LoginForm() {
+  const navigate = useNavigate();
+  const { token, setToken, cookie } = useMainContext();
   const [formData, setFormData] = useState({});
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
+  }
+  function handleSubmit(e) {
+    e.preventDefault();
+    async function submitForm() {
+      try {
+        const data = await http.prototype.post("/api/api/login/", formData);
+        if (data.data.access) {
+          console.log(data.data.access);
+          cookie.set("token", data.data, {
+            expires: new Date(jwtDecode(data.data.access).exp * 1000),
+          });
+          setToken(data.data);
+          toast.success("Login Successful", {
+            className: "poppins text-[1.8rem]",
+          });
+          setTimeout(() => {
+            return navigate("/dashboard");
+          }, 1000);
+        }
+        if (data.data.detail) {
+          const err = new Error();
+          err.message = data.data.detail;
+          err.name = Number(data.status) === 401 ? "401" : "500";
+          throw err;
+        }
+      } catch (error) {
+        toast.error("Invalid Login Credentials", {
+          className: "poppins text-[1.8rem]",
+        });
+      }
+    }
+    submitForm();
   }
   const formstyle = {
     form: "flex flex-col w-full overflow-hidden pt-[clamp(1rem,13.0859375vh,13.4rem)] relative pl-[clamp(1rem,3.75vw,5.4rem)] bg-transparent z-10 max-md:pl-0 max-md:pt-[clamp(1rem,12.931034482758621vh,10.5rem)]",
@@ -21,7 +59,7 @@ function LoginForm() {
     signup: "text-black poppins text-[1.6rem] font-medium underline",
   };
   const xml = (
-    <form className={`${formstyle.form}`}>
+    <form className={`${formstyle.form}`} onSubmit={handleSubmit}>
       <h2 className={`${formstyle.formHead}`}>Login</h2>
       {/* Email */}
       <div

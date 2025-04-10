@@ -9,7 +9,7 @@ import {
   ReferenceLine,
 } from "recharts";
 
-function MyBarChart() {
+function MyBarChart({ dashboardData }) {
   const CustomTooltip = ({ active, payload, label }) => {
     if (!active || !payload || !payload.length) return null;
 
@@ -22,13 +22,23 @@ function MyBarChart() {
       </div>
     );
   };
-  const salesData = [
-    { month: "Jan", sales: 40000 },
-    { month: "Feb", sales: 20000 },
-    { month: "Mar", sales: 30000 },
-    { month: "Apr", sales: 45000 },
-    { month: "May", sales: 50000 },
-  ];
+  let salesData = dashboardData
+    ? dashboardData.sales_data.slice(0, 7)
+    : [
+        // { date: "Jan", total_sales: 40000 },
+        { date: "Jan", total_sales: 40000 },
+        { date: "Feb", total_sales: 20000 },
+        { date: "Mar", total_sales: 30000 },
+        { date: "Apr", total_sales: 45000 },
+        { date: "May", total_sales: 50000 },
+      ];
+  // salesData = [
+  //   { date: "Jan", total_sales: 40000 },
+  //   { date: "Feb", total_sales: 20000 },
+  //   { date: "Mar", total_sales: 30000 },
+  //   { date: "Apr", total_sales: 45000 },
+  //   { date: "May", total_sales: 50000 },
+  // ];
   const xml = (
     <>
       <div className="flex mb-[0.35rem] justify-between">
@@ -62,7 +72,7 @@ function MyBarChart() {
             strokeOpacity={0.9}
           />
           <Area
-            dataKey="sales"
+            dataKey="total_sales"
             stroke="#61A061A6"
             fill="#61A061A6"
             activeDot={false}
@@ -70,7 +80,7 @@ function MyBarChart() {
             fillOpacity={1}
           />
           <XAxis
-            dataKey="month"
+            dataKey="date"
             tick={{
               color: "#222",
               textAlign: "center",
@@ -80,6 +90,7 @@ function MyBarChart() {
               fontWeight: "400",
               lineHeight: "normal",
             }}
+            dy={10}
           />
           <YAxis
             dataKey="sales"

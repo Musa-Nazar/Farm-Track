@@ -8,17 +8,18 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
-
-const data = [
-  { day: "Mon", sales: 2000 },
-  { day: "Tue", sales: 1000 },
-  { day: "Wed", sales: 9000 },
-  { day: "Thu", sales: 4000 },
-  { day: "Fri", sales: 5000 },
-  { day: "Sat", sales: 3500 },
-];
-
-const SalesTrendChart = () => {
+const SalesTrendChart = ({ salesTrend }) => {
+  console.log(salesTrend);
+  const data = salesTrend
+    ? salesTrend.slice(0, 6)
+    : [
+        { date: "Mon", total_sales: 2000 },
+        { date: "Tue", total_sales: 1000 },
+        { date: "Wed", total_sales: 9000 },
+        { date: "Thu", total_sales: 4000 },
+        { date: "Fri", total_sales: 5000 },
+        { date: "Sat", total_sales: 3500 },
+      ];
   return (
     <>
       <h2 className="text-black ml-[3.5rem] text-[20px] font-bold sf-bold mb-[3.5rem]">
@@ -43,7 +44,7 @@ const SalesTrendChart = () => {
           })}
           <CartesianGrid vertical={false} strokeOpacity={0.7} />
           <Line
-            dataKey="sales"
+            dataKey="total_sales"
             type="monotone"
             dot={false}
             stroke="#61A061"
@@ -51,7 +52,7 @@ const SalesTrendChart = () => {
             activeDot={false}
           />
           <XAxis
-            dataKey="day"
+            dataKey="date"
             tick={{
               color: "#222",
               textAlign: "center",
@@ -64,7 +65,7 @@ const SalesTrendChart = () => {
             padding={{ left: 20, right: 20 }}
           />
           <YAxis
-            dataKey="sales"
+            dataKey="total_sales"
             strokeOpacity={0}
             domain={[0, 10000]}
             tickCount={6}

@@ -44,7 +44,7 @@ function SettingPagePrefference() {
       <div className="flex flex-col">
         <div className="flex gap-[2.5rem] items-center">
           <h2 className="text-[#000] poppins text-[3rem] font-bold leading-[150%] gap-[0.5rem]">
-            Security and backup:
+            Backup:
           </h2>
           <button className="flex w-[17.4rem] h-[4.4rem] p-[1rem] justify-center items-center gap-[1rem] rounded-[1.3rem] border">
             <span className="text-[#000] poppins text-[1.1rem] font-[600] leading-normal">

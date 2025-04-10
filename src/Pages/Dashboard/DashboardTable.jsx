@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DashboardTableRow from "./DashboardTableRow";
+import { useMainContext } from "../../../MainContext";
 
-function DashboardTable() {
+function DashboardTable({ dashboardData }) {
+  const { user } = useMainContext();
+  useEffect(() => {
+    console.log(dashboardData);
+  }, []);
   let theadStyle =
     "text-[#000] text-center poppins text-[2.2rem] font-[500] leading-normal mb-[0.6rem] ";
   const xml = (
@@ -9,27 +14,59 @@ function DashboardTable() {
       <thead className="w-full border-b-[1px] border-b-solid border-b-[rgba(0,0,0,0.60)]">
         <tr className="grid grid-cols-5">
           <th className={`${theadStyle}`}>Name</th>
-          <th className={theadStyle}>Action</th>
-          <th className={theadStyle}>Quantity</th>
-          <th className={theadStyle}>Cost</th>
-          <th className={theadStyle}>Date</th>
+          <th className={theadStyle}>Initial</th>
+          <th className={theadStyle}>Bought</th>
+          <th className={theadStyle}>Consumed</th>
+          <th className={theadStyle}>Left</th>
         </tr>
       </thead>
       <tbody>
-        <DashboardTableRow
-          name="Bird Feed"
-          action="Bought"
-          cost="N100,000"
-          quantity="10kg"
-          date="06/03/2025"
-        />
-        <DashboardTableRow
-          name="Fish Feed"
-          action="Bought"
-          cost="N100,000"
-          quantity="50kg"
-          date="09/03/2025"
-        />
+        {((dashboardData && user.livestock_type === "Fish") ||
+          (dashboardData && user.livestock_type === "Both")) && (
+          <DashboardTableRow
+            name={dashboardData.feed_info[0].name || "Bird Feed"}
+            initial={dashboardData.feed_info[0].initial || "00"}
+            bought={dashboardData.feed_info[0].bought || "00"}
+            consumed={dashboardData.feed_info[0].consumed || "00"}
+            left={`${dashboardData.feed_info[0].left}` || "00"}
+          />
+        )}
+
+        {/* {((dashboardData && user.livestock_type === "Poultry") ||
+          (dashboardData && user.livestock_type === "Both")) && (
+          <DashboardTableRow
+            name={dashboardData.feed_info[1].name || "Bird Feed"}
+            initial={dashboardData.feed_info[1].initial || "00"}
+            bought={dashboardData.feed_info[1].bought || "00"}
+            consumed={dashboardData.feed_info[1].consumed || "00"}
+            left={`${dashboardData.feed_info[1].left}` || "00"}
+          />
+        )} */}
+        {dashboardData && user.livestock_type === "Poultry" ? (
+          <DashboardTableRow
+            name={dashboardData.feed_info[0].name || "Bird Feed"}
+            initial={dashboardData.feed_info[0].initial || "00"}
+            bought={dashboardData.feed_info[0].bought || "00"}
+            consumed={dashboardData.feed_info[0].consumed || "00"}
+            left={`${dashboardData.feed_info[0].left}` || "00"}
+          />
+        ) : dashboardData && user.livestock_type === "Both" ? (
+          <DashboardTableRow
+            name={dashboardData.feed_info[1].name || "Bird Feed"}
+            initial={dashboardData.feed_info[1].initial || "00"}
+            bought={dashboardData.feed_info[1].bought || "00"}
+            consumed={dashboardData.feed_info[1].consumed || "00"}
+            left={`${dashboardData.feed_info[1].left}` || "00"}
+          />
+        ) : (
+          <DashboardTableRow
+            name={"Bird Feed"}
+            initial={"00"}
+            bought={"00"}
+            consumed={"00"}
+            left={"00"}
+          />
+        )}
       </tbody>
     </table>
   );

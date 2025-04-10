@@ -1,6 +1,6 @@
 function DashboardBox({ head, body, icon }) {
   const xml = (
-    <div className="w-[clamp(5rem,17.36111111111111vw,25rem)] min-h-[111px] rounded-[17.096px] bg-white box-shadow pl-[2.45rem] pt-[3.2rem] max-md:w-full ">
+    <div className="w-[clamp(5rem,17.36111111111111vw,25rem)] min-h-[111px] rounded-[17.096px] bg-white box-shadow pl-[2.45rem] pt-[3.2rem] max-md:w-full blur">
       <div className="flex gap-[clamp(0.5rem,3.0555555555555554vw,4.4rem)]">
         <h2 className="text-black break-all poppins text-[22.959px] font-semibold leading-[100%] mb-[1.7rem] ">
           {head}

@@ -1,10 +1,10 @@
 function SalesAndExpenseBox({ head, body }) {
   const xml = (
-    <div className="w-[clamp(10rem,21vw,29.7rem)] min-h-[16.5rem] rounded-[1.5rem] bg-[#F7FBF7] shadow-[0px_4px_25px_-4px_rgba(0,0,0,0.15)] max-md:w-full">
-      <h2 className="text-black poppins text-[2.5rem] font-medium leading-normal pt-[0.9rem] pl-[6rem] mb-[3.6rem]">
+    <div className="w-[clamp(10rem,21vw,29.7rem)] min-h-[16.5rem] rounded-[1.5rem] bg-[#F7FBF7] shadow-[0px_4px_25px_-4px_rgba(0,0,0,0.15)] max-md:w-full px-[1rem]">
+      <h2 className="text-black poppins text-[2.5rem] font-medium leading-normal pt-[0.9rem] text-center mb-[3.6rem]">
         {head}
       </h2>
-      <div className="flex pl-[4.4rem]">
+      <div className="flex justify-center break-all items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="40"
@@ -17,7 +17,7 @@ function SalesAndExpenseBox({ head, body }) {
             fill="black"
           />
         </svg>
-        <p className="text-black poppins text-[3rem] font-semibold leading-normal">
+        <p className="text-black poppins text-[3rem] font-semibold leading-normal text-center break-all">
           {body}
         </p>
       </div>

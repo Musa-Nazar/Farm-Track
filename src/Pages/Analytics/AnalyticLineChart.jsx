@@ -23,8 +23,8 @@ const data = [
 function AnalyticLineChart() {
   return (
     <>
-      <h2 className="text-black poppins text-[20px] font-semibold leading-normal mb-[1rem] mt-[1.67rem]">
-        Net Profit Trend
+      <h2 className="text-black poppins text-[20px] font-semibold leading-normal mb-[1rem] mt-[0.5rem]">
+        Net Income
       </h2>
       <ResponsiveContainer width="100%" height={380}>
         <LineChart

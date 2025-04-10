@@ -2,7 +2,7 @@ function AboutPreview() {
   const xml = (
     <div
       className="w-full px-[clamp(2rem,6.666666667vw,9.6rem)] pt-[13.6rem] bg-[#F4F4F4] max-md:pt-[calc(13.6rem/2)] pb-[17.8rem] max-md:pb-[8.9rem] max-md:px-[1.6rem]"
-      id="about"
+      id="abouts"
     >
       <div className="flex gap-[5.95rem] justify-between max-md:flex-col max-md:text-center max-md:items-center max-md:gap-0">
         <div className="flex flex-col items-start w-[50%] max-md:w-full max-md:items-start">
