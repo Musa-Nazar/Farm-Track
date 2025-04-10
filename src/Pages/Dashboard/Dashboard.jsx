@@ -44,9 +44,7 @@ function Dashboard() {
     getDashboardData();
   }, []);
   console.log(dashboardData);
-  const type = user.livestock_type
-    ? user.livestock_type.toLowerCase()
-    : "string";
+  const type = user ? user.livestock_type.toLowerCase() : "string";
   let total = 0;
   let totalSales = 0;
   dashboardData &&
