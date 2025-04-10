@@ -15,7 +15,7 @@ function Dashboard() {
     async function getUserData() {
       try {
         const data = await http.prototype.get(
-          "/api/api/user/profile/",
+          "https://farmtrack-backend.onrender.com/api/user/profile/",
           token.access
         );
         setUser(data.data);
@@ -33,7 +33,7 @@ function Dashboard() {
     async function getDashboardData() {
       try {
         const dashboardInfo = await http.prototype.get(
-          "/api/api/info/dashboard/",
+          "https://farmtrack-backend.onrender.com/api/info/dashboard/",
           token.access
         );
         setDashboardData(dashboardInfo);

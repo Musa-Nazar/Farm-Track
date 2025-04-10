@@ -14,7 +14,7 @@ function SalesChartsContainer() {
     async function getSalesTrend() {
       try {
         const salesTrendInfo = await http.prototype.get(
-          "/api/api/sales-trend/",
+          "https://farmtrack-backend.onrender.com/api/sales-trend/",
           token.access
         );
         setSalesTrend(salesTrendInfo);

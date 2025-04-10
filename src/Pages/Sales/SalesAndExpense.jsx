@@ -14,7 +14,7 @@ function SalesAndExpense() {
     async function getSalesData() {
       try {
         const salesInfo = await http.prototype.get(
-          "/api/api/info/sales-expenses/",
+          "https://farmtrack-backend.onrender.com/api/info/sales-expenses/",
           token.access
         );
         setSalesData(salesInfo);

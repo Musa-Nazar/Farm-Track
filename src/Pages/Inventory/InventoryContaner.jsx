@@ -78,7 +78,7 @@ function InventoryContaner() {
       try {
         if (!token.access) return location.reload();
         const data = await http.prototype.get(
-          "/api/api/inventory/feed/",
+          "https://farmtrack-backend.onrender.com/api/inventory/feed/",
           token.access
         );
         setFeedData(data);
@@ -91,7 +91,7 @@ function InventoryContaner() {
     async function getLiveStockData() {
       try {
         const data = await http.prototype.get(
-          "/api/api/inventory/livestock/",
+          "https://farmtrack-backend.onrender.com/api/inventory/livestock/",
           token.access
         );
         setLiveStockData(data);

@@ -83,7 +83,7 @@ function InventoryTable() {
         if (selectedData === "feed") {
           if (!token.access) return location.reload();
           await http.prototype.delete(
-            "/api/api/inventory/feed/",
+            "https://farmtrack-backend.onrender.com/api/inventory/feed/",
             token.access,
             delParams
           );
@@ -98,7 +98,7 @@ function InventoryTable() {
         } else {
           if (!token.access) return location.reload();
           const deletedData = await http.prototype.delete(
-            "/api/api/inventory/livestock/",
+            "https://farmtrack-backend.onrender.com/api/inventory/livestock/",
             token.access,
             delParams
           );

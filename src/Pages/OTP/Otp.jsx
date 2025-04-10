@@ -28,10 +28,13 @@ function Otp() {
     const data = parseInt(`${input1}${input2}${input3}${input4}`);
     async function postOtp() {
       try {
-        const response = await http.prototype.post("/api/api/otp-verify/", {
-          email: user.email,
-          otp: data,
-        });
+        const response = await http.prototype.post(
+          "https://farmtrack-backend.onrender.com/api/otp-verify/",
+          {
+            email: user.email,
+            otp: data,
+          }
+        );
         if (response.status >= 200 && response.status < 300) {
           cookie.set(
             "token",

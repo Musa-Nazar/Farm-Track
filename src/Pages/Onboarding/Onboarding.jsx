@@ -90,7 +90,7 @@ function Onboarding() {
     async function postToApi() {
       try {
         const apiData = await http.prototype.put(
-          "/api/api/onboarding",
+          "https://farmtrack-backend.onrender.com/api/onboarding",
           token.access,
           "",
           data

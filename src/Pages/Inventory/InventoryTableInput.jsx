@@ -54,7 +54,7 @@ function InventoryTableInput() {
           if (selectedData === "feed") {
             const { count, entry_date, ...rest } = formData;
             const data = await http.prototype.postWithToken(
-              "/api/api/inventory/feed/",
+              "https://farmtrack-backend.onrender.com/api/inventory/feed/",
               token.access,
               { ...rest }
             );
@@ -65,7 +65,7 @@ function InventoryTableInput() {
           } else {
             const { count, entry_date, ...rest } = formData;
             const data = await http.prototype.postWithToken(
-              "/api/api/inventory/livestock/",
+              "https://farmtrack-backend.onrender.com/api/inventory/livestock/",
               token.access,
               { ...rest, quantity: formData.count }
             );
@@ -89,8 +89,8 @@ function InventoryTableInput() {
       try {
         const url =
             selectedData === "feed"
-              ? "/api/api/inventory/feed/"
-              : "/api/api/inventory/livestock/",
+              ? "https://farmtrack-backend.onrender.com/api/inventory/feed/"
+              : "https://farmtrack-backend.onrender.com/api/inventory/livestock/",
           { entry_date, ...rest } = formData;
         const body =
           selectedData === "feed"

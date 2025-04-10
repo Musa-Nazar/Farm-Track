@@ -15,7 +15,7 @@ function Analytic() {
       try {
         if (!token.access) return location.reload();
         const analyticsInfo = await http.prototype.get(
-          "/api/api/info/analytics/",
+          "https://farmtrack-backend.onrender.com/api/info/analytics/",
           token.access
         );
         console.log(analyticsInfo);

@@ -16,7 +16,10 @@ function LoginForm() {
     e.preventDefault();
     async function submitForm() {
       try {
-        const data = await http.prototype.post("/api/api/login/", formData);
+        const data = await http.prototype.post(
+          "https://farmtrack-backend.onrender.com/api/login/",
+          formData
+        );
         if (data.data.access) {
           console.log(data.data.access);
           cookie.set("token", data.data, {
@@ -37,6 +40,7 @@ function LoginForm() {
           throw err;
         }
       } catch (error) {
+        console.log(error);
         toast.error("Invalid Login Credentials", {
           className: "poppins text-[1.8rem]",
         });
