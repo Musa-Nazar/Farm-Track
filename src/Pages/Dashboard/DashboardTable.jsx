@@ -55,15 +55,7 @@ function DashboardTable({ dashboardData }) {
             consumed={dashboardData.feed_info[1].consumed || "00"}
             left={`${dashboardData.feed_info[1].left}` || "00"}
           />
-        ) : (
-          <DashboardTableRow
-            name={"Bird Feed"}
-            initial={"00"}
-            bought={"00"}
-            consumed={"00"}
-            left={"00"}
-          />
-        )}
+        ) : ""}
       </tbody>
     </table>
   );
