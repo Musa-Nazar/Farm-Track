@@ -10,7 +10,7 @@ import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
 function Dashboard() {
   const { user, setUser, token, cookie } = useMainContext();
-  const [dashboardData, setDashboardData] = useState(undefined);
+  const [dashboardData, setDashboardData] = useState(false);
   const [dUser, setDUser] = useState(false);
 
   useEffect(() => {
