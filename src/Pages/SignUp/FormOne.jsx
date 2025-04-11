@@ -50,7 +50,7 @@ function FormOne({ setPageNo, pageNo }) {
   const xml = (
     <form
       onSubmit={handleSubmit}
-      className={`pl-[clamp(1rem,3.7vw,5.3rem)] pt-[clamp(3rem,7.18359375vh,13.5rem)] max-md:pt-[clamp(1rem,11.45320197044335vh,9.5rem)] max-md:px-[1.6rem] overflow-hidden w-full bg-white max-md:bg-transparent pll relative z-[1]`}
+      className={`pl-[clamp(1rem,3.7vw,5.3rem)] pt-[clamp(3rem,7.18359375vh,13.5rem)] max-md:pt-[clamp(1rem,11.45320197044335vh,9.5rem)] max-md:px-[1.6rem] overflow-hidden max-md:overflow-y-auto w-full bg-white max-md:bg-transparent pll relative z-[1]`}
       id="form_1"
     >
       <h2 className="text-black poppins text-[4rem] font-semibold leading-normal max-xl:text-[clamp(2rem,2.8vw,4rem)] max-md:text-center max-md:text-[2.1713rem]">
