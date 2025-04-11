@@ -42,28 +42,22 @@ function Onboarding() {
   function handleFishFeed(e) {
     const { value } = e.target;
     setFishFeed((prevState) => ({ ...prevState, quantity: value }));
-    console.log(fishFeed);
   }
   function handleFishCount(e) {
     const { value } = e.target;
     setFishCount((prevState) => ({ ...prevState, quantity: value }));
-    console.log(fishCount);
   }
   function handlePoultryFeed(e) {
     const { value } = e.target;
     setPoultryFeed((prevState) => ({ ...prevState, quantity: value }));
-    console.log(poultryFeed);
   }
   function handlePoultryCount(e) {
     const { value } = e.target;
     setPoultryCount((prevState) => ({ ...prevState, quantity: value }));
-    console.log(poultryCount);
   }
   function handleChange(e) {
     const { name, value } = e.target;
     setFormDataOne((prevState) => ({ ...prevState, [name]: value }));
-    console.log(formDataOne);
-    console.log(token.access);
   }
   function handleFirstSubmit(e) {
     e.preventDefault();
