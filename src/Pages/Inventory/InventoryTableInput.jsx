@@ -27,7 +27,7 @@ function InventoryTableInput() {
   function handleForm(e) {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-    if (value === "Consumed") {
+    if (value === "Dead") {
       setFormData((prevState) => ({ ...prevState, cost: 0 }));
     }
   }
