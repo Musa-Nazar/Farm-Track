@@ -9,6 +9,9 @@ function FormOne({ setPageNo, pageNo }) {
   const [formData, setFormData] = useState({});
   const { setUser, cookie, setToken } = useMainContext();
   function handleSubmit(e) {
+    toast.success("Wait while user is being signed in", {
+          className: "poppins text-[1.8rem]",
+    });
     e.preventDefault();
     http.prototype
       .post("https://farmtrack-backend.onrender.com/api/register/", formData)
@@ -122,7 +125,7 @@ function FormOne({ setPageNo, pageNo }) {
           id="confirmPassword"
           required
           minLength="8"
-          className={`${formstyle.input}`}
+          className={`${formstyle.input} active:scale-[0.8] transition-all`}
           placeholder="Confirm Password"
           autoComplete={false}
           onChange={handleChange}
