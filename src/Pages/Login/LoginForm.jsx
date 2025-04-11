@@ -28,7 +28,7 @@ function LoginForm() {
             expires: new Date(jwtDecode(data.data.access).exp * 1000),
           });
           setToken(data.data);
-          setUser({livestock_type : ""});
+          setUser({});
           toast.success("Login Successful", {
             className: "poppins text-[1.8rem]",
           });
