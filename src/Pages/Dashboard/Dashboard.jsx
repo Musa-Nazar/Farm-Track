@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 function Dashboard() {
   const { user, setUser, token, cookie } = useMainContext();
   const [dashboardData, setDashboardData] = useState(undefined);
+  const [dUser, setDUser] = useState(false);
 
   useEffect(() => {
     async function getUserData() {
@@ -21,6 +22,7 @@ function Dashboard() {
           token.access
         );
         setUser(data.data);
+        setDUser(data.data);
         cookie.set("user", data.data, {
           path: "/",
           expires: new Date(jwtDecode(token.access).exp * 1000),
@@ -48,7 +50,7 @@ function Dashboard() {
     }
     getDashboardData();
   }, []);
-  const type = user ? user.livestock_type.toLowerCase() : "string";
+  const type = dUser ? dUser.livestock_type.toLowerCase() : "string";
   let total = 0;
   let totalSales = 0;
   dashboardData &&
