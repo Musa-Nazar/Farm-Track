@@ -89,7 +89,7 @@ function Onboarding() {
           "",
           data
         );
-        setUser(undefined);
+        setUser(false);
         toast.success("Onboarding Successful", {
           className: "poppins text-[1.8rem]",
         });
