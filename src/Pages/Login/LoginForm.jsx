@@ -14,6 +14,9 @@ function LoginForm() {
   }
   function handleSubmit(e) {
     e.preventDefault();
+    toast.success("Wait, while being logged in", {
+      className: "poppins text-[1.8rem]",
+    });
     async function submitForm() {
       try {
         const data = await http.prototype.post(
@@ -25,7 +28,7 @@ function LoginForm() {
             expires: new Date(jwtDecode(data.data.access).exp * 1000),
           });
           setToken(data.data);
-          setUser(undefined);
+          setUser(false);
           toast.success("Login Successful", {
             className: "poppins text-[1.8rem]",
           });
@@ -96,7 +99,7 @@ function LoginForm() {
       </div>
       {/* Login */}
       <div
-        className={`${formstyle.inputField} mb-[clamp(1rem,7.2265625vh,7.4rem)] max-md:mb-[clamp(1rem,6.527093596059113vh,5.3rem)]`}
+        className={`${formstyle.inputField} mb-[clamp(1rem,7.2265625vh,7.4rem)] max-md:mb-[clamp(1rem,6.527093596059113vh,5.3rem)] active:scale-[0.8]  transition-all`}
       >
         <input
           type="submit"
