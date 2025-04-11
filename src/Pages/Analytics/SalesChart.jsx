@@ -23,13 +23,18 @@ const renderLegend = () => {
     </div>
   );
 };
-const SalesChart = () => {
-  const data = [
-    { name: "Week 1", salesDark: 50000, salesLight: 30000 },
-    { name: "Week 2", salesDark: 45000, salesLight: 35000 },
-    { name: "Week 3", salesDark: 52000, salesLight: 36000 },
-    { name: "Week 4", salesDark: 48000, salesLight: 20000 },
-  ];
+const SalesChart = ({ analyticsChartData }) => {
+  const chartData = analyticsChartData
+    ? analyticsChartData.weekly_sales_purchases
+    : false;
+  const data = chartData
+    ? chartData
+    : [
+        { week: "Week 1", sales: 50000, purchases: 30000 },
+        { week: "Week 2", sales: 45000, purchases: 35000 },
+        { week: "Week 3", sales: 52000, purchases: 36000 },
+        { week: "Week 4", sales: 48000, purchases: 20000 },
+      ];
   return (
     <>
       <h2 className="text-black text-center poppins text-[20px] font-semibold leading-[100%] w-[23.7rem] h-[17px] ml-[2rem] mt-[0.5rem] mb-[4.316rem] max-md:w-full max-md:mx-0">
@@ -43,20 +48,20 @@ const SalesChart = () => {
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis
-              dataKey="name"
+              dataKey="week"
               axisLine={{ stroke: "black", strokeWidth: 2 }}
             />
-            <YAxis domain={[0, 50000]} tickCount={11} />
+            <YAxis domain={[0, 50000]} tickCount={12} />
             <Tooltip />
             <Legend content={renderLegend} />
             <Bar
-              dataKey="salesDark"
+              dataKey="sales"
               fill="#004200"
               barSize={20}
               radius={[9.963, 9.963, 0, 0]}
             />
             <Bar
-              dataKey="salesLight"
+              dataKey="purchases"
               fill="#61A061"
               barSize={20}
               radius={[9.963, 9.963, 0, 0]}

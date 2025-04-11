@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useMainContext } from "../../../MainContext";
 import http from "../../../http";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 function Dashboard() {
   const { user, setUser, token, cookie } = useMainContext();
   const [dashboardData, setDashboardData] = useState(undefined);
@@ -14,18 +15,20 @@ function Dashboard() {
   useEffect(() => {
     async function getUserData() {
       try {
+        if (!token.access) return location.reload();
         const data = await http.prototype.get(
           "https://farmtrack-backend.onrender.com/api/user/profile/",
           token.access
         );
         setUser(data.data);
-        cookie.set(
-          "user",
-          data.data,
-          new Date(jwtDecode(token.access).exp * 1000)
-        );
+        cookie.set("user", data.data, {
+          path: "/",
+          expires: new Date(jwtDecode(token.access).exp * 1000),
+        });
       } catch (error) {
-        console.log(error);
+        toast.error("Unable to get Users Data", {
+          className: "poppins text-[1.6rem]",
+        });
       }
     }
     getUserData();
@@ -38,18 +41,19 @@ function Dashboard() {
         );
         setDashboardData(dashboardInfo);
       } catch (error) {
-        console.log(error);
+        toast.error("Unable to get Users Data", {
+          className: "poppins text-[1.6rem]",
+        });
       }
     }
     getDashboardData();
   }, []);
-  console.log(dashboardData);
   const type = user ? user.livestock_type.toLowerCase() : "string";
   let total = 0;
   let totalSales = 0;
   dashboardData &&
-    dashboardData.livestock_count.forEach((item) => {
-      total += parseInt(item.count);
+    dashboardData.feed_info.forEach((item) => {
+      total += parseInt(item.left);
     });
   dashboardData &&
     dashboardData.sales_data.forEach((item) => {
@@ -86,7 +90,12 @@ function Dashboard() {
                 ? "Low Stock"
                 : "In Stock"
             }
-            icon={true}
+            icon={
+              dashboardData &&
+              total / 2 < parseInt(dashboardData.low_stock_threshold)
+                ? true
+                : false
+            }
           />
           <DashboardBox
             head="Total Sales"

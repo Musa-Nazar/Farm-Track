@@ -10,7 +10,6 @@ function FormOne({ setPageNo, pageNo }) {
   const { setUser, cookie, setToken } = useMainContext();
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("submitted");
     http.prototype
       .post("https://farmtrack-backend.onrender.com/api/register/", formData)
       .then((data) => {
@@ -21,7 +20,6 @@ function FormOne({ setPageNo, pageNo }) {
         setTimeout(() => {
           navigate("/otp");
         }, 1500);
-        console.log(data);
       })
       .catch((err) => {
         if (typeof err === "object") {
@@ -39,9 +37,6 @@ function FormOne({ setPageNo, pageNo }) {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   }
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
   const formstyle = {
     label:
       "text-black/80 font-poppins text-[1.5rem] font-medium leading-normal max-md:text-black max-md:poppins max-md:text-[1.2rem] max-md:font-medium max-md:leading-[1.4rem]",
@@ -67,7 +62,7 @@ function FormOne({ setPageNo, pageNo }) {
       {/* NAME */}
       <div className={`${formstyle.inputField}`}>
         <label htmlFor="farmname" className={`${formstyle.label}`}>
-          Name
+          Farm Name
         </label>
         <input
           type="text"

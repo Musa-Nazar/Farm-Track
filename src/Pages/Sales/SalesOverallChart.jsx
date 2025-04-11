@@ -12,14 +12,14 @@ import {
 
 const data = [
   { name: "Birds", Sales: 120, Expenses: 80, Loss: 40 },
-  { name: "Catfish", Sales: 100, Expenses: 70, Loss: 30 },
+  { name: "Feed", Sales: 100, Expenses: 70, Loss: 30 },
   { name: "Feed", Sales: 0, Expenses: 160, Loss: 0 },
   { name: "Loss", Sales: 0, Expenses: 0, Loss: 60 },
 ];
 
 function SalesOverallChart() {
   return (
-    <div className="w-full h-[46.3rem] flex justify-center items-center">
+    <div className="w-full h-[46.3rem] flex justify-center items-center ">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
           data={data}

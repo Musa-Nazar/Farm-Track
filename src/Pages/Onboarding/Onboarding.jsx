@@ -8,11 +8,11 @@ import { useMainContext } from "../../../MainContext";
 import { toast } from "react-toastify";
 function Onboarding() {
   const navigate = useNavigate();
-  const { token } = useMainContext();
+  const { token, user, setUser } = useMainContext();
   const [pageNo, setPageNo] = useState(1);
   useEffect(() => {
     console.log(token);
-    if (token.is_onboarded === true) {
+    if (user.is_onboarded === true) {
       navigate("/dashboard");
     }
   }, []);
@@ -95,6 +95,7 @@ function Onboarding() {
           "",
           data
         );
+        setUser(undefined);
         toast.success("Onboarding Successful", {
           className: "poppins text-[1.8rem]",
         });

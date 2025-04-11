@@ -30,7 +30,6 @@ function ForgotPassword() {
     const { name, pattern, value } = e.target;
     confirmRegex();
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-    console.log(formData);
   }
   const formStyle = {
     form: "pl-[clamp(1rem,3.75vw,5.4rem)] w-full h-full overflow-hidden pr-[1rem] relative z-10",

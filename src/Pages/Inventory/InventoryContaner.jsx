@@ -26,37 +26,21 @@ function InventoryContaner() {
   const [feedData, setFeedData] = useState([
     {
       id: "0",
-      name: "Bird Feed",
-      action: "Bought",
-      quantity: "10kg",
-      cost: "N100,000",
-      date: "06/03/2025",
-    },
-    {
-      id: "1",
-      name: "Fish Feed",
-      action: "Bought",
-      quantity: "15kg",
-      cost: "N150,000",
-      date: "06/03/2025",
+      name: "--",
+      action: "--",
+      quantity: "--",
+      cost: "--",
+      date: "--",
     },
   ]);
   const [liveStockData, setLiveStockData] = useState([
     {
       id: "0",
-      name: "Bird",
-      action: "Bought",
-      quantity: "5",
-      cost: "N100,000",
-      date: "06/03/2025",
-    },
-    {
-      id: "1",
-      name: "Fish",
-      action: "Bought",
-      quantity: "6",
-      cost: "N100,000",
-      date: "06/03/2025",
+      name: "--",
+      action: "--",
+      quantity: "--",
+      cost: "--",
+      date: "--",
     },
   ]);
   function cleanInput() {
@@ -82,9 +66,10 @@ function InventoryContaner() {
           token.access
         );
         setFeedData(data);
-        console.log(data);
       } catch (error) {
-        console.log(error);
+        toast.error("Unable to get Users Data", {
+          className: "poppins text-[1.6rem]",
+        });
       }
     }
     getFeedData();
@@ -95,9 +80,10 @@ function InventoryContaner() {
           token.access
         );
         setLiveStockData(data);
-        console.log(data);
       } catch (error) {
-        console.log(error);
+        toast.error("Unable to get Users Data", {
+          className: "poppins text-[1.6rem]",
+        });
       }
     }
     getLiveStockData();

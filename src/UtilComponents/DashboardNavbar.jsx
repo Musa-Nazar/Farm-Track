@@ -41,7 +41,6 @@ function DashboardNavbar() {
       .querySelector(".inventory")
       .addEventListener("scroll", changeNavbarOpacity);
   }, [useLocation().pathname]);
-
   const xml = (
     <>
       <header>
@@ -57,14 +56,12 @@ function DashboardNavbar() {
             </h2>
           </div>
           <div className="flex gap-[3.15rem] items-center">
-            <img
-              src={profileIcon}
-              alt="error"
-              className="w-[5rem] aspect-square"
-            />
+            <div className="w-[5rem] aspect-square bg-green-300 rounded-[50%] flex items-center justify-center text-white text-[3rem]">
+              {user && user.first_name[0]}
+            </div>
             {user ? (
               <span className="text-[#000] poppins text-[2rem] font-[600] leading-normal">
-                {user.first_name} {user.last_name}
+                {user && user.first_name} {user && user.last_name}
               </span>
             ) : (
               <span className="text-[#000] poppins text-[2rem] font-[600] leading-normal">

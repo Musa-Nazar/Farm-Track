@@ -10,6 +10,7 @@ import { useMainContext } from "../../../MainContext";
 function Analytic() {
   const { token, user } = useMainContext();
   const [analyticsData, setAnalyticsData] = useState(undefined);
+  const [analyticsChartData, setAnalyticsChartData] = useState(undefined);
   useEffect(() => {
     async function getAnalyticsData() {
       try {
@@ -18,13 +19,30 @@ function Analytic() {
           "https://farmtrack-backend.onrender.com/api/info/analytics/",
           token.access
         );
-        console.log(analyticsInfo);
         setAnalyticsData(analyticsInfo);
-      } catch (error) {}
+      } catch (error) {
+        toast.error("Unable to fetch Data: 404", {
+          className: "poppins text-[1.6rem]",
+        });
+      }
     }
     getAnalyticsData();
+    async function getAnalyticsChartData() {
+      try {
+        if (!token.access) return location.reload();
+        const analyticsChartInfo = await http.prototype.get(
+          "https://farmtrack-backend.onrender.com/api/analytics-chart/",
+          token.access
+        );
+        setAnalyticsChartData(analyticsChartInfo);
+      } catch (error) {
+        toast.error("Unable to Chart fetch Data: 404", {
+          className: "poppins text-[1.6rem]",
+        });
+      }
+    }
+    getAnalyticsChartData();
   }, []);
-
   const xml = (
     <div className="w-full inventory h-dvh overflow-y-scroll hide-scrollbar">
       <DashboardGap />
@@ -63,18 +81,18 @@ function Analytic() {
           />
           <AnalyticsCard
             head="Mortality rate"
-            unit="count"
+            unit="%"
             cs="pl-[2.6rem] pr-[4.4rem]"
             poultry={
               analyticsData && user.livestock_type === "Poultry"
-                ? analyticsData.livestock_mortality[0].mortality
+                ? analyticsData.livestock_mortality[0].mortality.toFixed(1)
                 : analyticsData && user.livestock_type === "Both"
-                ? analyticsData.feed_consumption[1].consumed
+                ? analyticsData.livestock_mortality[1].mortality.toFixed(1)
                 : "10"
             }
             fish={
               analyticsData
-                ? analyticsData.livestock_mortality[0].mortality
+                ? analyticsData.livestock_mortality[0].mortality.toFixed(1)
                 : "10"
             }
           />
@@ -82,7 +100,7 @@ function Analytic() {
       </AnalyticContainer>
       <div className="flex max-md:flex-col gap-[3.3rem] justify-between pl-[3.1rem] pr-[8.8rem] max-md:px-[3.1rem] mb-[2rem]">
         <AnalyticContainer cs="mt-[3.6rem] w-[clamp(3rem,46vw,63.4rem)] max-md:w-full flex-none !mx-0">
-          <SalesChart />
+          <SalesChart analyticsChartData={analyticsChartData} />
         </AnalyticContainer>
         <AnalyticContainer cs="mt-[3.6rem] w-full !mx-[0rem] max-md:mt-[0.3rem]">
           <AnalyticLineChart />

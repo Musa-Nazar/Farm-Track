@@ -53,7 +53,6 @@ function InventoryTable() {
             }
           });
     setCurrent({ ...found, cost: parseInt(found.cost) });
-    console.log(current);
   }
   // USE EFFECT HOOK
   useEffect(() => {
@@ -111,13 +110,20 @@ function InventoryTable() {
           );
         }
       } catch (error) {
-        console.log(error);
+        toast.error("Unable to Delete", {
+          className: "poppins text-[1.6rem]",
+        });
       } finally {
         setPopup(false);
         setDelParams("");
         setCurrent({ id: null });
       }
     })();
+  }
+  function cancel() {
+    setPopup(false);
+    setDelParams("");
+    setCurrent({ id: null });
   }
   // TABLE DATA
   const tableData =
@@ -195,7 +201,10 @@ function InventoryTable() {
                 <span className="w-[1.6rem] block h-[1.6rem] rounded-[50%] border border-white border-t-[transparent] rotate"></span>
               )}
             </button>
-            <button className="bg-green-700 shadow-[0px_1px_3px_rgba(0,0,0,0.1)] text-[#fff] text-[1.6rem] py-[0.5rem] px-[1.5rem] cursor-pointer rounded-[0.5rem]">
+            <button
+              className="bg-green-700 shadow-[0px_1px_3px_rgba(0,0,0,0.1)] text-[#fff] text-[1.6rem] py-[0.5rem] px-[1.5rem] cursor-pointer rounded-[0.5rem]"
+              onClick={cancel}
+            >
               No
             </button>
           </div>

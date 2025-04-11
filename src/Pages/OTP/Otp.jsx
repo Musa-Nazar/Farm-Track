@@ -20,7 +20,6 @@ function Otp() {
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
-    console.log(formData);
   }
   function handleSubmit(e) {
     e.preventDefault();
@@ -51,12 +50,11 @@ function Otp() {
         }
       } catch (error) {
         toast.error(
-          "There some to be an an error with our server please contact our support team"
+          "There seems to be an an error with our server please contact our support team"
         );
       }
     }
     postOtp();
-    console.log({ email: user.email, otp: data });
   }
   function moveToNext(e) {
     if (e.target.value.length === e.target.maxLength) {

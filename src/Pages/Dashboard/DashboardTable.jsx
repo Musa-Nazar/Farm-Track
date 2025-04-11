@@ -4,9 +4,6 @@ import { useMainContext } from "../../../MainContext";
 
 function DashboardTable({ dashboardData }) {
   const { user } = useMainContext();
-  useEffect(() => {
-    console.log(dashboardData);
-  }, []);
   let theadStyle =
     "text-[#000] text-center poppins text-[2.2rem] font-[500] leading-normal mb-[0.6rem] ";
   const xml = (

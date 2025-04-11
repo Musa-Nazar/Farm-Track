@@ -58,7 +58,6 @@ class http {
       body: JSON.stringify(body),
     });
     const isExpired = jwtDecode(access).exp * 1000 < Date.now();
-    console.log(isExpired);
     const data = await response.json();
     return data;
   }

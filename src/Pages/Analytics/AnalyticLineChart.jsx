@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import http from "../../../http";
 import {
   LineChart,
   Line,
@@ -9,18 +10,43 @@ import {
   Tooltip,
   ReferenceLine,
 } from "recharts";
-
-const data = [
-  { month: "Jan", value: 10000 },
-  { month: "Feb", value: 15000 },
-  { month: "Mar", value: 20000 },
-  { month: "Apr", value: 25000 },
-  { month: "May", value: 20000 },
-  { month: "Jun", value: 30000 },
-  { month: "July", value: 35000 },
-];
+import { toast } from "react-toastify";
+import { useMainContext } from "../../../MainContext";
 
 function AnalyticLineChart() {
+  const { token } = useMainContext();
+  const [analyticsChartData, setAnalyticsChartData] = useState(undefined);
+  useEffect(() => {
+    async function getAnalyticsChartData() {
+      try {
+        if (!token.access) return location.reload();
+        const analyticsChartInfo = await http.prototype.get(
+          "https://farmtrack-backend.onrender.com/api/analytics-chart/",
+          token.access
+        );
+        setAnalyticsChartData(analyticsChartInfo);
+      } catch (error) {
+        toast.error("Unable to Chart fetch Data: 404", {
+          className: "poppins text-[1.6rem]",
+        });
+      }
+    }
+    getAnalyticsChartData();
+  }, []);
+  const salesData = analyticsChartData
+    ? analyticsChartData.monthly_net_income
+    : false;
+  const data = salesData
+    ? salesData
+    : [
+        { month: "Jan", net_income: 10000 },
+        { month: "Feb", net_income: 15000 },
+        { month: "Mar", net_income: 20000 },
+        { month: "Apr", net_income: 25000 },
+        { month: "May", net_income: 20000 },
+        { month: "Jun", net_income: 30000 },
+        { month: "July", net_income: 35000 },
+      ];
   return (
     <>
       <h2 className="text-black poppins text-[20px] font-semibold leading-normal mb-[1rem] mt-[0.5rem]">
@@ -45,7 +71,7 @@ function AnalyticLineChart() {
           })}
           <CartesianGrid vertical={false} strokeOpacity={0.7} />
           <Line
-            dataKey="value"
+            dataKey="net_income"
             type="monotone"
             dot={false}
             stroke="#61A061"
@@ -54,7 +80,7 @@ function AnalyticLineChart() {
           />
           <XAxis dataKey="month" />
           <YAxis
-            dataKey="value"
+            dataKey="net_income"
             strokeOpacity={0}
             domain={[0, 40000]}
             tickCount={5}

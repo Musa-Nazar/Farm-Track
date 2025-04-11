@@ -9,7 +9,6 @@ import {
   ReferenceLine,
 } from "recharts";
 const SalesTrendChart = ({ salesTrend }) => {
-  console.log(salesTrend);
   const data = salesTrend
     ? salesTrend.slice(0, 6)
     : [

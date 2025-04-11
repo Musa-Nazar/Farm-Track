@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 function LoginForm() {
   const navigate = useNavigate();
-  const { token, setToken, cookie } = useMainContext();
+  const { token, setToken, cookie, setUser } = useMainContext();
   const [formData, setFormData] = useState({});
   function handleChange(e) {
     const { name, value } = e.target;
@@ -21,11 +21,11 @@ function LoginForm() {
           formData
         );
         if (data.data.access) {
-          console.log(data.data.access);
           cookie.set("token", data.data, {
             expires: new Date(jwtDecode(data.data.access).exp * 1000),
           });
           setToken(data.data);
+          setUser(undefined);
           toast.success("Login Successful", {
             className: "poppins text-[1.8rem]",
           });
@@ -40,7 +40,6 @@ function LoginForm() {
           throw err;
         }
       } catch (error) {
-        console.log(error);
         toast.error("Invalid Login Credentials", {
           className: "poppins text-[1.8rem]",
         });

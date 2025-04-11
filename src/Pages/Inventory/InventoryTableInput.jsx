@@ -6,10 +6,6 @@ import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
 import { Navigate } from "react-router-dom";
 function InventoryTableInput() {
-  // useEffect
-  useEffect(() => {
-    console.log(user.livestock_type);
-  }, []);
   // MAIN CONTEXT
   const { token, user, setUser } = useMainContext();
   // INVENTORY CONTEXT
@@ -37,7 +33,6 @@ function InventoryTableInput() {
   }
   // ADD TO INVENTORY
   function addToInventory() {
-    console.log(formData);
     let validator = true,
       selectedDataText = selectedData === "feed" ? "count" : "quantity";
     for (let i in formData) {
@@ -77,7 +72,9 @@ function InventoryTableInput() {
           cleanInput();
           setMethod(null);
         } catch (error) {
-          console.log(error);
+          toast.error("Unable to add Entry", {
+            className: "poppins text-[1.6rem]",
+          });
         }
       })();
     }
