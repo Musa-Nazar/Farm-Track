@@ -48,8 +48,8 @@ function InventoryHeader() {
   }
   const xml = (
     <>
-      <div className="flex justify-between items-center">
-        <h2 className="text-[#000] poppins text-[3rem] font-[600] leading-normal mt-[5.7rem] ml-[2.6rem] mb-[2.9rem]">
+      <div className="flex justify-between items-center mt-[5.7rem] mb-[2.9rem]">
+        <h2 className="text-[#000] poppins text-[3rem] font-[600] leading-normal  ml-[2.6rem] ">
           Inventory
         </h2>
         <div className="relative flex min-w-[11rem] min-h-[4.2rem] pl-[1.3rem] items-center gap-[1.7rem] outline-0 rounded-[1rem] border border-black pr-[0.85rem] appearance-none mr-[clamp(1rem,6.666666666666667vw,9.6rem)]">
