@@ -9,6 +9,9 @@ function FormOne({ setPageNo, pageNo }) {
   const [formData, setFormData] = useState({});
   const { setUser, cookie, setToken } = useMainContext();
   function handleSubmit(e) {
+    toast.success("Wait while user is being signed in", {
+          className: "poppins text-[1.8rem]",
+    });
     e.preventDefault();
     http.prototype
       .post("https://farmtrack-backend.onrender.com/api/register/", formData)
@@ -50,7 +53,7 @@ function FormOne({ setPageNo, pageNo }) {
   const xml = (
     <form
       onSubmit={handleSubmit}
-      className={`pl-[clamp(1rem,3.7vw,5.3rem)] pt-[clamp(3rem,7.18359375vh,13.5rem)] max-md:pt-[clamp(1rem,11.45320197044335vh,9.5rem)] max-md:px-[1.6rem] overflow-hidden w-full bg-white max-md:bg-transparent pll relative z-[1]`}
+      className={`pl-[clamp(1rem,3.7vw,5.3rem)] pt-[clamp(3rem,7.18359375vh,13.5rem)] max-md:pt-[clamp(1rem,11.45320197044335vh,9.5rem)] max-md:px-[1.6rem] overflow-hidden max-md:overflow-y-auto w-full bg-white max-md:bg-transparent pll relative z-[1]`}
       id="form_1"
     >
       <h2 className="text-black poppins text-[4rem] font-semibold leading-normal max-xl:text-[clamp(2rem,2.8vw,4rem)] max-md:text-center max-md:text-[2.1713rem]">
@@ -122,7 +125,7 @@ function FormOne({ setPageNo, pageNo }) {
           id="confirmPassword"
           required
           minLength="8"
-          className={`${formstyle.input}`}
+          className={`${formstyle.input} active:scale-[0.8] transition-all`}
           placeholder="Confirm Password"
           autoComplete={false}
           onChange={handleChange}

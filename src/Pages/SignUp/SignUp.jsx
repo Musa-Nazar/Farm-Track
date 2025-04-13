@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import FormOne from "./FormOne";
 function SignUp() {
   const xml = (
-    <div className="flex w-full h-dvh max-h-vh bg-gradient-to-b from-[#C3FFD2] via-[#61A061] to-black hide-scrollbar overflow-hidden bgl">
+    <div className="flex w-full h-dvh max-h-vh bg-gradient-to-b from-[#C3FFD2] via-[#61A061] to-black hide-scrollbar overflow-hidden max-md:overflow-auto bgl">
       <div className="w-full bg-white mx-[clamp(2rem,9.1vw,13rem)] mt-[clamp(1rem,6.8vh,6.9rem)] mb-[clamp(1rem,5.5vh,5.6rem)] flex max-xl:mx-[2rem] rmm text-[1.6rem] signup max-md:mx-0 max-md:my-0 relative max-md:bg-transparent">
         <div className="w-[47.2rem] h-full flex-none bg-[url('./assets/signupimage.png')] bg-center bg-cover bg-no-repeat max-xl:w-[50%] max-md:hidden">
           <Link to="/">
