@@ -17,44 +17,53 @@ function Otp() {
     input3: "",
     input4: "",
   });
+  const [notSubmitted, setNotSubmitted] = useState(true);
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   }
   function handleSubmit(e) {
     e.preventDefault();
-    const { input1, input2, input3, input4 } = formData;
-    const data = parseInt(`${input1}${input2}${input3}${input4}`);
-    async function postOtp() {
-      try {
-        const response = await http.prototype.post(
-          "https://farmtrack-backend.onrender.com/api/otp-verify/",
-          {
-            email: user.email,
-            otp: data,
-          }
-        );
-        if (response.status >= 200 && response.status < 300) {
-          cookie.set(
-            "token",
-            response.data,
-            new Date(jwtDecode(response.data.access).exp * 1000)
+    if (e.target.classList.contains("not-submitted")) {
+      e.target.classList.remove("not-submitted");
+      setNotSubmitted(false);
+      const { input1, input2, input3, input4 } = formData;
+      const data = parseInt(`${input1}${input2}${input3}${input4}`);
+      async function postOtp() {
+        try {
+          const response = await http.prototype.post(
+            "https://farmtrack-backend.onrender.com/api/otp-verify/",
+            {
+              email: user.email,
+              otp: data,
+            }
           );
-          setToken(response.data);
-          toast.success("Otp is valid, Proceeding to onBoarding", {
-            className: "poppins text-[1.8rem]",
-          });
-          setTimeout(() => {
-            navigate("/onboarding");
-          }, 1000);
+          if (response.status >= 200 && response.status < 300) {
+            cookie.set(
+              "token",
+              response.data,
+              new Date(jwtDecode(response.data.access).exp * 1000)
+            );
+            setToken(response.data);
+            toast.success("Otp is valid, Proceeding to onBoarding", {
+              className: "poppins text-[1.8rem]",
+            });
+            e.target.classList.add("not-submitted");
+            setNotSubmitted(true);
+            setTimeout(() => {
+              navigate("/onboarding");
+            }, 1000);
+          }
+        } catch (error) {
+          toast.error(
+            "There seems to be an an error with our server please contact our support team"
+          );
+          e.target.classList.add("not-submitted");
+          setNotSubmitted(true);
         }
-      } catch (error) {
-        toast.error(
-          "There seems to be an an error with our server please contact our support team"
-        );
       }
+      postOtp();
     }
-    postOtp();
   }
   function moveToNext(e) {
     if (e.target.value.length === e.target.maxLength) {
@@ -93,7 +102,7 @@ function Otp() {
               email adress to complete your verification.
             </span>
           </p>
-          <form className="flex flex-col" onSubmit={handleSubmit}>
+          <form className="flex flex-col not-submitted" onSubmit={handleSubmit}>
             <div className="flex justify-between mb-[3.7rem]">
               <OtpInput
                 name="input1"
@@ -141,7 +150,15 @@ function Otp() {
               </p>
             </div>
             <button className={`${styles.otpButton} mb-[2.9rem]`}>
-              Verify
+              {notSubmitted ? (
+                "Verify"
+              ) : (
+                <span className="w-full grid place-items-center">
+                  <span className="Myspin w-[1.8rem] aspect-square border-solid border-[2px] border-white border-t-transparent flex items-center justify-center text-center rounded-[50%]">
+                    <span className="Myspin-2 w-[1.6rem] aspect-square border-solid border-[2px] border-green-400 border-t-transparent rounded-[50%]"></span>
+                  </span>
+                </span>
+              )}
             </button>
             <Link
               to="/login"

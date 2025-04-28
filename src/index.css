@@ -180,8 +180,14 @@ input[type="number"] {
   }
 }
 .rotate {
-  animation: rotate 1s ease forwards infinite;
+  animation: rotate 1s forwards infinite;
   animation-timing-function: linear;
+}
+.Myspin {
+  animation: rotate 1s forwards infinite linear;
+}
+.Myspin-2 {
+  animation: rotate-2 1s forwards infinite linear;
 }
 @keyframes rotate {
   from {
@@ -189,5 +195,13 @@ input[type="number"] {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+@keyframes rotate-2 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-720deg);
   }
 }

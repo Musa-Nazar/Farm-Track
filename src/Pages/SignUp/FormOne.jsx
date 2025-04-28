@@ -7,34 +7,46 @@ import { jwtDecode } from "jwt-decode";
 function FormOne({ setPageNo, pageNo }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { setUser, cookie, setToken } = useMainContext();
   function handleSubmit(e) {
-    toast.success("Wait while user is being signed in", {
-          className: "poppins text-[1.8rem]",
-    });
     e.preventDefault();
-    http.prototype
-      .post("https://farmtrack-backend.onrender.com/api/register/", formData)
-      .then((data) => {
-        setUser({ email: formData.email });
-        toast.success("Otp sent to mail", {
-          className: "poppins text-[1.8rem]",
-        });
-        setTimeout(() => {
-          navigate("/otp");
-        }, 1500);
-      })
-      .catch((err) => {
-        if (typeof err === "object") {
-          toast.error(err[Object.keys(err)[0]][0], {
-            className: "poppins text-[1.8rem]",
-          });
-        } else {
-          toast.error("An Error Has Occured", {
-            className: "poppins text-[1.8rem]",
-          });
-        }
+    if (e.target.classList.contains("not-submitted")) {
+      e.target.classList.remove("not-submitted");
+      toast.success("Wait while user is being signed in", {
+        className: "poppins text-[1.8rem]",
       });
+      setIsSubmitted(true);
+      http.prototype
+        .post("https://farmtrack-backend.onrender.com/api/register/", formData)
+        .then((data) => {
+          setUser({ email: formData.email });
+          toast.success("Otp sent to mail", {
+            className: "poppins text-[1.8rem]",
+          });
+          setIsSubmitted(false);
+          setTimeout(() => {
+            navigate("/otp");
+          }, 1500);
+        })
+        .catch((err) => {
+          setIsSubmitted(false);
+          e.target.classList.add("not-submitted");
+          if (typeof err === "object") {
+            toast.error(err[Object.keys(err)[0]][0], {
+              className: "poppins text-[1.8rem]",
+            });
+          } else {
+            toast.error("An Error Has Occured", {
+              className: "poppins text-[1.8rem]",
+            });
+          }
+        });
+    } else {
+      toast.success("You are still being signed in", {
+        className: "poppins text-[1.8rem]",
+      });
+    }
   }
   function handleChange(e) {
     const { name, value } = e.target;
@@ -53,7 +65,7 @@ function FormOne({ setPageNo, pageNo }) {
   const xml = (
     <form
       onSubmit={handleSubmit}
-      className={`pl-[clamp(1rem,3.7vw,5.3rem)] pt-[clamp(3rem,7.18359375vh,13.5rem)] max-md:pt-[clamp(1rem,11.45320197044335vh,9.5rem)] max-md:px-[1.6rem] overflow-hidden max-md:overflow-y-auto w-full bg-white max-md:bg-transparent pll relative z-[1]`}
+      className={`pl-[clamp(1rem,3.7vw,5.3rem)] pt-[clamp(3rem,7.18359375vh,13.5rem)] max-md:pt-[clamp(1rem,11.45320197044335vh,9.5rem)] max-md:px-[1.6rem] overflow-hidden max-md:overflow-y-auto w-full bg-white max-md:bg-transparent pll relative z-[1] not-submitted`}
       id="form_1"
     >
       <h2 className="text-black poppins text-[4rem] font-semibold leading-normal max-xl:text-[clamp(2rem,2.8vw,4rem)] max-md:text-center max-md:text-[2.1713rem]">
@@ -134,7 +146,15 @@ function FormOne({ setPageNo, pageNo }) {
       {/* SUBMIT */}
       <div className="pr-[2rem] mbb max-md:px-0">
         <button type="submit" className={`${formstyle.button}`}>
-          Submit
+          {isSubmitted ? (
+            <span className="w-full grid place-items-center">
+              <span className="Myspin w-[1.8rem] aspect-square border-solid border-[2px] border-white border-t-transparent flex items-center justify-center text-center rounded-[50%]">
+                <span className="Myspin-2 w-[1.6rem] aspect-square border-solid border-[2px] border-green-400 border-t-transparent rounded-[50%]"></span>
+              </span>
+            </span>
+          ) : (
+            "Submit"
+          )}
         </button>
       </div>
       <p className="text-black/80 poppins w-[54.1rem] max-w-[100%] text-[1.6rem] font-medium leading-normal text-center pr-[2rem]">

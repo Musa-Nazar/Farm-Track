@@ -16,6 +16,7 @@ function Onboarding() {
       navigate("/dashboard");
     }
   }, []);
+  const [notSubmitted, setNotSubmitted] = useState(true);
   const [formDataOne, setFormDataOne] = useState({
     first_name: "",
     last_name: "",
@@ -65,42 +66,53 @@ function Onboarding() {
   }
   function handleFinalSubmit(e) {
     e.preventDefault();
-    console.log(formDataOne.livestock_type);
-    const data = {
-      ...formDataOne,
-      livestock_data:
-        formDataOne.livestock_type === "Fish"
-          ? [{ ...fishCount }]
-          : formDataOne.livestock_type === "Poultry"
-          ? [{ ...poultryCount }]
-          : [{ ...poultryCount }, { ...fishCount }],
-      feed_data:
-        formDataOne.livestock_type === "Fish"
-          ? [{ ...fishFeed }]
-          : formDataOne.livestock_type === "Poultry"
-          ? [{ ...poultryFeed }]
-          : [{ ...poultryFeed }, { ...fishFeed }],
-    };
-    async function postToApi() {
-      try {
-        const apiData = await http.prototype.put(
-          "https://farmtrack-backend.onrender.com/api/onboarding",
-          token.access,
-          "",
-          data
-        );
-        setUser(false);
-        toast.success("Onboarding Successful", {
-          className: "poppins text-[1.8rem]",
-        });
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, 1300);
-      } catch (error) {
-        console.log(error);
+    if (e.target.classList.contains("not-submitted")) {
+      e.target.classList.remove("not-submitted");
+      setNotSubmitted(false);
+      const data = {
+        ...formDataOne,
+        livestock_data:
+          formDataOne.livestock_type === "Fish"
+            ? [{ ...fishCount }]
+            : formDataOne.livestock_type === "Poultry"
+            ? [{ ...poultryCount }]
+            : [{ ...poultryCount }, { ...fishCount }],
+        feed_data:
+          formDataOne.livestock_type === "Fish"
+            ? [{ ...fishFeed }]
+            : formDataOne.livestock_type === "Poultry"
+            ? [{ ...poultryFeed }]
+            : [{ ...poultryFeed }, { ...fishFeed }],
+      };
+      async function postToApi() {
+        try {
+          const apiData = await http.prototype.put(
+            "https://farmtrack-backend.onrender.com/api/onboarding",
+            token.access,
+            "",
+            data
+          );
+          setUser(false);
+          e.target.classList.add("not-submitted");
+          setNotSubmitted(true);
+          toast.success("Onboarding Successful", {
+            className: "poppins text-[1.8rem]",
+          });
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 1300);
+        } catch (error) {
+          e.target.classList.add("not-submitted");
+          setNotSubmitted(true);
+          console.log(error);
+        }
       }
+      postToApi();
+    } else {
+      toast.success("You are being onboarded, please be patient", {
+        className: "text-[1.8rem] poppins",
+      });
     }
-    postToApi();
   }
 
   const xml = (
@@ -137,6 +149,7 @@ function Onboarding() {
           handleFinalSubmit={handleFinalSubmit}
           handleFishFeed={handleFishFeed}
           handlePoultryFeed={handlePoultryFeed}
+          notSubmitted={notSubmitted}
         />
         <svg
           className="absolute z-0 w-full hidden max-md:block svg"
