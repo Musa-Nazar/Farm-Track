@@ -60,7 +60,7 @@ function FormOne({ setPageNo, pageNo }) {
     inputField:
       " flex-col gap-[1rem] mb-[clamp(1rem,1.7578125vh,3.6rem)]  flex pr-[2rem] w-full mbb max-md:px-0 max-md:mb-[0.8rem]",
     button:
-      "w-[54.1rem] max-w-[100%] h-[4.6rem] max-md:h-[3.9rem] px-[1rem] gap-[1rem] rounded-[1.5rem] bg-[#61A061] shadow-[0_0.4rem_1.9rem_0_rgba(0,0,0,0.25)] text-white poppins text-[1.4rem] font-medium leading-normal mb-[clamp(1rem,3.61328125vh,7.4rem)] block cursor-pointer max-md:text-[1.2rem]",
+      "w-[54.1rem] max-w-[100%] h-[4.6rem] max-md:h-[3.9rem] px-[1rem] gap-[1rem] rounded-[1.5rem] bg-[#61A061] shadow-[0_0.4rem_1.9rem_0_rgba(0,0,0,0.25)] text-white poppins text-[1.4rem] font-medium leading-normal mb-[clamp(1rem,3.61328125vh,7.4rem)] block cursor-pointer max-md:text-[1.2rem] active:scale-[0.8] transition-all",
   };
   const xml = (
     <form
@@ -137,7 +137,7 @@ function FormOne({ setPageNo, pageNo }) {
           id="confirmPassword"
           required
           minLength="8"
-          className={`${formstyle.input} active:scale-[0.8] transition-all`}
+          className={`${formstyle.input} `}
           placeholder="Confirm Password"
           autoComplete={false}
           onChange={handleChange}
@@ -158,7 +158,7 @@ function FormOne({ setPageNo, pageNo }) {
         </button>
       </div>
       <p className="text-black/80 poppins w-[54.1rem] max-w-[100%] text-[1.6rem] font-medium leading-normal text-center pr-[2rem]">
-        Already have an account?{" "}
+        Already have an account?
         <Link
           to="/login"
           className="text-black poppins text-[1.6rem] font-medium leading-normal underline"
