@@ -107,7 +107,7 @@ function FormOne({ setPageNo, pageNo }) {
       </div>
       {/* PASSWORD */}
       <div
-        className={` ${formstyle.inputField} max-md:mb-[clamp(1rem,6.280788177339901vh,5.1rem)]`}
+        className={` ${formstyle.inputField}`}
       >
         <label htmlFor="password" className={`${formstyle.label}`}>
           Password
