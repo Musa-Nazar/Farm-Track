@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import Cookies from "universal-cookie";
 import isTokenExpired from "../../../utils/isTokenExpired";
 import { Suspense } from "react";
-import InventoryLoaderUI from "../../LoaderUI/inventoryLoaderUI";
+import InventoryLoaderUI from "../../LoaderUI/InventoryLoaderUI";
 import InventoryErrorUI from "../../LoaderUI/InventoryErrorUI";
 function Inventory() {
   const type = useSearchParams()[0].get("type");
