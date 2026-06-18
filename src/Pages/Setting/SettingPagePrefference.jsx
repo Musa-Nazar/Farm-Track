@@ -1,44 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
-import http from "../../../http";
 import { useMainContext } from "../../../MainContext";
+import { post, postWithToken } from "../../../http";
+import config from "../../../config";
+import tickImg from "../../assets/tick.jpg";
+import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
+
 function SettingPagePrefference() {
-  const { token, cookie } = useMainContext();
+  // NAVIGATE
   const navigate = useNavigate();
-  function notifyMaintainance() {
-    toast.error("This feature is yet to be released", {
-      className: "poppins text-[1.6rem]",
-    });
-  }
-  function sendToMail() {
-    async function sendReport() {
-      try {
-        if (!token.access) return location.reload();
-        const response = await http.prototype.postWithToken(
-          "https://farmtrack-backend.onrender.com/api/info/analytics/report/",
-          token.access
-        );
-        toast.success("Report sent to mail", {
-          className: "poppins text-[1.8rem]",
-        });
-      } catch (error) {
-        toast.error("Fail to send report", {
-          className: "poppins text-[1.8rem]",
-        });
-      }
+  // GET TOKEN
+  const cookie = new Cookies();
+  const token = cookie.get("token") ?? "";
+
+  // SENDING REPORT STATE
+  const [reportState, setReportState] = useState("");
+
+  async function sendReport() {
+    // CHECK TOKEN
+    if (!token) return navigate("/login");
+
+    // GENERATE REPORT
+    setReportState("loading");
+    const report = await postWithToken(
+      `${config.apiDomain}/api/v1/settings/sendreport`,
+      token,
+    );
+
+    // IF AN ERROR OCCURS
+    if (report?.status >= 400) {
+      toast.error(report?.message ?? "Unable to send report", {
+        className: "text-[1.8rem] poppins",
+      });
+      setReportState("");
+      return;
     }
-    sendReport();
+
+    // IF REPORT IS SENT
+    setReportState("done");
+    toast.success(report?.data?.message, {
+      className: "text-[1.8rem] poppins",
+    });
+    setTimeout(() => setReportState(""), 1000);
   }
-  function logoutUser() {
-    cookie.remove("user");
-    cookie.remove("token");
-    navigate("/login");
-  }
+  function logoutUser() {}
   const xml = (
     <div className="mt-[8rem] flex flex-col gap-[4.7rem]">
       {/* NOTIFICATIONS */}
-      <div className="flex flex-col">
+      {/* <div className="flex flex-col">
         <div className="flex items-center gap-[2.3rem]">
           <h2 className="text-[#000] poppins text-[3rem] font-bold leading-[150%] gap-[0.5rem]">
             Notifications :
@@ -58,7 +68,7 @@ function SettingPagePrefference() {
         >
           Enable/disable alerts for stock, feeding, and mortality.
         </p>
-      </div>
+      </div> */}
       {/* THEMES */}
       {/* <div className="flex flex-col">
         <div className="flex items-center gap-[2.3rem]">
@@ -80,25 +90,40 @@ function SettingPagePrefference() {
       </div> */}
       {/* SECURITY AND BACK UP */}
       <div className="flex flex-col">
-        <div className="flex gap-[2.5rem] items-center">
-          <h2 className="text-[#000] poppins text-[3rem] font-bold leading-[150%] gap-[0.5rem]">
+        <div className="flex items-center">
+          <h2 className="text-[#000] poppins text-[3rem] font-bold leading-[150%] mr-[2.5rem] ">
             Report:
           </h2>
           <button
-            className="flex w-[17.4rem] h-[4.4rem] p-[1rem] justify-center items-center gap-[1rem] rounded-[1.3rem] border"
-            onClick={sendToMail}
+            className={`flex w-[17.4rem] h-[4.4rem] text-[#000] p-[1rem] justify-center items-center gap-[1rem] rounded-[1.3rem] border cursor-pointer hover:bg-black hover:text-[#fff] transition-all ${reportState ? "mr-[1rem] bg-[darkgray]" : ""}`}
+            onClick={sendReport}
+            disabled={reportState}
           >
-            <span className="text-[#000] poppins text-[1.1rem] font-[600] leading-normal">
+            <span className="poppins text-[1.1rem] font-[600] leading-normal">
               Send Report to mail
             </span>
           </button>
+          {reportState === "loading" && (
+            <div className="rotate w-[1.8rem] aspect-square rounded-[50%] border-green-300 border border-t-transparent"></div>
+          )}
+          {/* CONFIRMED TICK */}
+          {reportState === "done" && (
+            <img
+              src={tickImg}
+              alt={tickImg}
+              className={"inline-block w-[1.8rem] aspect-square"}
+            />
+          )}
         </div>
         <p
           className="text-[#000] poppins text-[1.6rem] font-[500] leading-[4.5rem] w-[79.6rem] max-w-[100%]
         "
         >
-          Ensure data safety with secure cloud storage and automated backups,
-          protecting your farm’s vital information from loss or breaches.
+          {/* Ensure data safety with secure cloud storage and automated backups,
+          protecting your farm’s vital information from loss or breaches. */}
+          Generate a monthly report of your farm’s vital information, such as
+          total sales, expense and feed consumed in that month up to the current
+          date
         </p>
       </div>
       {/* LOG OUT */}

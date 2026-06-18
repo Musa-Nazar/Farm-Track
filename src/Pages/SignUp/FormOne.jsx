@@ -1,71 +1,61 @@
 import { useState, useEffect } from "react";
-import { data, Link, useNavigate } from "react-router-dom";
-import http from "../../../http";
+import {
+  data,
+  Form,
+  Link,
+  useNavigate,
+  useNavigation,
+  useSubmit,
+} from "react-router-dom";
 import { toast } from "react-toastify";
 import { useMainContext } from "../../../MainContext";
 import { jwtDecode } from "jwt-decode";
+import useForm from "../../hooks/useForm";
+import signUpPattern from "../../FormPatterns/SignUpFormPattern";
 function FormOne({ setPageNo, pageNo }) {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({});
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { state } = useNavigation();
   const { setUser, cookie, setToken } = useMainContext();
+  const submit = useSubmit();
+  const { handleChange, formSchema: formData } = useForm(signUpPattern);
+  const { farmName, email, password, confirmPassword } = formData;
+  const formIsValid =
+    farmName.isValid &&
+    email.isValid &&
+    password.isValid &&
+    confirmPassword.isValid;
+
   function handleSubmit(e) {
     e.preventDefault();
-    if (e.target.classList.contains("not-submitted")) {
-      e.target.classList.remove("not-submitted");
-      toast.success("Wait while user is being signed in", {
-        className: "poppins text-[1.8rem]",
+    if (state === "submitting")
+      return toast.error("Please wait, your account is being created", {
+        className: "poppins text-[1.5rem]",
       });
-      setIsSubmitted(true);
-      http.prototype
-        .post("https://farmtrack-backend.onrender.com/api/register/", formData)
-        .then((data) => {
-          setUser({ email: formData.email });
-          toast.success("Otp sent to mail", {
-            className: "poppins text-[1.8rem]",
-          });
-          setIsSubmitted(false);
-          setTimeout(() => {
-            navigate("/otp");
-          }, 1500);
-        })
-        .catch((err) => {
-          setIsSubmitted(false);
-          e.target.classList.add("not-submitted");
-          if (typeof err === "object") {
-            toast.error(err[Object.keys(err)[0]][0], {
-              className: "poppins text-[1.8rem]",
-            });
-          } else {
-            toast.error("An Error Has Occured", {
-              className: "poppins text-[1.8rem]",
-            });
-          }
-        });
-    } else {
-      toast.success("You are still being signed in", {
-        className: "poppins text-[1.8rem]",
+    if (!formIsValid)
+      return toast.error("Fill in the form with the appropriate values", {
+        className: "poppins text-[1.6rem]",
       });
-    }
+    const submittedFormData = {
+      farmName: formData.farmName.value,
+      email: formData.email.value,
+      password: formData.password.value,
+    };
+    submit(submittedFormData, { method: "post" });
   }
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  }
+
   const formstyle = {
     label:
       "text-black/80 font-poppins text-[1.5rem] font-medium leading-normal max-md:text-black max-md:poppins max-md:text-[1.2rem] max-md:font-medium max-md:leading-[1.4rem]",
     input:
-      "h-[5rem] w-[54.1rem] max-w-[100%] rounded-[0.4rem] border border-black/40 placeholder:text-black/35 poppins placeholder:text-[1.2rem] placeholder:font-medium placeholder:leading-normal indent-[2.3rem] outline-0 text-[1.6rem] max-md:rounded-[0.5rem] max-md:bg-white max-md:h-[3.2rem] max-md:placeholder:opacity-0 max-md:mx-0 max-md:w-full",
+      "h-[5rem] w-[54.1rem] max-w-[100%] rounded-[0.4rem] border border-black/40 placeholder:text-black/35 poppins placeholder:text-[1.2rem] placeholder:font-medium placeholder:leading-normal indent-[2.3rem] outline-0 text-[1.3rem] max-md:rounded-[0.5rem] max-md:bg-white max-md:h-[3.2rem] max-md:placeholder:opacity-0 max-md:mx-0 max-md:w-full",
     inputField:
-      " flex-col gap-[1rem] mb-[clamp(1rem,1.7578125vh,3.6rem)]  flex pr-[2rem] w-full mbb max-md:px-0 max-md:mb-[0.8rem]",
+      " flex-col gap-[1rem] mb-[clamp(1rem,1.7578125vh,3.6rem)]  flex pr-[2rem] w-full mbb max-md:px-0 max-md:mb-[0.8rem] relative",
     button:
       "w-[54.1rem] max-w-[100%] h-[4.6rem] max-md:h-[3.9rem] px-[1rem] gap-[1rem] rounded-[1.5rem] bg-[#61A061] shadow-[0_0.4rem_1.9rem_0_rgba(0,0,0,0.25)] text-white poppins text-[1.4rem] font-medium leading-normal mb-[clamp(1rem,3.61328125vh,7.4rem)] block cursor-pointer max-md:text-[1.2rem] active:scale-[0.8] transition-all",
   };
   const xml = (
-    <form
-      onSubmit={handleSubmit}
+    <Form
       className={`pl-[clamp(1rem,3.7vw,5.3rem)] pt-[clamp(3rem,7.18359375vh,13.5rem)] max-md:pt-[clamp(1rem,11.45320197044335vh,9.5rem)] max-md:px-[1.6rem] overflow-hidden max-md:overflow-y-auto w-full bg-white max-md:bg-transparent pll relative z-[1] not-submitted`}
+      onSubmit={handleSubmit}
       id="form_1"
     >
       <h2 className="text-black poppins text-[4rem] font-semibold leading-normal max-xl:text-[clamp(2rem,2.8vw,4rem)] max-md:text-center max-md:text-[2.1713rem]">
@@ -81,13 +71,18 @@ function FormOne({ setPageNo, pageNo }) {
         </label>
         <input
           type="text"
-          name="farm_name"
+          name="farmName"
           id="farmname"
           required
-          className={`${formstyle.input}`}
+          className={`${formstyle.input}  ${!formData.farmName.isValid && formData.farmName.isTouched ? "!border-red-400" : ""}`}
           placeholder="FarmTrack"
           onChange={handleChange}
         />
+        {!formData.farmName.isValid && formData.farmName.isTouched && (
+          <p className="absolute bottom-0 translate-y-[100%] text-red-600 text-[1rem] max-md:text-[0.7rem]">
+            farmname should be atleast 3 Characters
+          </p>
+        )}
       </div>
       {/* EMAIL */}
       <div className={`${formstyle.inputField}`}>
@@ -100,15 +95,18 @@ function FormOne({ setPageNo, pageNo }) {
           id="email"
           required
           autoComplete="email"
-          className={`${formstyle.input}`}
+          className={`${formstyle.input} ${!formData.email.isValid && formData.email.isTouched ? "!border-red-400" : ""}`}
           placeholder="FarmTrack@gmail.com"
           onChange={handleChange}
         />
+        {!formData.email.isValid && formData.email.isTouched && (
+          <p className="absolute bottom-0 translate-y-[100%] text-red-600 text-[1rem] max-md:text-[0.7rem]">
+            This is not a valid email
+          </p>
+        )}
       </div>
       {/* PASSWORD */}
-      <div
-        className={` ${formstyle.inputField}`}
-      >
+      <div className={` ${formstyle.inputField}`}>
         <label htmlFor="password" className={`${formstyle.label}`}>
           Password
         </label>
@@ -118,11 +116,16 @@ function FormOne({ setPageNo, pageNo }) {
           id="password"
           required
           minLength="8"
-          className={`${formstyle.input}`}
+          className={`${formstyle.input} ${!formData.password.isValid && formData.password.isTouched ? "!border-red-400" : ""}`}
           placeholder="8+ Characters"
           autoComplete="current-password"
           onChange={handleChange}
         />
+        {!formData.password.isValid && formData.password.isTouched && (
+          <p className="absolute bottom-0 translate-y-[100%] text-red-600 text-[1rem] max-md:text-[0.7rem]">
+            password should be atleast 8 Characters
+          </p>
+        )}
       </div>
       {/* CONFIRM PASSWORD */}
       <div
@@ -137,16 +140,22 @@ function FormOne({ setPageNo, pageNo }) {
           id="confirmPassword"
           required
           minLength="8"
-          className={`${formstyle.input} `}
+          className={`${formstyle.input}  ${!formData.confirmPassword.isValid && formData.confirmPassword.isTouched ? "!border-red-400" : ""}`}
           placeholder="Confirm Password"
           autoComplete={false}
           onChange={handleChange}
         />
+        {!formData.confirmPassword.isValid &&
+          formData.confirmPassword.isTouched && (
+            <p className="absolute bottom-0 translate-y-[100%] text-red-600 text-[1rem] max-md:text-[0.7rem]">
+              This does not match the password above
+            </p>
+          )}
       </div>
       {/* SUBMIT */}
       <div className="pr-[2rem] mbb max-md:px-0">
         <button type="submit" className={`${formstyle.button}`}>
-          {isSubmitted ? (
+          {state === "submitting" ? (
             <span className="w-full grid place-items-center">
               <span className="Myspin w-[1.8rem] aspect-square border-solid border-[2px] border-white border-t-transparent flex items-center justify-center text-center rounded-[50%]">
                 <span className="Myspin-2 w-[1.6rem] aspect-square border-solid border-[2px] border-green-400 border-t-transparent rounded-[50%]"></span>
@@ -166,7 +175,7 @@ function FormOne({ setPageNo, pageNo }) {
           Login
         </Link>
       </p>
-    </form>
+    </Form>
   );
   return xml;
 }

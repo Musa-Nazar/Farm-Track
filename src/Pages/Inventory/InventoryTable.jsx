@@ -3,9 +3,8 @@ import InventoryTableInput from "./InventoryTableInput";
 import { useState, useContext, useEffect } from "react";
 import Context from "../../Auth-context";
 import { useMainContext } from "../../../MainContext";
-import http from "../../../http";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigation, useSubmit } from "react-router-dom";
 function InventoryTable() {
   // STYLES
   let theadStyle =
@@ -19,11 +18,16 @@ function InventoryTable() {
     feedData,
     setFormData,
     method,
+    setMethod,
     selectedData,
     liveStockData,
     setLiveStockData,
     setFeedData,
   } = useContext(Context);
+  // SUBMIT
+  const submit = useSubmit();
+  // PAGE STATE
+  const { state } = useNavigation();
   // FORMATTERS
   function formatNumber(num) {
     const formater = new Intl.NumberFormat("en-US"),
@@ -43,16 +47,16 @@ function InventoryTable() {
     const found =
       selectedData === "feed"
         ? feedData.find((item) => {
-            if (String(item.id) === String(id)) {
+            if (String(item._id) === String(id)) {
               return item;
             }
           })
         : liveStockData.find((item) => {
-            if (String(item.id) === String(id)) {
+            if (String(item._id) === String(id)) {
               return item;
             }
           });
-    setCurrent({ ...found, cost: parseInt(found.cost) });
+    setCurrent({ ...found, id: found._id });
   }
   // USE EFFECT HOOK
   useEffect(() => {
@@ -69,60 +73,17 @@ function InventoryTable() {
   }, [current]);
   // DELETE INVENTORY
   const [popup, setPopup] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-  const [delParams, setDelParams] = useState("");
-  function handlePopup(id) {
+  function handlePopup() {
     setPopup(true);
-    setDelParams(id);
+    setMethod("");
   }
   function deleteInventory() {
-    setIsClicked(true);
-    (async function () {
-      try {
-        if (selectedData === "feed") {
-          if (!token.access) return location.reload();
-          await http.prototype.delete(
-            "https://farmtrack-backend.onrender.com/api/inventory/feed/",
-            token.access,
-            delParams
-          );
-          setIsClicked(false);
-          toast.error("You have deleted an entry", {
-            className: "text-[1.8rem] poppins",
-          });
-          setFeedData((prevState) =>
-            [...prevState].filter((data) => data.id !== delParams)
-          );
-          setPopup(false);
-        } else {
-          if (!token.access) return location.reload();
-          const deletedData = await http.prototype.delete(
-            "https://farmtrack-backend.onrender.com/api/inventory/livestock/",
-            token.access,
-            delParams
-          );
-          setIsClicked(false);
-          toast.error("You have deleted an entry", {
-            className: "text-[1.8rem] poppins",
-          });
-          setLiveStockData((prevState) =>
-            [...prevState].filter((data) => data.id !== delParams)
-          );
-        }
-      } catch (error) {
-        toast.error("Unable to Delete", {
-          className: "poppins text-[1.6rem]",
-        });
-      } finally {
-        setPopup(false);
-        setDelParams("");
-        setCurrent({ id: null });
-      }
-    })();
+    submit({ id: current.id, method: "delete" }, { method: "post" });
+    setMethod("");
+    setPopup(false);
   }
   function cancel() {
     setPopup(false);
-    setDelParams("");
     setCurrent({ id: null });
   }
   // TABLE DATA
@@ -132,12 +93,12 @@ function InventoryTable() {
           return (
             <InventoryTableRow
               key={item.id}
-              id={item.id}
+              id={item._id}
               name={item.name}
               action={item.action}
               quantity={`${item.quantity}kg`}
               cost={formatNumber(item.cost)}
-              date={formatDate(item.entry_date)}
+              date={formatDate(item.createdAt)}
               select={select}
               handlePopup={handlePopup}
             />
@@ -147,7 +108,7 @@ function InventoryTable() {
           return (
             <InventoryTableRow
               key={item.id}
-              id={item.id}
+              id={item._id}
               name={item.name}
               action={item.action}
               quantity={item.quantity}
@@ -175,7 +136,34 @@ function InventoryTable() {
           </tr>
         </thead>
         <tbody>
-          {tableData}
+          {state !== "loading" && tableData}
+          {selectedData === "feed" &&
+            !method &&
+            feedData.length === 0 &&
+            state !== "loading" && (
+              <tr>
+                <td className="w-full text-center poppins text-[2rem] text-black/50 py-[1.5rem]">
+                  No feed data currently
+                </td>
+              </tr>
+            )}
+          {selectedData === "livestock" &&
+            !method &&
+            state !== "loading" &&
+            liveStockData.length === 0 && (
+              <tr>
+                <td className="w-full text-center poppins text-[2rem] text-black/50 py-[1.5rem]">
+                  No livestock data currently
+                </td>
+              </tr>
+            )}
+          {state === "loading" && (
+            <tr>
+              <td className="w-full py-[2rem] grid place-items-center">
+                <div className="border-[#61A061] border-solid border-[1rem] border-t-transparent rotate rounded-[50%] w-[5rem] aspect-square"></div>
+              </td>
+            </tr>
+          )}
           <InventoryTableInput />
         </tbody>
       </table>
@@ -195,7 +183,7 @@ function InventoryTable() {
               className="bg-red-700 shadow-[0px_1px_3px_rgba(0,0,0,0.1)] text-[#fff] text-[1.6rem] py-[0.5rem] px-[1.5rem] cursor-pointer rounded-[0.5rem]"
               onMouseDown={deleteInventory}
             >
-              {!isClicked ? (
+              {state !== "loading" ? (
                 "Yes"
               ) : (
                 <span className="w-[1.6rem] block h-[1.6rem] rounded-[50%] border border-white border-t-[transparent] rotate"></span>
@@ -216,3 +204,7 @@ function InventoryTable() {
 }
 
 export default InventoryTable;
+
+// setPopup(false);
+// setDelParams("");
+// setCurrent({ id: null });

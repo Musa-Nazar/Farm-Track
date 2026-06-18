@@ -1,8 +1,14 @@
-function DashboardBox({ head, body, icon }) {
+function DashboardBox({ head, body, icon, val }) {
+  console.log(val);
   const xml = (
-    <div className="w-[clamp(5rem,17.36111111111111vw,25rem)] min-h-[111px] rounded-[17.096px] bg-white box-shadow pl-[2.45rem] pt-[3.2rem] max-md:w-full blur">
-      <div className="flex gap-[clamp(0.5rem,3.0555555555555554vw,4.4rem)]">
-        <h2 className="text-black break-all poppins text-[22.959px] font-semibold leading-[100%] mb-[1.7rem] ">
+    <div className="w-[clamp(5rem,17.36111111111111vw,25rem)] min-h-[111px] rounded-[17.096px] bg-white box-shadow pl-[2.45rem] pt-[3.2rem] max-md:w-full blur-out">
+      <div
+        className="flex gap-[clamp(0.5rem,3.0555555555555554vw,4.4rem)]"
+        title={typeof val === "number" && val < 0 && "Its in the negative"}
+      >
+        <h2
+          className={` break-all poppins text-[22.959px] font-semibold leading-[100%] mb-[1.7rem] ${typeof val === "number" && val < 0 ? "text-red-500" : "text-black"}`}
+        >
           {head}
         </h2>
         {icon && (
@@ -12,6 +18,7 @@ function DashboardBox({ head, body, icon }) {
             height="21"
             viewBox="0 0 21 21"
             fill="none"
+            title="Its in the negative"
           >
             <path
               fill-rule="evenodd"
@@ -22,7 +29,9 @@ function DashboardBox({ head, body, icon }) {
           </svg>
         )}
       </div>
-      <p className="text-[rgba(0,0,0,0.60)] break-all font-[Poppins] text-[22.959px] font-semibold leading-[100%]">
+      <p
+        className={`break-all font-[Poppins] text-[22.959px] font-semibold leading-[100%] ${typeof val === "number" && val < 0 ? "text-red-500" : "text-[rgba(0,0,0,0.60)]"}`}
+      >
         {body}
       </p>
     </div>

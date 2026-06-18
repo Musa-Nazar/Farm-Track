@@ -10,6 +10,29 @@ import {
 } from "recharts";
 
 function MyBarChart({ dashboardData }) {
+  const saleData = dashboardData?.salesData;
+  function getLastSevenDaysSales() {
+    const chartData = [];
+    for (let day = 0; day < 7; day++) {
+      const today = new Date();
+      today.setDate(today.getDate() - day);
+      const existingSaleData = saleData?.find((data) => {
+        const testFormat = `${new Date(data.date).getDate()}/${new Date(data.date).getMonth()}/${new Date(data.date).getFullYear()}`;
+        const todayTestFormat = `${today.getDate()}/${today.getMonth()}/${today.getFullYear()}`;
+        return testFormat === todayTestFormat;
+      });
+      if (existingSaleData) {
+        chartData.unshift(existingSaleData);
+        continue;
+      }
+      chartData.unshift({
+        totalSales: 0,
+        date: `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`,
+      });
+    }
+    return chartData;
+  }
+
   const CustomTooltip = ({ active, payload, label }) => {
     if (!active || !payload || !payload.length) return null;
 
@@ -22,23 +45,6 @@ function MyBarChart({ dashboardData }) {
       </div>
     );
   };
-  let salesData = dashboardData
-    ? dashboardData.sales_data.slice(0, 7)
-    : [
-        // { date: "Jan", total_sales: 40000 },
-        { date: "Jan", total_sales: 40000 },
-        { date: "Feb", total_sales: 20000 },
-        { date: "Mar", total_sales: 30000 },
-        { date: "Apr", total_sales: 45000 },
-        { date: "May", total_sales: 50000 },
-      ];
-  // salesData = [
-  //   { date: "Jan", total_sales: 40000 },
-  //   { date: "Feb", total_sales: 20000 },
-  //   { date: "Mar", total_sales: 30000 },
-  //   { date: "Apr", total_sales: 45000 },
-  //   { date: "May", total_sales: 50000 },
-  // ];
   const xml = (
     <>
       <div className="flex mb-[0.35rem] justify-between">
@@ -51,20 +57,7 @@ function MyBarChart({ dashboardData }) {
         minHeight={480}
         className="mb-[2rem] pl-[2.5rem] mt-[1.8rem]"
       >
-        <AreaChart data={salesData}>
-          {[...Array(11)].map((_, index) => {
-            if ((index + 1) % 2 !== 0) {
-              return (
-                <ReferenceLine
-                  key={index}
-                  y={(index + 1) * 5000}
-                  stroke="#EBEBEB"
-                  strokeDasharray="0 0"
-                  strokeOpacity={0.9}
-                />
-              );
-            }
-          })}
+        <AreaChart data={getLastSevenDaysSales()}>
           <CartesianGrid
             vertical={false}
             strokeDasharray="0 0"
@@ -72,7 +65,7 @@ function MyBarChart({ dashboardData }) {
             strokeOpacity={0.9}
           />
           <Area
-            dataKey="total_sales"
+            dataKey="totalSales"
             stroke="#61A061A6"
             fill="#61A061A6"
             activeDot={false}
@@ -93,9 +86,9 @@ function MyBarChart({ dashboardData }) {
             dy={10}
           />
           <YAxis
-            dataKey="sales"
-            domain={[0, 60000]}
-            tickCount={7}
+            dataKey="totalSales"
+            domain={[0, "dataMax + 60000"]}
+            tickCount={12}
             tickFormatter={(tick) => tick.toLocaleString()}
             padding={{ left: 0 }}
             tick={{

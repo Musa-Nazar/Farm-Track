@@ -1,118 +1,168 @@
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  redirect,
+  useNavigate,
+  useNavigation,
+  useSubmit,
+} from "react-router-dom";
 import logo from "../../assets/logo_white.svg";
 import { useEffect, useState } from "react";
 import OnboardingFormOne from "./OnboardingFormOne";
 import FinalOnboardingForm from "./FinalOnboardingForm";
-import http from "../../../http";
 import { useMainContext } from "../../../MainContext";
 import { toast } from "react-toastify";
+import Cookies from "universal-cookie";
+import { post } from "../../../http";
+import config from "../../../config";
+import { jwtDecode } from "jwt-decode";
+
+const OnboardingFormValidators = {
+  firstName: /^[A-Za-z]{3,}/,
+  lastName: /^[A-Za-z]{3,}/,
+};
+
 function Onboarding() {
-  const navigate = useNavigate();
-  const { token, user, setUser } = useMainContext();
+  // SUBMIT
+  const submit = useSubmit();
+  // FORM VARIABLE
+  const finalLiveStockCount = {};
+  const finalFeedCount = {};
+  // CONTEXT
+  const { state } = useNavigation();
   const [pageNo, setPageNo] = useState(1);
-  useEffect(() => {
-    console.log(token);
-    if (user.is_onboarded === true) {
-      navigate("/dashboard");
-    }
-  }, []);
+  // STATES
   const [notSubmitted, setNotSubmitted] = useState(true);
-  const [formDataOne, setFormDataOne] = useState({
-    first_name: "",
-    last_name: "",
-    low_stock_threshold: "",
-    livestock_type: "",
-    feed_data: "",
+  const [formData, setformData] = useState({
+    firstName: "",
+    lastName: "",
+    lowStockThreshold: "",
+    livestockType: "",
+  });
+  const [isTouched, setIsTouced] = useState({
+    firstName: false,
+    lastName: false,
+    lowStockThreshold: false,
+    livestockType: false,
+    birdCount: false,
+    fishCount: false,
+    fishFeed: false,
+    poultryFeed: false,
   });
   const [fishFeed, setFishFeed] = useState({
-    name: "Fish Feed",
-    quantity: "",
+    fish: -1,
   });
   const [poultryFeed, setPoultryFeed] = useState({
-    name: "Poultry Feed",
-    quantity: "",
+    poultry: -1,
   });
   const [fishCount, setFishCount] = useState({
-    name: "Fish",
-    quantity: "",
+    fish: -1,
   });
   const [poultryCount, setPoultryCount] = useState({
-    name: "Poultry",
-    quantity: "",
+    poultry: -1,
   });
+  const [liveStockCount, setLiveStockCount] = useState({});
+  // EVENT FUNCTIONS
   function handleFishFeed(e) {
     const { value } = e.target;
-    setFishFeed((prevState) => ({ ...prevState, quantity: value }));
+    setIsTouced((prevState) => ({ ...prevState, fishFeed: true }));
+    setFishFeed({ fish: value });
   }
+
   function handleFishCount(e) {
-    const { value } = e.target;
-    setFishCount((prevState) => ({ ...prevState, quantity: value }));
+    const { name, value } = e.target;
+    setIsTouced((prevState) => ({ ...prevState, [name]: true }));
+
+    setFishCount({ fish: value });
   }
+
   function handlePoultryFeed(e) {
     const { value } = e.target;
-    setPoultryFeed((prevState) => ({ ...prevState, quantity: value }));
+    setIsTouced((prevState) => ({ ...prevState, poultryFeed: true }));
+    setPoultryFeed({ poultry: value });
   }
+
   function handlePoultryCount(e) {
-    const { value } = e.target;
-    setPoultryCount((prevState) => ({ ...prevState, quantity: value }));
+    const { name, value } = e.target;
+    setIsTouced((prevState) => ({ ...prevState, [name]: true }));
+    setPoultryCount({ poultry: value });
   }
+
   function handleChange(e) {
     const { name, value } = e.target;
-    setFormDataOne((prevState) => ({ ...prevState, [name]: value }));
+    setformData((prevState) => ({ ...prevState, [name]: value }));
+    setIsTouced((prevState) => ({ ...prevState, [name]: true }));
   }
+
   function handleFirstSubmit(e) {
     e.preventDefault();
+    // VALIDATE THAT FORM
+    const firstNameIsValid = OnboardingFormValidators.firstName.test(
+      formData.firstName,
+    );
+    const lastNameIsValid = OnboardingFormValidators.lastName.test(
+      formData.lastName,
+    );
+    const lowStockThresholdIsValid = formData.lowStockThreshold > 0;
+    const liveStockCountIsValid =
+      formData.livestockType === "both"
+        ? parseInt(fishCount.fish) >= 0 && parseInt(poultryCount.poultry) >= 0
+        : formData.livestockType === "poultry"
+          ? parseInt(poultryCount.poultry) >= 0
+          : parseInt(fishCount.fish) >= 0;
+    const formIsValid =
+      firstNameIsValid &&
+      lastNameIsValid &&
+      lowStockThresholdIsValid &&
+      liveStockCountIsValid;
+    if (!formIsValid)
+      return toast.error("Please fill the form appropiately", {
+        className: "text-[1.5rem] poppins",
+      });
+    // LIVESTOCK COUNT
+    if (formData.livestockType === "fish")
+      finalLiveStockCount.fish = parseInt(fishCount.fish);
+    if (formData.livestockType === "poultry")
+      finalLiveStockCount.poultry = parseInt(poultryCount.poultry);
+    if (formData.livestockType === "both") {
+      finalLiveStockCount.poultry = parseInt(poultryCount.poultry);
+      finalLiveStockCount.fish = parseInt(fishCount.fish);
+    }
+    setLiveStockCount(finalLiveStockCount);
     setPageNo(2);
   }
   function handleFinalSubmit(e) {
     e.preventDefault();
-    if (e.target.classList.contains("not-submitted")) {
-      e.target.classList.remove("not-submitted");
-      setNotSubmitted(false);
-      const data = {
-        ...formDataOne,
-        livestock_data:
-          formDataOne.livestock_type === "Fish"
-            ? [{ ...fishCount }]
-            : formDataOne.livestock_type === "Poultry"
-            ? [{ ...poultryCount }]
-            : [{ ...poultryCount }, { ...fishCount }],
-        feed_data:
-          formDataOne.livestock_type === "Fish"
-            ? [{ ...fishFeed }]
-            : formDataOne.livestock_type === "Poultry"
-            ? [{ ...poultryFeed }]
-            : [{ ...poultryFeed }, { ...fishFeed }],
-      };
-      async function postToApi() {
-        try {
-          const apiData = await http.prototype.put(
-            "https://farmtrack-backend.onrender.com/api/onboarding",
-            token.access,
-            "",
-            data
-          );
-          setUser(false);
-          e.target.classList.add("not-submitted");
-          setNotSubmitted(true);
-          toast.success("Onboarding Successful", {
-            className: "poppins text-[1.8rem]",
-          });
-          setTimeout(() => {
-            navigate("/dashboard");
-          }, 1300);
-        } catch (error) {
-          e.target.classList.add("not-submitted");
-          setNotSubmitted(true);
-          console.log(error);
-        }
-      }
-      postToApi();
-    } else {
-      toast.success("You are being onboarded, please be patient", {
-        className: "text-[1.8rem] poppins",
+    if (state === "submitting")
+      return toast.sucess("Please wait, while being onboarded", {
+        className: "poppins text-[1.8rem]",
       });
+    // VALIDATE FORM
+    const formIsValid =
+      formData.livestockType === "both"
+        ? parseInt(fishFeed.fish) >= 0 && parseInt(poultryFeed.poultry) >= 0
+        : formData.livestockType === "poultry"
+          ? parseInt(poultryFeed.poultry) >= 0
+          : parseInt(fishFeed.fish) >= 0;
+    if (!formIsValid)
+      return toast.error("Please fill the form appropiately", {
+        className: "text-[1.5rem] poppins",
+      });
+    // FEED COUNT
+    if (formData.livestockType === "fish")
+      finalFeedCount.fish = parseInt(fishFeed.fish);
+    if (formData.livestockType === "poultry")
+      finalFeedCount.poultry = parseInt(poultryFeed.poultry);
+    if (formData.livestockType === "both") {
+      finalFeedCount.poultry = parseInt(poultryFeed.poultry);
+      finalFeedCount.fish = parseInt(fishFeed.fish);
     }
+    // SUBMIT
+    const submittedFormData = {
+      ...formData,
+      initialFeedCount: JSON.stringify(finalFeedCount),
+      initialLivestockCount: JSON.stringify(liveStockCount),
+    };
+    submit(submittedFormData, { method: "post" });
   }
 
   const xml = (
@@ -140,16 +190,22 @@ function Onboarding() {
           handleFishCount={handleFishCount}
           handlePoultryCount={handlePoultryCount}
           handleFirstSubmit={handleFirstSubmit}
-          formDataOne={formDataOne}
+          formData={formData}
+          isTouched={isTouched}
+          fishCount={fishCount}
+          poultryCount={poultryCount}
         />
         <FinalOnboardingForm
           pageNo={pageNo}
-          formDataOne={formDataOne}
+          formData={formData}
           setPageNo={setPageNo}
           handleFinalSubmit={handleFinalSubmit}
           handleFishFeed={handleFishFeed}
           handlePoultryFeed={handlePoultryFeed}
           notSubmitted={notSubmitted}
+          fishFeed={fishFeed}
+          poultryFeed={poultryFeed}
+          isTouched={isTouched}
         />
         <svg
           className="absolute z-0 w-full hidden max-md:block svg"
@@ -169,3 +225,35 @@ function Onboarding() {
 }
 
 export default Onboarding;
+
+export async function action({ request, params }) {
+  const cookie = new Cookies();
+  const formData = await request.formData();
+  const submittedFormData = {
+    firstName: formData.get("firstName"),
+    lastName: formData.get("lastName"),
+    livestockType: formData.get("livestockType"),
+    lowStockThreshold: formData.get("lowStockThreshold"),
+    initialLivestockCount: JSON.parse(formData.get("initialLivestockCount")),
+    initialFeedCount: JSON.parse(formData.get("initialFeedCount")),
+    email: localStorage.getItem("email"),
+  };
+
+  const user = await post(
+    `${config.apiDomain}/api/v1/auth/onboarding`,
+    submittedFormData,
+  );
+  if (user?.status > 400)
+    return toast.error(user?.message ?? "Failed to onboard user", {
+      className: "text-[1.5rem] poppins",
+    });
+  // SUCESS
+  toast.success(user?.data?.message, { className: "text-[1.5rem] poppins" });
+  localStorage.removeItem("email");
+  const token = user?.data?.token;
+  cookie.set("token", token, { expires: new Date(Date.now() + 3600000) });
+  cookie.set("userData", JSON.stringify(user?.data?.userData), {
+    expires: new Date(jwtDecode(user?.data?.token).exp * 1000),
+  });
+  return redirect("/dashboard");
+}

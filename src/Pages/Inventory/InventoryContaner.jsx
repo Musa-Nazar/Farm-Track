@@ -1,15 +1,26 @@
-import http from "../../../http";
+import {
+  useLoaderData,
+  useNavigation,
+  useSearchParams,
+  Await,
+} from "react-router-dom";
 import { useMainContext } from "../../../MainContext";
 import Context from "../../Auth-context";
 import InventoryHeader from "./InventoryHeader";
 import InventoryTable from "./InventoryTable";
-import { useState, useEffect } from "react";
-function InventoryContaner() {
-  const { token } = useMainContext();
+import { useState, useEffect, Suspense } from "react";
+function InventoryContaner({ data }) {
+  // GET TYPE
+  const type = useSearchParams()[0].get("type");
+  // NAVIGATION STATE
+  const { state } = useNavigation();
+  const [changingState, setChangingState] = useState(state);
+  // INITIALIZE CURRENT
   const [current, setCurrent] = useState({
     id: null,
   });
-  const [selectedData, setSelectedData] = useState("feed");
+  // INITIALIZE SELECTED DATA,METHOD, and FORMDATA
+  const [selectedData, setSelectedData] = useState(type);
   const [method, setMethod] = useState(null);
   const date = new Date(),
     day = date.getDate().toString().padStart(2, "0"),
@@ -20,29 +31,16 @@ function InventoryContaner() {
     action: "",
     quantity: "",
     cost: "",
-    count: "",
-    entry_date: `${day}/${month}/${year}`,
   });
-  const [feedData, setFeedData] = useState([
-    {
-      id: "0",
-      name: "--",
-      action: "--",
-      quantity: "--",
-      cost: "--",
-      date: "--",
-    },
-  ]);
-  const [liveStockData, setLiveStockData] = useState([
-    {
-      id: "0",
-      name: "--",
-      action: "--",
-      quantity: "--",
-      cost: "--",
-      date: "--",
-    },
-  ]);
+  // INITIALIZE FEED AND LIVESTOCK DATA
+  const [feedData, setFeedData] = useState(type === "feed" ? data.entries : []);
+  const [liveStockData, setLiveStockData] = useState(
+    type === "livestock" ? data.entries : [],
+  );
+  useEffect(() => {
+    if (type === "feed") setFeedData(data.entries);
+    if (type === "livestock") setLiveStockData(data.entries);
+  }, [state]);
   function cleanInput() {
     const date = new Date(),
       day = date.getDate().toString().padStart(2, "0"),
@@ -53,41 +51,8 @@ function InventoryContaner() {
       action: "",
       quantity: "",
       cost: "",
-      count: "",
-      entry_date: `${day}/${month}/${year}`,
     });
   }
-  useEffect(() => {
-    async function getFeedData() {
-      try {
-        if (!token.access) return location.reload();
-        const data = await http.prototype.get(
-          "https://farmtrack-backend.onrender.com/api/inventory/feed/",
-          token.access
-        );
-        setFeedData(data);
-      } catch (error) {
-        toast.error("Unable to get Users Data", {
-          className: "poppins text-[1.6rem]",
-        });
-      }
-    }
-    getFeedData();
-    async function getLiveStockData() {
-      try {
-        const data = await http.prototype.get(
-          "https://farmtrack-backend.onrender.com/api/inventory/livestock/",
-          token.access
-        );
-        setLiveStockData(data);
-      } catch (error) {
-        toast.error("Unable to get Users Data", {
-          className: "poppins text-[1.6rem]",
-        });
-      }
-    }
-    getLiveStockData();
-  }, []);
   const xml = (
     <div className="flex flex-col mx-[2.8rem] bg-[#FFF] rounded-[1.5rem] min-h-[89.3rem]">
       <Context.Provider

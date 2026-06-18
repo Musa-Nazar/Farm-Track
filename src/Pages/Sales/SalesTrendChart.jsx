@@ -8,17 +8,8 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from "recharts";
-const SalesTrendChart = ({ salesTrend }) => {
-  const data = salesTrend
-    ? salesTrend.slice(0, 6)
-    : [
-        { date: "Mon", total_sales: 2000 },
-        { date: "Tue", total_sales: 1000 },
-        { date: "Wed", total_sales: 9000 },
-        { date: "Thu", total_sales: 4000 },
-        { date: "Fri", total_sales: 5000 },
-        { date: "Sat", total_sales: 3500 },
-      ];
+import { tickFormatter } from "../../../utils/numberFormatter";
+const SalesTrendChart = ({ data }) => {
   return (
     <>
       <h2 className="text-black ml-[3.5rem] text-[20px] font-bold sf-bold mb-[3.5rem]">
@@ -29,21 +20,9 @@ const SalesTrendChart = ({ salesTrend }) => {
           data={data}
           margin={{ left: 0, right: 0, top: 0, bottom: 0 }}
         >
-          {[...Array(9)].map((i, index) => {
-            if ((index + 1) % 2 !== 0) {
-              return (
-                <ReferenceLine
-                  key={index}
-                  y={(index + 1) * 1000}
-                  stroke="#EBEBEB"
-                  strokeDasharray="0 0"
-                />
-              );
-            }
-          })}
           <CartesianGrid vertical={false} strokeOpacity={0.7} />
           <Line
-            dataKey="total_sales"
+            dataKey="sales"
             type="monotone"
             dot={false}
             stroke="#61A061"
@@ -51,7 +30,7 @@ const SalesTrendChart = ({ salesTrend }) => {
             activeDot={false}
           />
           <XAxis
-            dataKey="date"
+            dataKey="day"
             tick={{
               color: "#222",
               textAlign: "center",
@@ -64,10 +43,11 @@ const SalesTrendChart = ({ salesTrend }) => {
             padding={{ left: 20, right: 20 }}
           />
           <YAxis
-            dataKey="total_sales"
+            dataKey="sales"
             strokeOpacity={0}
-            domain={[0, 10000]}
-            tickCount={6}
+            domain={[0, "dataMax + 50000"]}
+            tickCount={12}
+            tickFormatter={tickFormatter}
             axisLine={false}
             tick={{
               color: "#444",

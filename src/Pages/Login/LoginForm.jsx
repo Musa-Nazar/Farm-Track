@@ -1,54 +1,43 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import http from "../../../http";
+import {
+  data,
+  Link,
+  redirect,
+  useNavigation,
+  useSubmit,
+} from "react-router-dom";
 import { useMainContext } from "../../../MainContext";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
+import useForm from "../../hooks/useForm";
+import { post } from "../../../http";
+import config from "../../../config";
+import Cookies from "universal-cookie";
+const loginSchema = {
+  email: { pattern: /^[\w\d]{5,15}@[\w]{1,5}.com$/ },
+  password: { pattern: /^[\w\d]{8}/ },
+};
 function LoginForm() {
-  const navigate = useNavigate();
-  const { token, setToken, cookie, setUser } = useMainContext();
-  const [formData, setFormData] = useState({});
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({ ...prevState, [name]: value }));
-  }
+  const { state } = useNavigation();
+  const { handleChange, formSchema: formData } = useForm(loginSchema);
+  const submit = useSubmit();
   function handleSubmit(e) {
     e.preventDefault();
-    toast.success("Wait, while being logged in", {
-      className: "poppins text-[1.8rem]",
-    });
-    async function submitForm() {
-      try {
-        const data = await http.prototype.post(
-          "https://farmtrack-backend.onrender.com/api/login/",
-          formData
-        );
-        if (data.data.access) {
-          cookie.set("token", data.data, {
-            expires: new Date(jwtDecode(data.data.access).exp * 1000),
-          });
-          setToken(data.data);
-          setUser(false);
-          toast.success("Login Successful", {
-            className: "poppins text-[1.8rem]",
-          });
-          setTimeout(() => {
-            return navigate("/dashboard");
-          }, 1000);
-        }
-        if (data.data.detail) {
-          const err = new Error();
-          err.message = data.data.detail;
-          err.name = Number(data.status) === 401 ? "401" : "500";
-          throw err;
-        }
-      } catch (error) {
-        toast.error("Invalid Login Credentials", {
-          className: "poppins text-[1.8rem]",
-        });
-      }
-    }
-    submitForm();
+    if (state === "submitting")
+      return toast.success("Wait, while being logged in", {
+        className: "poppins text-[1.8rem]",
+      });
+    const formIsValid = formData.email.isValid && formData.password.isValid;
+    if (!formIsValid)
+      return toast.error("Please fill the form properly", {
+        className: "poppins text-[1.8rem]",
+      });
+
+    const loginBody = {
+      email: formData.email.value,
+      password: formData.password.value,
+    };
+    submit(loginBody, { method: "post" });
   }
   const formstyle = {
     form: "flex flex-col w-full overflow-hidden pt-[clamp(1rem,13.0859375vh,13.4rem)] relative pl-[clamp(1rem,3.75vw,5.4rem)] bg-transparent z-10 max-md:pl-0 max-md:pt-[clamp(1rem,12.931034482758621vh,10.5rem)]",
@@ -69,7 +58,7 @@ function LoginForm() {
       <h2 className={`${formstyle.formHead}`}>Login</h2>
       {/* Email */}
       <div
-        className={`${formstyle.inputField} mb-[clamp(1rem,2.83203125vh,2.9rem)] max-md:mb-[clamp(1rem,2.4630541871921183vh,2rem)]`}
+        className={`${formstyle.inputField} mb-[clamp(1rem,2.83203125vh,2.9rem)] max-md:mb-[clamp(1rem,2.4630541871921183vh,2rem)] relative`}
       >
         <label htmlFor="email" className={`${formstyle.label}`}>
           Email
@@ -79,12 +68,17 @@ function LoginForm() {
           name="email"
           id="email"
           onChange={handleChange}
-          className={`${formstyle.input}`}
+          className={`${formstyle.input} ${!formData.email.isValid && formData.email.isTouched ? "border-red-500" : ""}`}
         />
+        {!formData.email.isValid && formData.email.isTouched && (
+          <p className="absolute bottom-0 translate-y-[100%] text-red-600 text-[1rem] max-md:text-[0.7rem]">
+            This is not a valid email
+          </p>
+        )}
       </div>
       {/* Password */}
       <div
-        className={`${formstyle.inputField} mb-[clamp(1rem,7.2265625vh,7.4rem)] max-md:mb-[clamp(1rem,6.527093596059113vh,5.3rem)]`}
+        className={`${formstyle.inputField} mb-[clamp(1rem,7.2265625vh,7.4rem)] max-md:mb-[clamp(1rem,6.527093596059113vh,5.3rem)] relative`}
       >
         <label htmlFor="password" className={`${formstyle.label}`}>
           Password
@@ -94,20 +88,34 @@ function LoginForm() {
           name="password"
           id="password"
           onChange={handleChange}
-          className={`${formstyle.input}`}
+          className={`${formstyle.input} ${!formData.password.isValid && formData.password.isTouched ? "border-red-500" : ""}`}
         />
+        {!formData.password.isValid && formData.password.isTouched && (
+          <p className="absolute bottom-0 translate-y-[100%] text-red-600 text-[1rem] max-md:text-[0.7rem]">
+            password should be atleast 8 Characters
+          </p>
+        )}
       </div>
       {/* Login */}
       <div
         className={`${formstyle.inputField} mb-[clamp(1rem,7.2265625vh,7.4rem)] max-md:mb-[clamp(1rem,6.527093596059113vh,5.3rem)] active:scale-[0.8]  transition-all`}
       >
-        <input
+        <button
           type="submit"
           name="login"
           id="login"
-          value="Login"
           className={`${formstyle.button}`}
-        />
+        >
+          {state === "submitting" ? (
+            <span className="w-full grid place-items-center">
+              <span className="Myspin w-[1.8rem] aspect-square border-solid border-[2px] border-white border-t-transparent flex items-center justify-center text-center rounded-[50%]">
+                <span className="Myspin-2 w-[1.6rem] aspect-square border-solid border-[2px] border-green-400 border-t-transparent rounded-[50%]"></span>
+              </span>
+            </span>
+          ) : (
+            "Login"
+          )}
+        </button>
       </div>
       <p className="text-[rgba(0,0,0,0.80)] poppins text-[1.6rem] font-medium flex gap-[1.6rem w-[54.1rem] max-w-full text-center justify-center">
         Already have an account?
@@ -121,3 +129,37 @@ function LoginForm() {
 }
 
 export default LoginForm;
+
+export async function action({ request, params }) {
+  const formData = await request.formData();
+  const loginBody = {
+    email: formData.get("email"),
+    password: formData.get("password"),
+  };
+  const user = await post(`${config.apiDomain}/api/v1/auth/login`, loginBody);
+
+  if (user?.status >= 400)
+    return toast.error(user?.message ?? "Fail to login user", {
+      className: "poppins text-[1.5rem]",
+    });
+  // SUCESS
+  toast.success(user?.data?.message ?? "Fail to login user", {
+    className: "poppins text-[1.5rem]",
+  });
+  // ONBOARDED === false
+  if (user?.data?.onBoarded === false) {
+    localStorage.setItem("email", loginBody.email);
+    return redirect("/onboarding");
+  }
+  // SET COOKIE
+  const cookie = new Cookies();
+  cookie.set("token", user?.data?.token, {
+    expires: new Date(jwtDecode(user?.data?.token).exp * 1000),
+  });
+  cookie.set("userData", JSON.stringify(user?.data?.userData), {
+    expires: new Date(jwtDecode(user?.data?.token).exp * 1000),
+  });
+  localStorage.removeItem("email");
+  // NAVIGATE TO DASHBOARD
+  return redirect("/dashboard");
+}

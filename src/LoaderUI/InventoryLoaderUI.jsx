@@ -1,57 +1,8 @@
-import { useState, useContext } from "react";
-import search from "../../assets/search.svg";
-import Context from "../../Auth-context";
-import { useNavigate, useSearchParams } from "react-router-dom";
-function InventoryHeader() {
-  const {
-    method,
-    setMethod,
-    current,
-    setFormData,
-    cleanInput,
-    setCurrent,
-    setSelectedData,
-  } = useContext(Context);
-  const navigate = useNavigate();
-  const type = useSearchParams()[0].get("type");
-  function addInventoryUI() {
-    setMethod("add");
-    cleanInput();
-    setCurrent({
-      id: null,
-    });
-  }
-  function handleSelectedData(e) {
-    setSelectedData(e.target.value);
-    navigate(`/inventory?type=${e.target.value}`);
-    setMethod("");
-    cleanInput();
-    setCurrent({
-      id: null,
-    });
-  }
-  function editInventoryUI() {
-    if (current.id) {
-      setMethod("edit");
-      const split = /[0-9]*/g,
-        value = current.cost.toString().match(split),
-        newArray = value.filter((data) => {
-          if (data !== "") {
-            return data;
-          }
-        }),
-        number = newArray.join("");
-      setFormData((prevState) => ({
-        ...prevState,
-        name: current.name,
-        action: current.action,
-        cost: parseInt(number),
-        quantity: parseInt(current.quantity),
-      }));
-    }
-  }
+import search from "../assets/search.svg";
+
+function InventoryLoaderUI() {
   const xml = (
-    <>
+    <div className="flex flex-col mx-[2.8rem] bg-[#FFF] rounded-[1.5rem] min-h-[89.3dvh]">
       <div className="flex justify-between items-centerb mt-[5.7rem] mb-[2.9rem]">
         <h2 className="text-[#000] poppins text-[3rem] font-[600] leading-normal  ml-[2.6rem] ">
           Inventory
@@ -61,8 +12,7 @@ function InventoryHeader() {
             name="dataType"
             id="dataType"
             className="outline-0 w-full text-black font-[Manrope] text-[1.5rem] font-medium leading-[271.789%]"
-            onChange={handleSelectedData}
-            value={type}
+            disabled={true}
           >
             <option value="feed" className="w-full py-[5rem] block">
               Feed
@@ -96,7 +46,6 @@ function InventoryHeader() {
         <div className="flex gap-[5.8rem] max-md:justify-between max-md:w-full">
           <button
             className={`flex justify-center  w-[13.3rem] py-0 px-[1.3589rem] flex-col items-center gap-[1.3589rem] rounded-[0.6777rem] bg-[#61A061] cursor-pointer`}
-            onClick={addInventoryUI}
           >
             <span className="text-[#FFF] text-center manrope-5-500 text-[1.5rem] font-[500] leading-[271.789%]">
               +New Entry
@@ -104,7 +53,6 @@ function InventoryHeader() {
           </button>
           <button
             className={`flex justify-center w-[13.3rem] py-0 px-[1.3589rem] flex-col items-center gap-[1.3589rem] rounded-[0.6777rem] border-[#61A061] border-solid border-[0.1rem] cursor-pointer`}
-            onClick={editInventoryUI}
             id="edit"
           >
             <span className="text-[#000] text-center manrope-5-500 text-[1.5rem] font-[500] leading-[271.789%]">
@@ -114,9 +62,12 @@ function InventoryHeader() {
         </div>
       </div>
       <div className="w-full bg-[#000] h-[0.1rem]"></div>
-    </>
+      <div className="w-[7rem] aspect-square my-[1rem] mx-auto border-[#61A061] border-t-transparent border-[1rem] rounded-[50%] rotate flex justify-center items-center">
+        <div className="w-[80%] aspect-square border-[#91bb91] border-t-transparent border-[0.2rem] rounded-[50%] rotate flex justify-center items-center Myspin-2"></div>
+      </div>
+    </div>
   );
   return xml;
 }
 
-export default InventoryHeader;
+export default InventoryLoaderUI;

@@ -1,13 +1,25 @@
 import Context from "../../Auth-context";
 import { useContext, useEffect, useState } from "react";
 import { useMainContext } from "../../../MainContext";
-import http from "../../../http";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigation, useSubmit } from "react-router-dom";
+import checkFormData from "../../../utils/checkFormData";
 function InventoryTableInput() {
   // MAIN CONTEXT
-  const { token, user, setUser } = useMainContext();
+  const { user, setUser, cookie } = useMainContext();
+  const token = cookie.get("token");
+  let decodedToken;
+  // PAGESTATE
+  const { state } = useNavigation();
+  // useSubmit
+  const submit = useSubmit();
+  try {
+    decodedToken = jwtDecode(token);
+  } catch (error) {
+    return <Navigate to="/login"></Navigate>;
+  }
+
   // INVENTORY CONTEXT
   const {
     formData,
@@ -23,6 +35,15 @@ function InventoryTableInput() {
     cleanInput,
     setCurrent,
   } = useContext(Context);
+  // TYPE OF INVENTORY
+  const isPoultry =
+    decodedToken?.livestockType === "poultry" ||
+    decodedToken?.livestockType === "both";
+  const isFish =
+    decodedToken?.livestockType === "fish" ||
+    decodedToken?.livestockType === "both";
+  const isFeed = selectedData === "feed";
+  const isLivestock = selectedData === "livestock";
   // FORM HANDLER
   function handleForm(e) {
     const { name, value } = e.target;
@@ -32,123 +53,36 @@ function InventoryTableInput() {
     }
   }
   // ADD TO INVENTORY
-  function addToInventory() {
-    let validator = true,
-      selectedDataText = selectedData === "feed" ? "count" : "quantity";
-    for (let i in formData) {
-      if (i !== selectedDataText && formData[i] === "") {
-        validator = false;
-      } else if (formData !== "" && validator !== false) {
-        validator = true;
-      }
-    }
-    if (validator) {
-      (async function () {
-        try {
-          if (!token.access) return location.reload();
-          if (selectedData === "feed") {
-            const { count, entry_date, ...rest } = formData;
-            const data = await http.prototype.postWithToken(
-              "https://farmtrack-backend.onrender.com/api/inventory/feed/",
-              token.access,
-              { ...rest }
-            );
-            setFeedData((prevState) => [...prevState, data]);
-            toast.success("Entry added successfuly", {
-              className: "poppins text-[1.8rem]",
-            });
-          } else {
-            const { count, entry_date, ...rest } = formData;
-            const data = await http.prototype.postWithToken(
-              "https://farmtrack-backend.onrender.com/api/inventory/livestock/",
-              token.access,
-              { ...rest, quantity: formData.count }
-            );
-            setLiveStockData((prevState) => [...prevState, data]);
-            toast.success("Entry added successfuly", {
-              className: "poppins text-[1.8rem]",
-            });
-          }
-          cleanInput();
-          setMethod(null);
-        } catch (error) {
-          toast.error("Unable to add Entry", {
-            className: "poppins text-[1.6rem]",
-          });
-        }
-      })();
-    }
+  async function addToInventory() {
+    // FORM VALIDATION
+    const formIsValid = checkFormData({ ...formData });
+    if (!formIsValid)
+      return toast.error("Please enter all fields", {
+        className: "poppins text-[1.8rem]",
+      });
+    // SUBMIT
+    await submit(
+      { ...formData, type: selectedData, method: "add" },
+      { method: "post" },
+    );
+    setMethod("");
   }
   // EDIT INVENTORY
-  function editInventory() {
-    (async function () {
-      let message, type;
-      try {
-        const url =
-            selectedData === "feed"
-              ? "https://farmtrack-backend.onrender.com/api/inventory/feed/"
-              : "https://farmtrack-backend.onrender.com/api/inventory/livestock/",
-          { entry_date, ...rest } = formData;
-        const body =
-          selectedData === "feed"
-            ? { ...rest }
-            : { ...rest, quantity: rest.count };
-        const updateData = await http.prototype.put(
-          url,
-          token.access,
-          current.id,
-          body
-        );
-        message = "update successfuly";
-        if (selectedData === "feed") {
-          setFeedData((prevState) => {
-            const updatedInventory = prevState.map((item) => {
-              if (String(item.id) === String(current.id)) {
-                item = {
-                  ...rest,
-                  id: current.id,
-                  quantity:
-                    selectedData === "feed" ? rest.quantity : rest.count,
-                };
-                return item;
-              }
-              return item;
-            });
-            return updatedInventory;
-          });
-        } else {
-          setLiveStockData((prevState) => {
-            const updatedInventory = prevState.map((item) => {
-              if (String(item.id) === String(current.id)) {
-                item = {
-                  ...rest,
-                  id: current.id,
-                  quantity:
-                    selectedData === "feed" ? rest.quantity : rest.count,
-                };
-                return item;
-              }
-              return item;
-            });
-            return updatedInventory;
-          });
-        }
-        type = "success";
-      } catch (error) {
-        message = "update failed";
-        type = "failed";
-      } finally {
-        return type === "success"
-          ? toast.success(message, {
-              className: "poppins text-[1.8rem]",
-            })
-          : toast.error(message, {
-              className: "poppins text-[1.8rem]",
-            });
-      }
-    })();
-    setMethod(null);
-    cancel();
+  async function editInventory() {
+    if (state === "submitting")
+      return toast.error("Please wait until operation is complete");
+    // FORM VALIDATION
+    const formIsValid = checkFormData({ ...formData });
+    if (!formIsValid)
+      return toast.error("Please enter all fields", {
+        className: "poppins text-[1.8rem]",
+      });
+    // SUBMIT
+    await submit(
+      { ...formData, type: selectedData, method: "edit", id: current.id },
+      { method: "post" },
+    );
+    setMethod("");
   }
   // CANCEL ALL
   function cancel() {
@@ -180,36 +114,16 @@ function InventoryTableInput() {
           <option disabled hidden value="">
             Select
           </option>
+
           {/* FEED OPTIONS */}
-          {user.livestock_type === "Poultry" && selectedData === "feed" ? (
+          {isPoultry && isFeed && (
             <option value="Poultry Feed">Poultry Feed</option>
-          ) : user.livestock_type === "Both" && selectedData === "feed" ? (
-            <option value="Poultry Feed">Poultry Feed</option>
-          ) : (
-            ""
           )}
-          {user.livestock_type === "Fish" && selectedData === "feed" ? (
-            <option value="Fish Feed">Fish Feed</option>
-          ) : user.livestock_type === "Both" && selectedData === "feed" ? (
-            <option value="Fish Feed">Fish Feed</option>
-          ) : (
-            ""
-          )}
+          {isFish && isFeed && <option value="Fish Feed">Fish Feed</option>}
           {/* LIVESTOCK OPTIONS */}
-          {user.livestock_type === "Poultry" && selectedData === "livestock" ? (
-            <option value="Poultry">Poultry</option>
-          ) : user.livestock_type === "Both" && selectedData === "livestock" ? (
-            <option value="Poultry">Poultry</option>
-          ) : (
-            ""
-          )}
-          {user.livestock_type === "Fish" && selectedData === "livestock" ? (
-            <option value="Fish">Fish</option>
-          ) : user.livestock_type === "Both" && selectedData === "livestock" ? (
-            <option value="Fish">Fish</option>
-          ) : (
-            ""
-          )}
+
+          {isPoultry && isLivestock && <option value="Poultry">Poultry</option>}
+          {isFish && isLivestock && <option value="Fish">Fish</option>}
         </select>
       </td>
       {/* ACTION */}
@@ -226,37 +140,25 @@ function InventoryTableInput() {
             Select
           </option>
           <option value="Bought">Bought</option>
-          {selectedData === "feed" && (
-            <option value="Consumed">Consumed</option>
-          )}
-          {selectedData === "livestock" && <option value="Sold">Sold</option>}
-          {selectedData === "livestock" && <option value="Dead">Dead</option>}
+          {/* FEED OPTIONS */}
+          {isFeed && <option value="Consumed">Consumed</option>}
+          {/* LIVESTOCK OPTIONS */}
+          {isLivestock && <option value="Sold">Sold</option>}
+          {isLivestock && <option value="Died">Died</option>}
         </select>
       </td>
-      {selectedData === "feed" ? (
-        <td className={rowStyle}>
-          <input
-            type="number"
-            name="quantity"
-            id="quantity"
-            onChange={handleForm}
-            className="w-[80%] outline-0 border border-solid border-[rgba(0,0,0,0.1)] indent-[2rem] py-[0.5rem] rounded-[0.5rem]"
-            value={formData.quantity}
-          />
-        </td>
-      ) : (
-        <td className={rowStyle}>
-          <input
-            type="number"
-            name="count"
-            id="count"
-            onChange={handleForm}
-            className="w-[80%] outline-0 border border-solid border-[rgba(0,0,0,0.1)] indent-[2rem] py-[0.5rem] rounded-[0.5rem]"
-            value={formData.count}
-            placeholder="count"
-          />
-        </td>
-      )}
+
+      <td className={rowStyle}>
+        <input
+          type="number"
+          name="quantity"
+          id="quantity"
+          onChange={handleForm}
+          className="w-[80%] outline-0 border border-solid border-[rgba(0,0,0,0.1)] indent-[2rem] py-[0.5rem] rounded-[0.5rem]"
+          value={formData.quantity}
+        />
+      </td>
+
       <td className={rowStyle}>
         <input
           type="number"
@@ -276,14 +178,20 @@ function InventoryTableInput() {
           className={`${buttonStyle} ${method === "add" ? "" : "hidden"}`}
           onClick={addToInventory}
         >
-          <span className="text-[#fff]">Add</span>
+          {state !== "submitting" && <span className="text-[#fff]">Add</span>}
+          {state === "submitting" && (
+            <span className="w-[2rem] aspect-square border-[white] border-solid border-[0.4rem] rounded-[50%] rotate border-t-transparent inline-block my-[0.5rem]"></span>
+          )}
         </button>
         <button
           type="button"
           className={`${buttonStyle} ${method === "edit" ? "" : "hidden"}`}
           onClick={editInventory}
         >
-          <span className="text-[#fff]">Edit</span>
+          {state !== "submitting" && <span className="text-[#fff]">Edit</span>}
+          {state === "submitting" && (
+            <span className="w-[2rem] aspect-square border-[white] border-solid border-[0.4rem] rounded-[50%] rotate border-t-transparent inline-block my-[0.5rem]"></span>
+          )}
         </button>
         <button type="button" className={`${buttonStyle} bg-red-400`}>
           <span className="text-[#fff] " onClick={cancel}>

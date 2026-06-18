@@ -3,125 +3,135 @@ import DashboardBox from "./DashboardBox";
 import DashboardContainer from "./DashboardContainer";
 import DashboardTable from "./DashboardTable";
 import MyBarChart from "./MyBarChart";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useMainContext } from "../../../MainContext";
-import http from "../../../http";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
+import { Await, Navigate, useLoaderData } from "react-router-dom";
+import { get } from "../../../http";
+import config from "../../../config";
+import Cookies from "universal-cookie";
+import DashboardLoaderUI, {
+  ChartLoader,
+} from "../../LoaderUI/DashboardLoaderUI";
+import numberFormatter from "../../../utils/numberFormatter";
+
 function Dashboard() {
-  const { user, setUser, token, cookie } = useMainContext();
-  const [dashboardData, setDashboardData] = useState(undefined);
-  const [dUser, setDUser] = useState(false);
+  const { cookie } = useMainContext();
+  const token = cookie.get("token");
+  let decodedToken;
+  try {
+    decodedToken = jwtDecode(token);
+  } catch (error) {
+    return <Navigate to="/login"></Navigate>;
+  }
+  const { dashboardPreviewData } = useLoaderData();
+  console.log(dashboardPreviewData);
+  const type = decodedToken.livestockType;
+  const isFish = type === "fish" || type === "both";
+  const isPoultry = type === "poultry" || type === "both";
 
-  useEffect(() => {
-    async function getUserData() {
-      try {
-        if (!token.access) return location.reload();
-        const data = await http.prototype.get(
-          "https://farmtrack-backend.onrender.com/api/user/profile/",
-          token.access
-        );
-        setUser(data.data);
-        setDUser(data.data);
-        cookie.set("user", data.data, {
-          path: "/",
-          expires: new Date(jwtDecode(token.access).exp * 1000),
-        });
-      } catch (error) {
-        toast.error("Unable to get Users Data", {
-          className: "poppins text-[1.6rem]",
-        });
-      }
-    }
-    getUserData();
-
-    async function getDashboardData() {
-      try {
-        const dashboardInfo = await http.prototype.get(
-          "https://farmtrack-backend.onrender.com/api/info/dashboard/",
-          token.access
-        );
-        setDashboardData(dashboardInfo);
-      } catch (error) {
-        toast.error("Unable to get Users Data", {
-          className: "poppins text-[1.6rem]",
-        });
-      }
-    }
-    getDashboardData();
-  }, []);
-  const type = dUser ? dUser.livestock_type.toLowerCase() : "string";
-  let total = 0;
-  let totalSales = 0;
-  dashboardData &&
-    dashboardData.feed_info.forEach((item) => {
-      total += parseInt(item.left);
-    });
-  dashboardData &&
-    dashboardData.sales_data.forEach((item) => {
-      totalSales += parseInt(item.total_sales);
-    });
   const xml = (
     <div className="w-full inventory h-dvh overflow-y-scroll hide-scrollbar">
       <DashboardGap />
-      <div className="flex flex-col w-full">
-        <DashboardContainer gap="gap-[1rem]" p={true}>
-          {(type === "fish" || type === "both") && (
-            <DashboardBox
-              head="Fish Count"
-              body={dashboardData ? dashboardData.livestock_count[0].count : ""}
-            />
+      <Suspense fallback={<DashboardLoaderUI state="loading" />}>
+        <Await resolve={dashboardPreviewData}>
+          {(dashboardPreviewData) => {
+            return (
+              <DashboardContainer gap="gap-[1rem]" p={true} type={type}>
+                {isFish && (
+                  <DashboardBox
+                    head="Fish Count"
+                    val={
+                      type === "poultry"
+                        ? dashboardPreviewData?.data?.totalLivestock
+                        : dashboardPreviewData?.data?.totalLivestock?.fish
+                    }
+                    body={
+                      type === "fish"
+                        ? Math.abs(dashboardPreviewData?.data?.totalLivestock)
+                        : Math.abs(
+                            dashboardPreviewData?.data?.totalLivestock?.fish,
+                          )
+                    }
+                  />
+                )}
+                {isPoultry && (
+                  <DashboardBox
+                    head="Bird Count"
+                    val={
+                      type === "poultry"
+                        ? dashboardPreviewData?.data?.totalLivestock
+                        : dashboardPreviewData?.data?.totalLivestock?.poultry
+                    }
+                    body={
+                      type === "poultry"
+                        ? Math.abs(dashboardPreviewData?.data?.totalLivestock)
+                        : Math.abs(
+                            dashboardPreviewData?.data?.totalLivestock?.poultry,
+                          )
+                    }
+                  />
+                )}
+                <DashboardBox
+                  head="Feed Stock"
+                  val={dashboardPreviewData?.data?.totalFeedLeft}
+                  body={Math.abs(dashboardPreviewData?.data?.totalFeedLeft)}
+                  icon={
+                    dashboardPreviewData?.data?.totalFeedLeft <=
+                    dashboardPreviewData?.data?.threshold
+                  }
+                />
+                <DashboardBox
+                  head="Total Sales"
+                  val={dashboardPreviewData?.data?.totalSales}
+                  body={`N${numberFormatter(Math.abs(dashboardPreviewData?.data?.totalSales))}`}
+                />
+              </DashboardContainer>
+            );
+          }}
+        </Await>
+      </Suspense>
+      <Suspense fallback={<ChartLoader />}>
+        <Await resolve={dashboardPreviewData}>
+          {(data) => {
+            return (
+              <DashboardContainer
+                mt="mt-[3rem] pb-[1rem]"
+                cs="pr-[6.5rem] !block max-md: !pr-[2rem]"
+              >
+                <MyBarChart dashboardData={data?.data} />
+              </DashboardContainer>
+            );
+          }}
+        </Await>
+      </Suspense>
+      <Suspense>
+        <Await resolve={dashboardPreviewData}>
+          {(data) => (
+            <DashboardContainer
+              mt="mt-[4.7rem]"
+              cs="mb-[3rem] overflow-x-auto hide-scrollbar"
+            >
+              <DashboardTable dashboardData={data?.data?.livestockSummary} />
+            </DashboardContainer>
           )}
-          {(type === "poultry" || type === "both") && (
-            <DashboardBox
-              head="Bird Count"
-              body={
-                dashboardData && type === "poultry"
-                  ? dashboardData.livestock_count[0].count
-                  : dashboardData
-                  ? dashboardData.livestock_count[0].count
-                  : ""
-              }
-            />
-          )}
-          <DashboardBox
-            head="Feed Stock"
-            body={
-              dashboardData &&
-              total / 2 < parseInt(dashboardData.low_stock_threshold)
-                ? "Low Stock"
-                : "In Stock"
-            }
-            icon={
-              dashboardData &&
-              total / 2 < parseInt(dashboardData.low_stock_threshold)
-                ? true
-                : false
-            }
-          />
-          <DashboardBox
-            head="Total Sales"
-            body={
-              dashboardData ? `N${totalSales.toLocaleString()}` : "N150,000"
-            }
-          />
-        </DashboardContainer>
-        <DashboardContainer
-          mt="mt-[3rem]"
-          cs="pr-[6.5rem] !block max-md: !pr-[2rem]"
-        >
-          <MyBarChart dashboardData={dashboardData} />
-        </DashboardContainer>
-        <DashboardContainer
-          mt="mt-[4.7rem]"
-          cs="mb-[3rem] overflow-x-auto hide-scrollbar"
-        >
-          <DashboardTable dashboardData={dashboardData} />
-        </DashboardContainer>
-      </div>
+        </Await>
+      </Suspense>
     </div>
   );
   return xml;
 }
 
 export default Dashboard;
+
+export async function loader() {
+  const cookie = new Cookies();
+  const token = cookie.get("token");
+  const dashboardPreviewData = get(
+    `${config.apiDomain}/api/v1/dashboard`,
+    token,
+  );
+
+  return { dashboardPreviewData };
+}

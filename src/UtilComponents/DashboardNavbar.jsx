@@ -1,5 +1,5 @@
 import logo from "../assets/logo.png";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Navigate, NavLink, useNavigation } from "react-router-dom";
 import profileIcon from "../assets/profile-icon-new.png";
 import dashboard from "../assets/dashboard.svg";
 import inventory from "../assets/inventory.svg";
@@ -12,10 +12,14 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useMainContext } from "../../MainContext.jsx";
 import { jwtDecode } from "jwt-decode";
-import http from "../../http.js";
 function DashboardNavbar() {
+  const { cookie } = useMainContext();
+  const token = cookie.get("token");
+  const userData = cookie.get("userData");
+  const { state } = useNavigation();
+  if (!token) return <Navigate to="/login"></Navigate>;
   const [checked, setChecked] = useState(false);
-  const { token, user, setUser } = useMainContext();
+  const [pageLoadedSucessfully, setPageLoadedSucessfully] = useState(false);
   function handleCheck() {
     setChecked(false);
   }
@@ -28,6 +32,14 @@ function DashboardNavbar() {
       : "w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem]";
   }
   const [navOpacity, setNavOpacity] = useState(false);
+  let tokenIsValid = false;
+  try {
+    jwtDecode(token);
+    tokenIsValid = true;
+  } catch (error) {
+    tokenIsValid = false;
+  }
+  const userName = tokenIsValid ? userData.name : "";
   useEffect(() => {
     const dgap = document.querySelector(".dgap");
     function changeNavbarOpacity() {
@@ -37,10 +49,12 @@ function DashboardNavbar() {
         setNavOpacity(true);
       }
     }
-    document
-      .querySelector(".inventory")
-      .addEventListener("scroll", changeNavbarOpacity);
-  }, [useLocation().pathname]);
+    const inventory = document.querySelector(".inventory");
+    setPageLoadedSucessfully(true);
+
+    if (inventory) inventory.addEventListener("scroll", changeNavbarOpacity);
+  }, [useLocation().pathname, pageLoadedSucessfully, state]);
+
   const xml = (
     <>
       <header>
@@ -56,18 +70,21 @@ function DashboardNavbar() {
             </h2>
           </div>
           <div className="flex gap-[3.15rem] items-center">
-            <div className="w-[5rem] aspect-square bg-green-300 rounded-[50%] flex items-center justify-center text-white text-[3rem]">
-              {user && user.first_name[0]}
-            </div>
-            {user ? (
-              <span className="text-[#000] poppins text-[2rem] font-[600] leading-normal">
-                {user && user.first_name} {user && user.last_name}
-              </span>
+            {/* CHECK PRFILE PICTURE */}
+            {userData?.path ? (
+              <img
+                src={userData?.path}
+                className="w-[5rem] aspect-square bg-green-300 rounded-[50%] items-center justify-center text-white text-[3rem] object-fill inline-block border-[0.3rem] border-solid border-[#C6C6C6]"
+              />
             ) : (
-              <span className="text-[#000] poppins text-[2rem] font-[600] leading-normal">
-                Dew Tee
-              </span>
+              <div className="w-[5rem] aspect-square bg-green-300 rounded-[50%] flex items-center justify-center text-white text-[3rem]">
+                {userName?.[0] ?? "T"}
+              </div>
             )}
+
+            <span className="text-[#000] poppins text-[2rem] font-[600] leading-normal">
+              {userName ?? "Test Test"}
+            </span>
           </div>
         </nav>
         <nav className="w-[23.1rem] flex-none bg-[#fff] h-dvh flex max-md:hidden">
@@ -85,7 +102,7 @@ function DashboardNavbar() {
               </NavLink>
             </li>
             <li>
-              <NavLink className={activeLink} to="/inventory">
+              <NavLink className={activeLink} to="/inventory?type=feed">
                 <img
                   src={inventory}
                   alt=""

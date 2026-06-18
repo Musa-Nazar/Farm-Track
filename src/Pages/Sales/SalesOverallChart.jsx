@@ -10,14 +10,7 @@ import {
   ReferenceLine,
 } from "recharts";
 
-const data = [
-  { name: "Birds", Sales: 120, Expenses: 80, Loss: 40 },
-  { name: "Feed", Sales: 100, Expenses: 70, Loss: 30 },
-  { name: "Feed", Sales: 0, Expenses: 160, Loss: 0 },
-  { name: "Loss", Sales: 0, Expenses: 0, Loss: 60 },
-];
-
-function SalesOverallChart() {
+function SalesOverallChart({ data }) {
   return (
     <div className="w-full h-[46.3rem] flex justify-center items-center ">
       <ResponsiveContainer width="100%" height="100%">
@@ -40,9 +33,9 @@ function SalesOverallChart() {
           <YAxis className="text-sm" domain={[0, 160]} tickCount={9} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="Sales" fill="#004200" barSize={40} />
-          <Bar dataKey="Expenses" fill="#61A061" barSize={40} />
-          <Bar dataKey="Loss" fill="#77F477" barSize={40} />
+          <Bar dataKey="sales" fill="#004200" barSize={40} />
+          <Bar dataKey="expenses" fill="#61A061" barSize={40} />
+          <Bar dataKey="loss" fill="#77F477" barSize={40} />
         </BarChart>
       </ResponsiveContainer>
     </div>

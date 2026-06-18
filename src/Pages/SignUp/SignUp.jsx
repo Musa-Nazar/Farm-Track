@@ -1,7 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import logo from "../../assets/logo_white.svg";
 import { useEffect, useState } from "react";
+import { post } from "../../../http";
 import FormOne from "./FormOne";
+import config from "../../../config";
+import { toast } from "react-toastify";
+import { useMainContext } from "../../../MainContext";
+import Cookies from "universal-cookie";
 function SignUp() {
   const xml = (
     <div className="flex w-full h-dvh max-h-vh bg-gradient-to-b from-[#C3FFD2] via-[#61A061] to-black hide-scrollbar overflow-hidden max-md:overflow-auto bgl">
@@ -40,3 +45,24 @@ function SignUp() {
 }
 
 export default SignUp;
+
+export async function action({ request, params }, setOtpHolder) {
+  const formData = await request.formData();
+
+  const signUpData = {
+    farmName: formData.get("farmName"),
+    email: formData.get("email"),
+    password: formData.get("password"),
+  };
+
+  const user = await post(`${config.apiDomain}/api/v1/auth/signup`, signUpData);
+
+  if (user?.status >= 400)
+    return toast.error(user?.message || "Failed to sign-up user", {
+      className: "poppins text-[1.6rem]",
+    });
+  // SUCESS MESSAGE
+  toast.success(user?.data?.message);
+  localStorage.setItem("email", signUpData.email);
+  return redirect(`/otp`);
+}

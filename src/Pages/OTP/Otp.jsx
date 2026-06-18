@@ -1,69 +1,47 @@
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+  useSubmit,
+  redirect,
+  useNavigation,
+  Form,
+  Navigate,
+} from "react-router-dom";
 import logo from "../../assets/logo.png";
 import styles from "./optStyle";
 import OtpInput from "./OtpInput";
 import { useState } from "react";
 import { useMainContext } from "../../../MainContext";
-import http from "../../../http";
 import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
-
+import config from "../../../config";
+import Cookies from "universal-cookie";
+import { post } from "../../../http";
 function Otp() {
-  const navigate = useNavigate();
-  const { user, setToken, cookie } = useMainContext();
+  const submit = useSubmit();
+  const { user, setToken, cookie, otpHolder } = useMainContext();
   const [formData, setFormData] = useState({
     input1: "",
     input2: "",
     input3: "",
     input4: "",
   });
-  const [notSubmitted, setNotSubmitted] = useState(true);
+  const passEmail = localStorage.getItem("email");
+  if (!passEmail) return <Navigate to="/login" />;
+  const { state } = useNavigation();
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   }
   function handleSubmit(e) {
     e.preventDefault();
-    if (e.target.classList.contains("not-submitted")) {
-      e.target.classList.remove("not-submitted");
-      setNotSubmitted(false);
-      const { input1, input2, input3, input4 } = formData;
-      const data = parseInt(`${input1}${input2}${input3}${input4}`);
-      async function postOtp() {
-        try {
-          const response = await http.prototype.post(
-            "https://farmtrack-backend.onrender.com/api/otp-verify/",
-            {
-              email: user.email,
-              otp: data,
-            }
-          );
-          if (response.status >= 200 && response.status < 300) {
-            cookie.set(
-              "token",
-              response.data,
-              new Date(jwtDecode(response.data.access).exp * 1000)
-            );
-            setToken(response.data);
-            toast.success("Otp is valid, Proceeding to onBoarding", {
-              className: "poppins text-[1.8rem]",
-            });
-            e.target.classList.add("not-submitted");
-            setNotSubmitted(true);
-            setTimeout(() => {
-              navigate("/onboarding");
-            }, 1000);
-          }
-        } catch (error) {
-          toast.error(
-            "There seems to be an an error with our server please contact our support team"
-          );
-          e.target.classList.add("not-submitted");
-          setNotSubmitted(true);
-        }
-      }
-      postOtp();
-    }
+    if (state === "submitting")
+      return toast.error("Verifying otp", {
+        className: "poppins text-[1.5rem]",
+      });
+    const { input1, input2, input3, input4 } = formData;
+    const otp = `${input1}${input2}${input3}${input4}`;
+    submit({ otp }, { method: "post", action: "/otp" });
   }
   function moveToNext(e) {
     if (e.target.value.length === e.target.maxLength) {
@@ -102,7 +80,7 @@ function Otp() {
               email adress to complete your verification.
             </span>
           </p>
-          <form className="flex flex-col not-submitted" onSubmit={handleSubmit}>
+          <Form className="flex flex-col not-submitted" onSubmit={handleSubmit}>
             <div className="flex justify-between mb-[3.7rem]">
               <OtpInput
                 name="input1"
@@ -127,7 +105,7 @@ function Otp() {
               />
               <OtpInput
                 name="input4"
-                id="2"
+                id="3"
                 moveToNext={moveToNext}
                 deletePrev={deletePrev}
                 handleChange={handleChange}
@@ -150,7 +128,7 @@ function Otp() {
               </p>
             </div>
             <button className={`${styles.otpButton} mb-[2.9rem]`}>
-              {notSubmitted ? (
+              {state !== "submitting" ? (
                 "Verify"
               ) : (
                 <span className="w-full grid place-items-center">
@@ -161,17 +139,39 @@ function Otp() {
               )}
             </button>
             <Link
-              to="/login"
+              to=".."
               className={`${styles.otpButton} text-center !leading-[4.5rem] !text-[#61A061] bg-white`}
             >
               Cancel
             </Link>
-          </form>
+          </Form>
         </div>
       </div>
     </div>
   );
   return xml;
+}
+
+export async function action({ request, params }) {
+  const formData = await request.formData();
+  const otp = formData.get("otp");
+  const email = localStorage.getItem("email");
+  const user = await post(`${config.apiDomain}/api/v1/auth/verify`, {
+    email,
+    otp,
+  });
+
+  if (user?.status >= 400)
+    return toast.error(user?.message || "failed to perform the action", {
+      className: "poppins text-[1.4rem]",
+    });
+  // SUCESS
+  toast.success(user?.data?.message, {
+    className: "poppins text-[1.4rem]",
+  });
+
+  if (!user.data.onBoarded) return redirect("/onboarding");
+  return redirect("/login");
 }
 
 export default Otp;

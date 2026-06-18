@@ -19,7 +19,7 @@ function Navbar() {
   }, [menuToggle]);
   const xml = (
     <header className="h-[10.6rem]  bg-[#fff] flex items-center max-md:bg-[#D9D9D9] max-md:h-[4.3rem] sticky top-0 z-10">
-      <nav className="flex justify-between items-center w-full pl-[clamp(2rem,4.7vw,6.7rem)]  pr-[clamp(2rem,6.7vw,9.6rem)] max-md:px-[1.3rem]">
+      <nav className="flex justify-between items-center w-[128rem] max-w-[85%] mx-auto max-md:px-[1.3rem]">
         <div className="flex items-center">
           <a href="/">
             <div className="img-holder">
