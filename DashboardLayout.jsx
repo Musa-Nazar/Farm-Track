@@ -1,4 +1,4 @@
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet, Navigate, useLocation } from "react-router-dom";
 import DashboardNavbar from "./src/UtilComponents/DashboardNavbar";
 import { useMainContext } from "./MainContext";
 import { jwtDecode } from "jwt-decode";
@@ -6,6 +6,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "universal-cookie";
 function DashboardLayout() {
+  const location = useLocation();
+
   const cookies = new Cookies();
   const token = cookies.get("token");
   if (!token) return <Navigate to="/login" />;
@@ -14,7 +16,7 @@ function DashboardLayout() {
   const xml = (
     <div className="flex bg-[#F4F4F4] w-full h-dvh max-md:flex-col">
       <DashboardNavbar />
-      <Outlet />
+      <Outlet key={location.pathname + location.search} />
       <ToastContainer />
     </div>
   );
