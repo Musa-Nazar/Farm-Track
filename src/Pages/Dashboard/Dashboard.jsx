@@ -26,7 +26,6 @@ function Dashboard() {
     return <Navigate to="/login"></Navigate>;
   }
   const { dashboardPreviewData } = useLoaderData();
-  console.log(dashboardPreviewData);
   const type = decodedToken.livestockType;
   const isFish = type === "fish" || type === "both";
   const isPoultry = type === "poultry" || type === "both";

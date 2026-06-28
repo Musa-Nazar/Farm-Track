@@ -17,7 +17,6 @@ import numberFormatter from "../../../utils/numberFormatter";
 
 function SalesAndExpense() {
   const { data } = useLoaderData();
-  console.log(data);
   const xml = (
     <div className="w-full inventory h-dvh overflow-y-scroll hide-scrollbar">
       <DashboardGap />

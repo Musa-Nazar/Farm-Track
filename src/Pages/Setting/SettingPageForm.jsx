@@ -33,7 +33,6 @@ function SettingPageForm() {
   const cookie = new Cookies();
   const token = cookie.get("token") ? cookie.get("token") : false;
   const userData = cookie.get("userData") ? cookie.get("userData") : false;
-  console.log(userData);
   const decodedToken = token ? jwtDecode(token) : false;
   const firstName = userData ? userData.name?.split(" ")?.[0] : "";
   const lastName = userData ? userData.name?.split(" ")?.[1] : "";
@@ -43,13 +42,15 @@ function SettingPageForm() {
   const [uploadState, setUploadState] = useState("");
 
   async function handleUpload(e) {
-    console.log("uploaded");
     e.preventDefault();
     // IMAGE VALIDATION
     const image = e?.target?.files?.[0];
     const acceptedFormats = ["png", "PNG", "jpg", "JPG", "JPEG", "jpeg"];
     const imageFormat = image?.type?.split("/")?.[1];
-    if (!acceptedFormats.includes(imageFormat)) return console.log("not found");
+    if (!acceptedFormats.includes(imageFormat))
+      return toast.error("This image format is not accepted", {
+        className: "text-[1.8rem] poppins",
+      });
 
     // SET IMAGE FOR UPLOAD
     const formData = new FormData();
@@ -74,10 +75,6 @@ function SettingPageForm() {
     const path = uploadedImage?.data?.path;
     setUploadState("sucess");
     setImageData({ path });
-
-    for (const key of formData.entries()) {
-      console.log(key);
-    }
   }
 
   // HANDLE SUBMISSION
@@ -331,7 +328,6 @@ export async function action({ request, params }) {
 
   if (formData.get("path")) submittedFormData.path = formData.get("path");
 
-  console.log(submittedFormData);
   // SUBMIT FORMDATA
   const updatedSetting = await postWithToken(
     `${config.apiDomain}/api/v1/settings/changesettings`,

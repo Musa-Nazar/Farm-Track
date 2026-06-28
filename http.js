@@ -131,8 +131,7 @@ class http {
         status: err.status ?? 500,
         message: err.message ?? "If problem persists, contact the support team",
       };
-      console.log(error);
-      return error;
+=      return error;
     }
   }
 }

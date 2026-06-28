@@ -104,6 +104,9 @@ input[type="number"] {
   width: 300px;
   max-width: 100%;
 }
+.hover-size:hover {
+  transition: all 0.5s ease;
+}
 .radio:checked::before {
   display: block;
 }
@@ -217,4 +220,43 @@ input[type="number"] {
   100% {
     transform: scaleY(0.2);
   }
+}
+
+.typing {
+  animation: typing 0.5s both ease-in var(--delay);
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+}
+
+@keyframes typing {
+  from {
+    max-width: 0px;
+    color: #61a061;
+  }
+  to {
+    max-width: 100vw;
+  }
+}
+
+.rise {
+  animation: rise 0.5s forwards ease 2s;
+  overflow: hidden;
+  translate: 0px 100%;
+}
+
+@keyframes rise {
+  to {
+    translate: 0px 0px;
+  }
+}
+
+.bring-into-view:has(:hover) > :not(:hover) {
+  filter: blur(5px) grayscale(15%);
+}
+.bring-into-view {
+  perspective: 3000px;
+}
+.bring-into-view div:hover {
+  transform: translate3d(0, 0, 50px);
 }

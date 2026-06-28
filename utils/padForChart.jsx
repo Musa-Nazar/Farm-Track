@@ -6,14 +6,11 @@ function getWeekNumber(date = new Date()) {
   const diffInDays = Math.floor(diffInMilliseconds / 86400000);
 
   const weekNumber = Math.floor(diffInDays / 7);
-  console.log(weekNumber);
 
   return weekNumber;
 }
 
 function padForChart(arr) {
-  console.log(arr);
-  console.log("arr" + JSON.stringify(arr));
   if (typeof arr !== "object") return;
   const length = arr.length;
   const weekNumber = arr?.[0]

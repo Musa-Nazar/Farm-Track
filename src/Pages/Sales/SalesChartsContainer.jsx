@@ -5,7 +5,6 @@ import SalesTrendChart from "./SalesTrendChart";
 import chartDayFormater from "../../../utils/chartDayFormater";
 
 function SalesChartsContainer({ data }) {
-  console.log(data);
   const xml = (
     <div className="flex ml-[3.8rem] mr-[9.6rem] mt-[2.5rem] justify-between gap-[1rem] !bg-transparent max-md:flex-col max-md:mx-[3.1rem] max-md:gap-[2.5rem] mb-[2rem]">
       <SalesAndExpenseContainer cs="!ml-0 !mr-0 w-[60%] flex-none max-md:w-full relative before:rounded-[15px]">

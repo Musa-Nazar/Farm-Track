@@ -14,7 +14,7 @@ function FeaturePreview() {
       <h2 className="text-[#1B1B1B] font-[SF Pro Display] text-[3rem] font-bold leading-[283%] tracking-[0.06rem] mb-[4.1rem] max-md:text-[1.6rem] max-md:tracking-[0.032rem] max-md:leading-[146.809%] max-md:mb-[5.65rem] w-[128rem] max-w-[85%] mx-auto">
         SOME OF OUR AMAZING FEATURES
       </h2>
-      <div className="flex gap-[clamp(1rem,1.81%,2.6rem)] justify-between max-md:flex-col max-md:items-center max-md:gap-[5.657rem] w-[128rem] max-w-[85%] mx-auto">
+      <div className="flex gap-[clamp(1rem,1.81%,2.6rem)] justify-between max-md:flex-col max-md:items-center max-md:gap-[5.657rem] w-[128rem] max-w-[85%] mx-auto bring-into-view">
         <FeatureCard
           icon={icon1}
           cardHeading="Automated Tracking"

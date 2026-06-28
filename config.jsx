@@ -1,2 +1,2 @@
-const config = { apiDomain: "https://farm-track-backend.onrender.com" };
+const config = { apiDomain: "http://localhost:3000" };
 export default config;

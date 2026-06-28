@@ -18,7 +18,6 @@ function padForTotalIncome(arr) {
     months?.indexOf(arr?.[0]?.month) !== -1
       ? months?.indexOf(arr?.[0]?.month)
       : months?.indexOf(new Date().toLocaleString("en-US", { month: "short" }));
-  console.log(curMonthIndex);
   const pad = 6 - arrLength;
   const newArr = [...arr];
   for (let i = 0; i < pad; i++) {

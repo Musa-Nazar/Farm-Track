@@ -85,7 +85,6 @@ function InventoryHeader() {
           );
           const data = await response.json();
           if (!response.ok) throw { data, status: response?.status };
-          console.log(data?.entries);
           setSearchResults(data?.entries);
         } catch (err) {
           const errorMessage = err?.message || "Unable to perform operation";

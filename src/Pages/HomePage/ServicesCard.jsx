@@ -14,11 +14,11 @@ function ServicesCard({ head, text, image, reverse }) {
         </p>
       </div>
       <div
-        className={`w-[50%] max-md:w-full max-h-[490px] rounded-[1rem_1rem_8rem_1rem] overflow-hidden max-md:h-[14.1rem] relative max-md:min-h-[unset]`}
+        className={`w-[50%] max-md:w-full max-h-[490px] rounded-[1rem_1rem_8rem_1.5rem] overflow-hidden max-md:h-[14.1rem] relative max-md:min-h-[unset]`}
       >
         <img
           src={image}
-          className="w-full h-full block object-center object-cover  hover:scale-[1.1] transition-[scale,_filter] duration-75 ease-linear hover:grayscale-[50%]"
+          className="w-full h-full block object-bottom object-cover  hover:scale-[1.1] transition-[scale,_filter] duration-75 ease-linear hover:grayscale-[50%]"
         />
       </div>
     </div>

@@ -38,6 +38,7 @@ function DashboardNavbar() {
     tokenIsValid = true;
   } catch (error) {
     tokenIsValid = false;
+    return <Navigate to="/login"></Navigate>;
   }
   const userName = tokenIsValid ? userData.name : "";
   useEffect(() => {

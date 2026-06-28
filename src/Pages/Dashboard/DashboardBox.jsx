@@ -1,5 +1,4 @@
 function DashboardBox({ head, body, icon, val }) {
-  console.log(val);
   const xml = (
     <div className="w-[clamp(5rem,17.36111111111111vw,25rem)] min-h-[111px] rounded-[17.096px] bg-white box-shadow pl-[2.45rem] pt-[3.2rem] max-md:w-full blur-out">
       <div

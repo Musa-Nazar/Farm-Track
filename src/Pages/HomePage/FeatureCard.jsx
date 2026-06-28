@@ -1,6 +1,6 @@
 function FeatureCard({ icon, cardHeading, cardText, leading }) {
   return (
-    <div className="flex flex-col w-[29rem] min-h-[30.1rem] bg-[#FFF] shadow-[0px_4px_23px_-4px_rgba(0,0,0,0.20)] items-center pt-[3rem] max-md:w-full rounded-[1rem]">
+    <div className="flex flex-col w-[29rem] min-h-[30.1rem] bg-[#FFF] shadow-[0px_4px_23px_-4px_rgba(0,0,0,0.20)] items-center pt-[3rem] max-md:w-full rounded-[1rem] transition-all">
       <div className="w-[5rem] flex justify-center items-center aspect-square mb-[4.6rem] max-md:w-[5.9138rem]">
         <img
           src={icon}

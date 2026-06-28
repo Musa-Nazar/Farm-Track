@@ -18,7 +18,6 @@ import InventoryErrorUI from "../../LoaderUI/InventoryErrorUI";
 function Inventory() {
   const type = useSearchParams()[0].get("type");
   const { entries } = useLoaderData();
-  console.log(entries);
   const isTypeValid = type === "feed" || type === "livestock";
   if (!type || !isTypeValid)
     return <Navigate to="/inventory?type=feed"></Navigate>;
