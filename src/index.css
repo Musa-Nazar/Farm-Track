@@ -258,5 +258,5 @@ input[type="number"] {
   perspective: 3000px;
 }
 .bring-into-view div:hover {
-  transform: translate3d(0, 0, 50px);
+  transform: translateZ(50px);
 }
