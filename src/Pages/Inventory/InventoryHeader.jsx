@@ -1,7 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import search from "../../assets/search.svg";
 import Context from "../../Auth-context";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { get } from "../../../http";
+import Cookies from "universal-cookie";
+import config from "../../../config";
 function InventoryHeader() {
   const {
     method,
@@ -11,6 +14,9 @@ function InventoryHeader() {
     cleanInput,
     setCurrent,
     setSelectedData,
+    setSearchData,
+    searchData,
+    setSearchResults,
   } = useContext(Context);
   const navigate = useNavigate();
   const type = useSearchParams()[0].get("type");
@@ -33,14 +39,14 @@ function InventoryHeader() {
   function editInventoryUI() {
     if (current.id) {
       setMethod("edit");
-      const split = /[0-9]*/g,
-        value = current.cost.toString().match(split),
-        newArray = value.filter((data) => {
-          if (data !== "") {
-            return data;
-          }
-        }),
-        number = newArray.join("");
+      const split = /[0-9]*/g;
+      const value = current.cost.toString().match(split);
+      const newArray = value.filter((data) => {
+        if (data !== "") {
+          return data;
+        }
+      });
+      const number = newArray.join("");
       setFormData((prevState) => ({
         ...prevState,
         name: current.name,
@@ -50,6 +56,58 @@ function InventoryHeader() {
       }));
     }
   }
+
+  // HANDLE SEARCH DATA
+  function handleSearchData({ target }) {
+    const { value } = target;
+    setSearchData(value);
+  }
+
+  let searchTimeOut;
+  // USE EFFECT
+  useEffect(() => {
+    const cookie = new Cookies();
+    const token = cookie.get("token");
+    setSearchResults("loading");
+    searchTimeOut = setTimeout(() => {
+      if (!searchData) return;
+      (async function () {
+        try {
+          const response = await fetch(
+            `${config.apiDomain}/api/v1/inventory/entries?type=${type}&action=${searchData}`,
+            {
+              headers: {
+                "Content-type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+              signal: AbortSignal.timeout(10000),
+            },
+          );
+          const data = await response.json();
+          if (!response.ok) throw { data, status: response?.status };
+          console.log(data?.entries);
+          setSearchResults(data?.entries);
+        } catch (err) {
+          const errorMessage = err?.message || "Unable to perform operation";
+          const error = {
+            name: err?.name ?? "Unknown error",
+            message:
+              err?.name === "TimeoutError"
+                ? "This request took too long"
+                : errorMessage,
+            status: err?.status ?? 500,
+          };
+          setSearchResults("error");
+          return error;
+        }
+      })();
+    }, 2000);
+    return () => {
+      clearTimeout(searchTimeOut);
+    };
+  }, [searchData]);
+
+  // HANDLE SELECT UI
   const xml = (
     <>
       <div className="flex justify-between items-centerb mt-[5.7rem] mb-[2.9rem]">
@@ -62,7 +120,6 @@ function InventoryHeader() {
             id="dataType"
             className="outline-0 w-full text-black font-[Manrope] text-[1.5rem] font-medium leading-[271.789%]"
             onChange={handleSelectedData}
-            value={type}
           >
             <option value="feed" className="w-full py-[5rem] block">
               Feed
@@ -82,6 +139,7 @@ function InventoryHeader() {
             id="searchInventory"
             required
             className="w-[23.7rem] h-[4rem] border-[0.3px] border-solid border-[rgba(0,0,0,0.1)] outline-0 peer indent-[3rem] val text-[1.6rem] poppins"
+            onChange={handleSearchData}
           />
           <label
             htmlFor="searchInventory"

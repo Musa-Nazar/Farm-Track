@@ -21,8 +21,8 @@ function InventoryTable() {
     setMethod,
     selectedData,
     liveStockData,
-    setLiveStockData,
-    setFeedData,
+    searchData,
+    searchResults,
   } = useContext(Context);
   // SUBMIT
   const submit = useSubmit();
@@ -135,37 +135,97 @@ function InventoryTable() {
             <th className={theadStyle}>Date</th>
           </tr>
         </thead>
-        <tbody>
-          {state !== "loading" && tableData}
-          {selectedData === "feed" &&
-            !method &&
-            feedData.length === 0 &&
-            state !== "loading" && (
+        {/* NORMAL CASE */}
+        {!searchData && (
+          <tbody>
+            {state !== "loading" && tableData}
+            {selectedData === "feed" &&
+              !method &&
+              feedData.length === 0 &&
+              state !== "loading" && (
+                <tr>
+                  <td className="w-full text-center poppins text-[2rem] text-black/50 py-[1.5rem]">
+                    No feed data currently
+                  </td>
+                </tr>
+              )}
+            {selectedData === "livestock" &&
+              !method &&
+              state !== "loading" &&
+              liveStockData.length === 0 && (
+                <tr>
+                  <td className="w-full text-center poppins text-[2rem] text-black/50 py-[1.5rem]">
+                    No livestock data currently
+                  </td>
+                </tr>
+              )}
+            {state === "loading" && (
               <tr>
-                <td className="w-full text-center poppins text-[2rem] text-black/50 py-[1.5rem]">
-                  No feed data currently
+                <td className="w-full py-[2rem] grid place-items-center">
+                  <div className="border-[#61A061] border-solid border-[1rem] border-t-transparent rotate rounded-[50%] w-[5rem] aspect-square"></div>
                 </td>
               </tr>
             )}
-          {selectedData === "livestock" &&
-            !method &&
-            state !== "loading" &&
-            liveStockData.length === 0 && (
-              <tr>
-                <td className="w-full text-center poppins text-[2rem] text-black/50 py-[1.5rem]">
-                  No livestock data currently
-                </td>
-              </tr>
+            <InventoryTableInput />
+          </tbody>
+        )}
+        {/* WITH SEARCH */}
+        {searchData && (
+          <>
+            {searchResults === "loading" && (
+              <tbody>
+                <tr>
+                  <td className="w-full py-[2rem] grid place-items-center">
+                    <div className="border-[#61A061] border-solid border-[1rem] border-t-transparent rotate rounded-[50%] w-[5rem] aspect-square"></div>
+                  </td>
+                </tr>
+              </tbody>
             )}
-          {state === "loading" && (
-            <tr>
-              <td className="w-full py-[2rem] grid place-items-center">
-                <div className="border-[#61A061] border-solid border-[1rem] border-t-transparent rotate rounded-[50%] w-[5rem] aspect-square"></div>
-              </td>
-            </tr>
-          )}
-          <InventoryTableInput />
-        </tbody>
+            {searchResults === "error" && (
+              <tbody>
+                <tr>
+                  <td className="w-full py-[2rem] grid place-items-center">
+                    <p className="text-center text-red-500 poppins text-[1.8rem]">
+                      Unable to get this data (please enter correct action)
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            )}
+            {searchResults !== "loading" &&
+              searchResults !== "error" &&
+              searchResults?.length === 0 && (
+                <tbody>
+                  <tr>
+                    <td className="w-full py-[2rem] grid place-items-center">
+                      <p className="text-center text-gray-500 poppins text-[1.8rem]">
+                        No data with {searchData} action available
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              )}
+            {searchResults !== "loading" &&
+              searchResults !== "error" &&
+              searchResults && (
+                <tbody>
+                  {searchResults?.map((item) => (
+                    <InventoryTableRow
+                      key={item.id}
+                      id={item._id}
+                      name={item.name}
+                      action={item.action}
+                      quantity={`${item.quantity}kg`}
+                      cost={formatNumber(item.cost)}
+                      date={formatDate(item.createdAt)}
+                      select={select}
+                      handlePopup={handlePopup}
+                    />
+                  ))}
+                </tbody>
+              )}
+          </>
+        )}
       </table>
       {popup && (
         <div

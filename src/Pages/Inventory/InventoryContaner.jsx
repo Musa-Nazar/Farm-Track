@@ -14,11 +14,13 @@ function InventoryContaner({ data }) {
   const type = useSearchParams()[0].get("type");
   // NAVIGATION STATE
   const { state } = useNavigation();
-  const [changingState, setChangingState] = useState(state);
   // INITIALIZE CURRENT
   const [current, setCurrent] = useState({
     id: null,
   });
+  // SEARCH DATA
+  const [searchData, setSearchData] = useState("");
+  const [searchResults, setSearchResults] = useState(null);
   // INITIALIZE SELECTED DATA,METHOD, and FORMDATA
   const [selectedData, setSelectedData] = useState(type);
   const [method, setMethod] = useState(null);
@@ -70,6 +72,10 @@ function InventoryContaner({ data }) {
           setSelectedData,
           liveStockData,
           setLiveStockData,
+          searchData,
+          setSearchData,
+          searchResults,
+          setSearchResults,
         }}
       >
         <InventoryHeader />
