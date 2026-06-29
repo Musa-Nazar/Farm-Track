@@ -6,14 +6,14 @@ function Services() {
   const xml = (
     <>
       <div
-        className="flex w-full h-[255px] max-md:px-[0] max-md:py-[0] justify-center items-center gap-[10px] services-overlay max-md:h-[6.6064rem]"
+        className="flex w-full h-[255px] max-lg:px-[0] max-lg:py-[0] justify-center items-center gap-[10px] services-overlay max-lg:h-[15rem]"
         id="services"
       >
-        <h2 className="text-white text-[30px] font-bold leading-[67px] tracking-[2.4px] max-md:text-[1.6rem] text-center">
+        <h2 className="text-white text-[30px] font-bold leading-[67px] tracking-[2.4px] max-lg:text-[1.6rem] text-center">
           OUR SERVICES
         </h2>
       </div>
-      <div className="flex flex-col bg-[#F4F4F4] pt-[6.9rem] gap-[10rem] pb-[15.2rem] max-md:gap-[4.3rem] max-md:pt-[4.994rem] max-md:pb-[6.1rem]">
+      <div className="flex flex-col bg-[#F4F4F4] pt-[6.9rem] gap-[10rem] pb-[15.2rem] max-lg:gap-[3rem] max-lg:pt-[4.994rem] max-lg:pb-[6.1rem]">
         <ServicesCard
           image={image_1}
           head="Inventory Tracking"

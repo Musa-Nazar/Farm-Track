@@ -237,6 +237,19 @@ input[type="number"] {
   to {
     max-width: 100vw;
   }
+  100% {
+    white-space: wrap;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .typing {
+    animation: none;
+    white-space: wrap;
+  }
+  .rise {
+    animation: none;
+  }
 }
 
 .rise {
