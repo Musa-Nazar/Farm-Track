@@ -141,7 +141,7 @@ input[type="number"] {
   .bgl {
     background: url("./assets/signupimage.png") #ffffff -67.733px -467.035px /
       121.348% 100% no-repeat;
-    padding-top: clamp(1rem, 20.44334975369458vh, 16.6rem);
+    padding-top: clamp(1rem, 19.1vh, 16.6rem);
   }
 }
 @media (max-height: 600px) {
@@ -159,12 +159,18 @@ input[type="number"] {
     margin-block: 0;
   }
 }
-@media (max-height: 650px) and (max-width: 768) {
+@media (max-height: 650px) and (max-width: 768px) {
   .svg {
     translate: 0 -5rem;
   }
   .bgl {
     background-position: -67.733px -400px;
+    padding-top: 6rem;
+  }
+}
+@media (max-height: 700px) and (max-width: 768px) {
+  .bgl {
+    padding-top: 8rem;
   }
 }
 /* ANIMATION */
@@ -244,8 +250,13 @@ input[type="number"] {
 
 @media screen and (max-width: 768px) {
   .typing {
-    animation: none;
+    animation: backCheck 0.5s forwards linear var(--delay) alternate;
     white-space: wrap;
+    background: linear-gradient(to right, #fff, #61a061, #fff);
+    background-position: -300px;
+    background-clip: text;
+    color: transparent;
+    filter: blur(3px);
   }
   .rise {
     animation: none;
@@ -255,12 +266,35 @@ input[type="number"] {
 .rise {
   animation: rise 0.5s forwards ease 2s;
   overflow: hidden;
-  translate: 0px 100%;
+  translate: 0px 105%;
 }
 
 @keyframes rise {
   to {
     translate: 0px 0px;
+  }
+}
+
+@keyframes backCheck {
+  50% {
+    background: linear-gradient(to right, #61a061, #fff);
+    background-position: -150px;
+    background-clip: text;
+    color: transparent;
+    filter: blur(2px);
+  }
+  90% {
+    background: linear-gradient(to right, #61a061, #fff);
+    background-position: 0px;
+    background-clip: text;
+    color: transparent;
+    filter: blur(1px);
+  }
+  100% {
+    background: unset;
+    background-clip: text;
+    color: #fff;
+    filter: blur(0px);
   }
 }
 

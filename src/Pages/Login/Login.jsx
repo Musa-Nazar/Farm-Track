@@ -23,7 +23,7 @@ function Login() {
         {/* FORM */}
         <LoginForm />
         <svg
-          className="absolute w-full z-0 hidden max-md:block"
+          className="absolute w-full z-0 hidden max-md:block "
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 375 646"
           fill="none"

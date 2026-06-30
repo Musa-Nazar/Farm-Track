@@ -3,7 +3,7 @@ function Hero() {
   const xml = (
     <section className="w-full h-[65.8rem] hero flex max-md:h-[unset] max-md:pb-[4rem]">
       <div className="flex flex-col gap-[5rem] mr-auto mt-[9.9rem] items-start max-md:mt-[4rem] max-md:gap-[1rem]  w-[128rem] max-w-[85%] mx-auto max-md:text-center max-md:mx-auto max-md:max-w-[91%] max-md:min-h-[calc(35dvh-5rem)] max-md:justify-center max-md:items-stretch">
-        <h1 className="text-[#fff] text-[7.2rem] leading-0 font-[500] max-md:text-white  max-md:text-[3rem] max-md:leading-[32.388px] max-md:w-[unset]">
+        <h1 className="text-[#fff] text-[7.2rem] leading-0 font-[500] max-md:text-white  max-md:text-[clamp(2rem,7.25vw,3rem)] max-md:leading-[32.388px] max-md:w-[unset]">
           <span
             className="typing leading-[10.3rem] max-md:leading-[calc(3.5rem)] break-all"
             style={{ "--delay": "0s" }}
@@ -19,7 +19,7 @@ function Hero() {
           </span>
         </h1>
         <p
-          className="text-[#fff] poppins text-[2.1rem] font-[400] tracking-[0.042rem] leading-[200%] max-md:text-[1.4rem] max-md:tracking-[0.02rem] typing"
+          className="text-[#fff] poppins text-[2.1rem] font-[400] tracking-[0.042rem] leading-[200%] max-md:text-[clamp(1.25rem,2.66vw,1.4rem)] max-md:tracking-[0.02rem] typing"
           style={{ "--delay": "1s" }}
         >
           Track your stock, sales, and expenses in one place. <br />

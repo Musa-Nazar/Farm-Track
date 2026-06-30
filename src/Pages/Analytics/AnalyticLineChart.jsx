@@ -19,26 +19,32 @@ const formatYAxis = (value) => {
 };
 
 function AnalyticLineChart({ monthlyIncome }) {
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setScreenSize(window.innerWidth);
+    });
+    return () => {
+      window.addEventListener("resize", () => {
+        setScreenSize(window.innerWidth);
+      });
+    };
+  }, [screenSize]);
   return (
     <>
       <h2 className="text-black poppins text-[20px] font-semibold leading-normal mb-[1rem] mt-[0.5rem]">
         Net Income
       </h2>
-      <ResponsiveContainer width="100%" height={380}>
+      <ResponsiveContainer
+        height={380}
+        width={screenSize > 768 ? "100%" : "200%"}
+        style={{ marginLeft: `${screenSize > 768 ? "0" : "-20px"}` }}
+      >
         <LineChart
           data={monthlyIncome}
           margin={{ left: 0, right: 0, top: 0, bottom: 0 }}
         >
-          {/* {[...Array(7)].map((i, index) => {
-            return (
-              <ReferenceLine
-                key={index}
-                y={(index + 1) * 5000}
-                stroke="#EBEBEB"
-                strokeDasharray="0 0"
-              />
-            );
-          })} */}
           <CartesianGrid
             vertical={false}
             strokeOpacity={1}

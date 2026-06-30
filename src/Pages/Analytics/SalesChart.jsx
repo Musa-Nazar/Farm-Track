@@ -9,10 +9,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import padForTotalIncome from "../../../utils/padForTotalIncome";
+import { useEffect, useState } from "react";
 
 const renderLegend = () => {
   return (
-    <div className="flex items-center gap-4 mt-4 justify-center">
+    <div className="flex items-center gap-4 mt-4 justify-center max-md:justify-start max-md:pl-[1rem]">
       <div className="flex items-center gap-2">
         <div className="w-[1.3rem] h-[1.3rem] bg-green-900 rounded-full"></div>
         <span className="text-[1.6rem] text-black text-center poppins">
@@ -29,13 +30,30 @@ const renderLegend = () => {
   );
 };
 const SalesChart = ({ analyticsChartData }) => {
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setScreenSize(window.innerWidth);
+    });
+    return () => {
+      window.addEventListener("resize", () => {
+        setScreenSize(window.innerWidth);
+      });
+    };
+  }, [screenSize]);
+
   return (
     <>
-      <h2 className="text-black text-center poppins text-[20px] font-semibold leading-[100%] w-[23.7rem] h-[17px] ml-[2rem] mt-[0.5rem] mb-[4.316rem] max-md:w-full max-md:mx-0">
+      <h2 className="text-black text-center poppins text-[20px] font-semibold leading-[100%] w-[23.7rem] h-[17px] ml-[2rem] mt-[0.5rem] mb-[4.316rem] max-md:w-[unset] max-md:mx-0 max-md:ml-0 max-md:text-left">
         Sales and Purchase
       </h2>
-      <div className="max-md:ml-[-2rem] w-full">
-        <ResponsiveContainer width="100%" height={397}>
+      <div className="w-full overflow-scroll hide-scrollbar">
+        <ResponsiveContainer
+          width={screenSize > 768 ? "100%" : "200%"}
+          height={397}
+          style={{ marginLeft: `${screenSize > 768 ? "0" : "-30px"}` }}
+        >
           <BarChart
             data={analyticsChartData}
             margin={{ top: 0, right: 0, left: 20, bottom: 30 }}

@@ -1,3 +1,6 @@
+html:has(.toggle:checked) {
+  overflow-y: hidden;
+}
 @media screen and (max-width: 768px) {
   html::-webkit-scrollbar {
     display: none;

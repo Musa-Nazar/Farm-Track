@@ -121,7 +121,7 @@ function InventoryTable() {
         });
   const xml = (
     <div className="w-full overflow-x-scroll hide-scrollbar">
-      <table className="w-full max-md:w-[80rem] mt-[2.5rem] ">
+      <table className="w-full max-md:w-[100rem] mt-[2.5rem] ">
         <thead className="w-full border-b-[1px] border-b-solid border-b-[rgba(0,0,0,0.60)]">
           <tr className="grid grid-cols-[1fr_1fr_1fr_1fr_1fr_0.3fr]">
             <th className={`${theadStyle}`}>Name</th>

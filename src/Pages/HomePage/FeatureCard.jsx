@@ -9,7 +9,7 @@ function FeatureCard({ icon, cardHeading, cardText, leading }) {
         />
       </div>
       <h2
-        className={`text-black text-center sf-bold text-[clamp(1.8rem,2.1vw,2.9rem)] font-bold leading-[137.931%] mb-[2.9rem] max-xl:leading-[2.2rem] max-md:text-[3rem] max-md:tracking-[0.05rem] max-md:leading-[137.931%]`}
+        className={`text-black text-center sf-bold text-[clamp(1.8rem,2.1vw,2.9rem)] font-bold leading-[137.931%] mb-[2.9rem] max-xl:leading-[2.2rem] max-md:text-[clamp(2rem,7.25vw,3rem)] max-md:tracking-[0.05rem] max-md:leading-[137.931%]`}
       >
         {cardHeading}
       </h2>

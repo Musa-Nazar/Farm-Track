@@ -56,7 +56,7 @@ function InventoryContaner({ data }) {
     });
   }
   const xml = (
-    <div className="flex flex-col mx-[2.8rem] bg-[#FFF] rounded-[1.5rem] min-h-[89.3rem]">
+    <div className="flex flex-col mx-[2.8rem] max-md:max-w-[91%] max-md:mx-auto bg-[#FFF] rounded-[1.5rem] min-h-[89.3rem]">
       <Context.Provider
         value={{
           feedData,

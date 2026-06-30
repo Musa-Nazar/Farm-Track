@@ -41,11 +41,11 @@ function Analytic() {
               <AnalyticsTileErrorUI />
             ) : (
               <>
-                <AnalyticContainer>
-                  <h2 className="text-black pl-[2.05rem] poppins text-[3rem] font-semibold leading-normal">
+                <AnalyticContainer cs="max-md:mx-auto max-md:max-w-[91%]">
+                  <h2 className="text-black pl-[2.05rem] max-md:text-[2.2rem] max-md:pl-0 poppins text-[3rem] font-semibold leading-normal max-md:pt-[2rem]">
                     Analytics
                   </h2>
-                  <div className="flex justify-between mt-[2.6rem] gap-[1rem] max-md:flex-col">
+                  <div className="flex justify-between mt-[2.6rem] gap-[2rem] max-md:overflow-scroll hide-scrollbar">
                     <AnalyticsCard
                       head="Livestock Sales"
                       unit="count"
@@ -84,15 +84,15 @@ function Analytic() {
                     />
                   </div>
                 </AnalyticContainer>
-                <div className="flex max-md:flex-col gap-[3.3rem] justify-between pl-[3.1rem] pr-[8.8rem] max-md:px-[3.1rem] mb-[2rem]">
-                  <AnalyticContainer cs="mt-[3.6rem] w-[clamp(3rem,46vw,63.4rem)] max-md:w-full flex-none !mx-0">
+                <div className="flex max-md:flex-col gap-[3.3rem] justify-between pl-[3.1rem] pr-[8.8rem] mb-[2rem] max-md:mx-auto max-md:max-w-[91%] max-md:px-0 max-md:justify-baseline">
+                  <AnalyticContainer cs="mt-[3.6rem] w-[clamp(3rem,46vw,63.4rem)] max-md:w-full flex-none max-md:mx-0 !mx-0 ">
                     <SalesChart
                       analyticsChartData={padForChart(
                         data?.data?.salesAndPurchase,
                       )}
                     />
                   </AnalyticContainer>
-                  <AnalyticContainer cs="mt-[3.6rem] w-full !mx-[0rem] max-md:mt-[0.3rem]">
+                  <AnalyticContainer cs="mt-[3.6rem] w-full !mx-[0rem] max-md:mt-[0.3rem] max-md:overflow-scroll hide-scrollbar">
                     <AnalyticLineChart
                       monthlyIncome={padForTotalIncome(
                         data?.data?.monthlyIncome,

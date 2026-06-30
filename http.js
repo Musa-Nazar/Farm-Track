@@ -52,6 +52,7 @@ class http {
           Authorization: `Bearer ${token}`,
           "Content-type": "application/json",
         },
+        cache: "force-cache",
       });
       const data = await response.json();
       if (!response.ok) throw data;

@@ -28,10 +28,10 @@ function SalesAndExpense() {
             ) : (
               <>
                 <SalesAndExpenseContainer>
-                  <h2 className="text-black poppins text-[3rem] font-semibold leading-normal">
+                  <h2 className="text-black poppins text-[3rem] font-semibold leading-normal max-md:text-[2rem]">
                     Sales & Expenses
                   </h2>
-                  <div className="flex justify-between max-md:flex-col mt-[2.55rem] gap-[2rem]">
+                  <div className="flex justify-between max-md:overflow-scroll hide-scrollbar mt-[2.55rem] gap-[2rem] max-md:py-[1rem]">
                     <SalesAndExpenseBox
                       head="Total Sales"
                       body={numberFormatter(data?.data?.totalSales)}

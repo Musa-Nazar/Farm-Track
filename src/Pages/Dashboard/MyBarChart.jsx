@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   ResponsiveContainer,
   AreaChart,
@@ -6,10 +7,22 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  ReferenceLine,
 } from "recharts";
 
 function MyBarChart({ dashboardData }) {
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setScreenSize(window.innerWidth);
+    });
+    return () => {
+      window.addEventListener("resize", () => {
+        setScreenSize(window.innerWidth);
+      });
+    };
+  }, [screenSize]);
+
   const saleData = dashboardData?.salesData;
   function getLastSevenDaysSales() {
     const chartData = [];
@@ -47,15 +60,15 @@ function MyBarChart({ dashboardData }) {
   };
   const xml = (
     <>
-      <div className="flex mb-[0.35rem] justify-between">
-        <h2 className="text-black poppins text-[2rem] font-semibold leading-normal ml-[4.3rem]">
+      <div className="flex mb-[0.35rem] justify-between hide-scrollbar overflow-scroll">
+        <h2 className="text-black poppins text-[2rem] font-semibold leading-normal ml-[4.3rem] max-md:ml-0">
           Sales Trend
         </h2>
       </div>
       <ResponsiveContainer
-        width="100%"
+        width={screenSize > 768 ? "100%" : "400%"}
         minHeight={480}
-        className="mb-[2rem] pl-[2.5rem] mt-[1.8rem]"
+        className="mb-[2rem] pl-[2.5rem] mt-[1.8rem] max-md:p-0"
       >
         <AreaChart data={getLastSevenDaysSales()}>
           <CartesianGrid
@@ -100,6 +113,7 @@ function MyBarChart({ dashboardData }) {
               fontWeight: "400",
               lineHeight: "normal",
             }}
+            dx={screenSize > 768 ? 0 : -15}
           />
           <Tooltip content={CustomTooltip} />
         </AreaChart>

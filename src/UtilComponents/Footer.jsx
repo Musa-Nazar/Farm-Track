@@ -6,7 +6,7 @@ import envelope from "../assets/envelope.svg";
 import { Link } from "react-router-dom";
 function Footer() {
   const xml = (
-    <footer className="flex-col bg-[#61A061] py-[8.6rem] w-full  relative max-md:pb-[5rem] max-md:pt-[0.3rem] max-md:px-[1.6rem] max-md:min-h-[19.6rem]">
+    <footer className="flex-col bg-[#61A061] py-[8.6rem] w-full  relative max-md:pb-[5rem] max-md:pt-[0.3rem]  max-md:min-h-[19.6rem]">
       <div className="flex items-start justify-between max-md:flex-wrap max-md:gap-0 w-[128rem] max-w-[85%] mx-auto max-md:w-[40rem] max-md:max-w-[91%] max-md:flex-col max-md:items-stretch max-md:pt-[2rem]">
         <div className="flex flex-col  items-start max-md:w-full max-md:flex-none">
           <div className="flex mb-[2rem] items-center max-md:mb-[0.503rem]">

@@ -2,7 +2,7 @@ import FAQCard from "./FAQCard";
 
 function FAQ() {
   const xml = (
-    <div className="bg-[#F4F4F4] flex flex-col pb-[6.5rem] max-md:pb-[5.659rem] max-md:px-[1.6rem] ">
+    <div className="bg-[#F4F4F4] flex flex-col pb-[6.5rem] max-md:pb-[5.659rem] max-md:px-0 ">
       <h2 className="text-[#000] text-[3.5rem] font-bold sf-bold leading-[191.429%] mb-[4rem]  max-md:text-[12px] max-md:leading-[18.574px] max-md:text-center max-md:mb-[2.5rem] w-[128rem] max-w-[85%] mx-auto">
         FREQUENTLY ASKED QUESTIONS (FAQ)
       </h2>

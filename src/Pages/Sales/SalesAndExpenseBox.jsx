@@ -1,6 +1,6 @@
 function SalesAndExpenseBox({ head, body }) {
   const xml = (
-    <div className="w-[clamp(10rem,21vw,29.7rem)] min-h-[16.5rem] rounded-[1.5rem] bg-[#F7FBF7] shadow-[0px_4px_25px_-4px_rgba(0,0,0,0.15)] max-md:w-full px-[1rem]">
+    <div className="w-[clamp(10rem,21vw,29.7rem)] min-h-[16.5rem] rounded-[1.5rem] bg-[#F7FBF7] shadow-[0px_4px_25px_-4px_rgba(0,0,0,0.15)] px-[1rem] max-md:flex-none max-md:w-[25rem] max-md:shadow-[0px_1px_2px_rgba(0,0,0,.4)]">
       <h2 className="text-black poppins text-[2.5rem] font-medium leading-normal pt-[0.9rem] text-center mb-[3.6rem]">
         {head}
       </h2>
