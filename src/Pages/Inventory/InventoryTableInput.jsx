@@ -101,11 +101,13 @@ function InventoryTableInput() {
       "text-[rgba(0,0,0,0.6)] text-center poppins font-[500] text-[2rem] leading-[150%] mt-[1.8rem] mb-[1.5rem] flex items-center justify-center",
     buttonStyle =
       "flex justify-center w-[13.3rem] py-[0.5rem] flex-col items-center gap-[1.3589rem] rounded-[0.6777rem] bg-[#61A061] cursor-pointer";
+  // METHOD FORMATS
+  const methodFormat = ["add", "edit"];
   // COMPONENT
   const xml = (
     <tr
       className={`w-full grid grid-cols-5 border-b-[0.1rem] border-b-solid border-b-[rgba(0,0,0,0.6)] ${
-        method ? "" : "hidden"
+        methodFormat.includes(method) ? "" : "hidden"
       }`}
     >
       {/* NAME */}

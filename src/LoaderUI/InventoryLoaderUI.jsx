@@ -2,7 +2,7 @@ import search from "../assets/search.svg";
 
 function InventoryLoaderUI() {
   const xml = (
-    <div className="flex flex-col mx-[2.8rem] bg-[#FFF] rounded-[1.5rem] min-h-[89.3dvh]">
+    <div className="flex flex-col mx-[2.8rem] bg-[#FFF] rounded-[1.5rem] min-h-[89.3dvh] max-md:w-[91%] max-md:mx-auto">
       <div className="flex justify-between items-centerb mt-[5.7rem] mb-[2.9rem]">
         <h2 className="text-[#000] poppins text-[3rem] font-[600] leading-normal  ml-[2.6rem] max-md:text-[2.2rem] max-md:leading-[4.2rem] max-md:ml-[1rem]">
           Inventory

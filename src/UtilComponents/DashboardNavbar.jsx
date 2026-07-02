@@ -193,7 +193,7 @@ function DashboardNavbar() {
                 ></label>
                 <div className="w-[30rem] absolute z-[9999] bg-white h-dvh flex flex-col translate-x-[-100%] overflow-scroll hide-scrollbar">
                   <div className="logo flex justify-center items-center  mb-[1rem] mt-[2rem]">
-                    <div className="w-[15rem] aspect-square rounded-[50%] bg-[#c6c6c6] grid place-items-center">
+                    <div className="w-[10rem] aspect-square rounded-[50%] bg-[#c6c6c6] grid place-items-center">
                       {userData?.path ? (
                         <img
                           className="w-[80%] aspect-square rounded-[50%]"

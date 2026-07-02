@@ -76,28 +76,31 @@ function InventoryTable() {
         quantity: parseInt(current.quantity),
       }));
     }
-    if (data?.sucess && data?.method === "delete" && method === "") {
-      setMethod("");
-      setPopup(false);
-    }
-  }, [current, data]);
+  }, [current]);
   // DELETE INVENTORY
   const [popup, setPopup] = useState(false);
   function handlePopup() {
     setPopup(true);
-    setMethod("");
+    setMethod("delete");
   }
+
+  // DELETE FUNCTION
   async function deleteInventory() {
     if (!current.id)
       return toast.error("No Entry is focused on", {
         className: "text-[1.6rem] poppins",
       });
-    submit({ id: current.id, method: "delete" }, { method: "post" });
+    await submit({ id: current.id, method: "delete" }, { method: "post" });
+    setMethod("");
+    setPopup(false);
   }
+
+  // CANCEL FUNCTION
   function cancel() {
     setPopup(false);
     setCurrent({ id: null });
   }
+
   // TABLE DATA
   const tableData =
     selectedData === "feed"
