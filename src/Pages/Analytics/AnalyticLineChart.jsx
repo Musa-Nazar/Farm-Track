@@ -67,6 +67,7 @@ function AnalyticLineChart({ monthlyIncome }) {
             tickCount={15} // Packs the horizontal rows tighter
             tickFormatter={formatYAxis} // Changes raw digits to clean M/K text
             style={{ fontSize: "12px" }} // Ensures font size isn't blowing out the boundaries
+            dx={screenSize < 1281 ? -20 : 0}
           />
           {/* <YAxis
             dataKey="totalIncome"

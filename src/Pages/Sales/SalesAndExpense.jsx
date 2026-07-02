@@ -27,11 +27,11 @@ function SalesAndExpense() {
               <AnalyticsTileErrorUI />
             ) : (
               <>
-                <SalesAndExpenseContainer cs="max-md:min-h-[unset]">
-                  <h2 className="text-black poppins text-[3rem] font-semibold leading-normal max-md:text-[2rem]">
+                <SalesAndExpenseContainer cs="max-md:min-h-[unset] max-[1281px]:mx-[1rem] max-[1281px]:px-[1rem]">
+                  <h2 className="text-black poppins text-[3rem] font-semibold leading-normal max-md:text-[2rem] max-[1281px]:text-[2.5rem] ">
                     Sales & Expenses
                   </h2>
-                  <div className="flex justify-between max-md:overflow-scroll hide-scrollbar mt-[2.55rem] gap-[2rem] max-md:py-[1rem]">
+                  <div className="flex justify-between max-md:overflow-scroll hide-scrollbar mt-[2.55rem] gap-[2rem] max-md:py-[1rem] max-[1281px]:mt-[2rem]">
                     <SalesAndExpenseBox
                       head="Total Sales"
                       body={numberFormatter(data?.data?.totalSales)}

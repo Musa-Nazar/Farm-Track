@@ -42,7 +42,7 @@ function Analytic() {
             ) : (
               <>
                 <AnalyticContainer cs="max-md:mx-auto max-md:max-w-[91%]">
-                  <h2 className="text-black pl-[2.05rem] max-md:text-[2.2rem] max-md:pl-0 poppins text-[3rem] font-semibold leading-normal max-md:pt-[2rem]">
+                  <h2 className="text-black pl-[2.05rem] max-md:text-[2.2rem] max-md:pl-0 poppins text-[3rem] font-semibold leading-normal max-md:pt-[2rem] max-[1281px]:text-[2rem]">
                     Analytics
                   </h2>
                   <div className="flex justify-between mt-[2.6rem] gap-[2rem] max-md:overflow-x-scroll hide-scrollbar max-md:pb-[0.1rem]">
@@ -84,8 +84,8 @@ function Analytic() {
                     />
                   </div>
                 </AnalyticContainer>
-                <div className="flex max-md:flex-col gap-[3.3rem] justify-between pl-[3.1rem] pr-[8.8rem] mb-[2rem] max-md:mx-auto max-md:max-w-[91%] max-md:px-0 max-md:justify-baseline">
-                  <AnalyticContainer cs="mt-[3.6rem] w-[clamp(3rem,46vw,63.4rem)] max-md:w-full flex-none max-md:mx-0 !mx-0 ">
+                <div className="flex max-md:flex-col gap-[3.3rem] justify-between pl-[3.1rem] pr-[8.8rem] mb-[2rem] max-md:mx-auto max-md:max-w-[91%] max-md:px-0 max-md:justify-baseline max-[1281px]:px-[1rem] max-[1281px]:gap-[1rem]">
+                  <AnalyticContainer cs="mt-[3.6rem] w-[clamp(3rem,46vw,63.4rem)] max-md:w-full flex-none max-md:mx-0 !mx-0 max-[1281px]:px-[1rem] ">
                     <SalesChart
                       analyticsChartData={padForChart(
                         data?.data?.salesAndPurchase,
