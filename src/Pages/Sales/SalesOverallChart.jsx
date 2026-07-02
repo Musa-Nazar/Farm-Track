@@ -43,12 +43,11 @@ function SalesOverallChart({ data }) {
       : { name: type, sales: 0, expenses: 0, loss: 0 },
   ];
   return (
-    <div className="w-full h-[46.3rem] flex justify-center items-center hide-scrollbar overflow-scroll max-md:justify-baseline">
+    <div className="w-full h-[46.3rem] flex justify-center items-center hide-scrollbar overflow-scroll max-md:justify-start">
       <ResponsiveContainer
         width={screenSize > 768 ? "100%" : "200%"}
         height="100%"
         className="shrink-0"
-        style={{ marginLeft: `${screenSize > 768 ? "0" : "400px"}` }}
       >
         <BarChart
           data={!!data.length ? data : stadData}
