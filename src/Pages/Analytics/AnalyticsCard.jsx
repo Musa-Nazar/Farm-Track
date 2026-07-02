@@ -4,7 +4,7 @@ import { useMainContext } from "../../../MainContext";
 function AnalyticsCard({ head, cs, poultry, fish, unit, type }) {
   const xml = (
     <div
-      className={`w-[clamp(2rem,23vw,32rem)] max-md:w-[25rem] max-md:flex-none max-md:shadow-[0px_1px_5px_rgba(0,0,0,.1)] min-h-[17rem] rounded-[1.5rem] bg-[#F7FBF7] shadow-[0px_4px_25px_10px_rgba(0,0,0,0.10)] pt-[1.4rem] gap-[2.4rem] max-md:px-[1rem] max-md:min-h-[unset] max-md:py-[2rem] max-[1281px]:max-w-[30%] max-[1281px]:gap-[1rem] max-[1281px]:px-[1rem] ${cs}`}
+      className={`w-[clamp(2rem,23vw,32rem)] max-md:w-[25rem] max-md:flex-none max-md:shadow-[0px_1px_5px_rgba(0,0,0,.1)] min-h-[17rem] rounded-[1.5rem] bg-[#F7FBF7] shadow-[0px_4px_25px_10px_rgba(0,0,0,0.10)] pt-[1.4rem] gap-[2.4rem] max-md:px-[1rem] max-md:min-h-[unset] max-md:py-[2rem] max-md:max-w-[unset] max-[1281px]:max-w-[30%] max-[1281px]:gap-[1rem] max-[1281px]:px-[1rem] ${cs}`}
     >
       <h3 className="text-black text-center font-poppins text-[2rem] font-[500] leading-[100%] max-[1281px]:text-[1.8rem]">
         {head}
