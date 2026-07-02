@@ -61,14 +61,14 @@ function MyBarChart({ dashboardData }) {
   const xml = (
     <>
       <div className="flex mb-[0.35rem] justify-between hide-scrollbar overflow-scroll">
-        <h2 className="text-black poppins text-[2rem] font-semibold leading-normal ml-[4.3rem] max-md:ml-0">
+        <h2 className="text-black poppins text-[2rem] font-semibold leading-normal ml-[4.3rem] max-md:ml-0 max-[1281px]:ml-0">
           Sales Trend
         </h2>
       </div>
       <ResponsiveContainer
         width={screenSize > 768 ? "100%" : "400%"}
         minHeight={480}
-        className="mb-[2rem] pl-[2.5rem] mt-[1.8rem] max-md:p-0"
+        className="mb-[2rem] pl-[2.5rem] mt-[1.8rem] max-md:p-0 max-[1281px]:pl-0 "
       >
         <AreaChart data={getLastSevenDaysSales()}>
           <CartesianGrid

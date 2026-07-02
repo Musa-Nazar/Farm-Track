@@ -1,12 +1,12 @@
 function DashboardBox({ head, body, icon, val }) {
   const xml = (
-    <div className="w-[clamp(5rem,17.36111111111111vw,25rem)] min-h-[111px] rounded-[17.096px] bg-white box-shadow pl-[2.45rem] pt-[3.2rem] blur-out max-md:w-[20rem] max-md:shrink-0 !max-md:shadow-[0px_1px_5px_rgba(0,0,0,0.1)]">
+    <div className="w-[clamp(5rem,17.36111111111111vw,25rem)] min-h-[111px] rounded-[17.096px] bg-white box-shadow pl-[2.45rem] pt-[3.2rem] blur-out max-md:w-[20rem] max-md:shrink-0 !max-md:shadow-[0px_1px_5px_rgba(0,0,0,0.1)] max-[1281px]:pl-[1.5rem] max-[1281px]:pt-0 max-w-[25%] max-[1281px]:flex max-[1281px]:flex-col max-[1281px]:justify-center">
       <div
         className="flex gap-[clamp(0.5rem,3.0555555555555554vw,4.4rem)]"
         title={typeof val === "number" && val < 0 && "Its in the negative"}
       >
         <h2
-          className={` break-all poppins text-[22.959px] font-semibold leading-[100%] mb-[1.7rem] ${typeof val === "number" && val < 0 ? "text-red-500" : "text-black"}`}
+          className={` break-all poppins text-[22.959px] max-[1281px]:text-[1.8rem] font-semibold leading-[100%] mb-[1.7rem] ${typeof val === "number" && val < 0 ? "text-red-500" : "text-black"}`}
         >
           {head}
         </h2>
@@ -29,7 +29,7 @@ function DashboardBox({ head, body, icon, val }) {
         )}
       </div>
       <p
-        className={`break-all font-[Poppins] text-[22.959px] font-semibold leading-[100%] ${typeof val === "number" && val < 0 ? "text-red-500" : "text-[rgba(0,0,0,0.60)]"}`}
+        className={`break-all font-[Poppins] text-[22.959px] max-[1281px]:text-[1.8rem] font-semibold leading-[100%] ${typeof val === "number" && val < 0 ? "text-red-500" : "text-[rgba(0,0,0,0.60)]"}`}
       >
         {body}
       </p>

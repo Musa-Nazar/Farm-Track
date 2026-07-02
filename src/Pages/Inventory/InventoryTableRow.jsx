@@ -31,7 +31,7 @@ function InventoryTableRow({
   const renderedName = secondPart ? `${firstPart} ${secondPart}` : firstPart;
 
   let rowStyle =
-    "text-[rgba(0,0,0,0.6)] text-center poppins font-[500] text-[2rem] leading-[150%] mt-[1.8rem] mb-[1.5rem] wb";
+    "text-[rgba(0,0,0,0.6)] text-center poppins font-[500] text-[2rem] leading-[150%] mt-[1.8rem] mb-[1.5rem] wb max-[1281px]:text-[1.8rem]";
   const xml = (
     <>
       <tr

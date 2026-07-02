@@ -13,7 +13,7 @@ import {
 function InventoryTable() {
   // STYLES
   let theadStyle =
-    "text-[#000] text-center poppins text-[2.2rem] font-[500] leading-normal mb-[0.6rem] ";
+    "text-[#000] text-center poppins text-[2.2rem] font-[500] leading-normal mb-[0.6rem] max-[1281px]:text-[1.8rem]";
   // CONTEXT
   const {
     current,

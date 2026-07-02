@@ -28,8 +28,8 @@ function DashboardNavbar() {
   }
   function activeLink({ isActive }) {
     return isActive
-      ? "bg-[rgba(75,175,71,0.25)] w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem] mask max-md:pl-[5rem]"
-      : "w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem] max-md:pl-[5rem]";
+      ? "bg-[rgba(75,175,71,0.25)] w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem] mask max-md:pl-[5rem] max-[1281px]:pl-[1rem] max-[1281px]:gap-[1rem] max-[1281px]:[&>img]:scale-[0.8]"
+      : "w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem] max-md:pl-[5rem] max-[1281px]:pl-[1rem] max-[1281px]:gap-[1rem] max-[1281px]:[&>img]:scale-[0.8]";
   }
   const [navOpacity, setNavOpacity] = useState(false);
   let tokenIsValid = false;
@@ -60,17 +60,21 @@ function DashboardNavbar() {
     <>
       <header>
         <nav
-          className={`flex justify-between absolute nav-shadow top-0 w-full flex-none h-[9.1rem] ${
+          className={`flex justify-between absolute nav-shadow top-0 w-full flex-none h-[9.1rem] max-[1281px]:h-[7rem] ${
             navOpacity ? "bg-[#fff]" : "bg-[rgba(255,255,255,0.30)]"
-          } pr-[clamp(2rem,7.6736111111vw,110.5rem)] z-[1] max-md:hidden`}
+          } pr-[clamp(2rem,7.6736111111vw,110.5rem)] z-[1] max-md:hidden max-[1281px]:pr-[1.5rem]`}
         >
           <div className="flex items-center">
-            <img src={logo} alt="err" className="ml-[0.05rem]" />
+            <img
+              src={logo}
+              alt="err"
+              className="ml-[0.05rem] max-[1281px]:object-fit max-[1281px]:aspect-square object-cover max-[1281px]:w-[5rem] max-[1281px]:"
+            />
             <h2 className="text-[#000] poppins font-[600] text-[1.5rem] leading-normal">
               FARM TRACK
             </h2>
           </div>
-          <div className="flex gap-[3.15rem] items-center">
+          <div className="flex gap-[3.15rem] items-center max-[1281px]:gap-[1.5rem]">
             {/* CHECK PRFILE PICTURE */}
             {userData?.path ? (
               <img
@@ -88,8 +92,8 @@ function DashboardNavbar() {
             </span>
           </div>
         </nav>
-        <nav className="w-[23.1rem] flex-none bg-[#fff] h-dvh flex max-md:hidden">
-          <ul className="flex flex-col mt-[12.9rem] gap-[2rem] w-full">
+        <nav className="w-[23.1rem] max-[1281px]:w-[20rem] flex-none bg-[#fff] h-dvh flex max-md:hidden">
+          <ul className="flex flex-col mt-[12.9rem] max-[1281px]:mt-[10.5rem] gap-[2rem] w-full">
             <li>
               <NavLink className={activeLink} to="/dashboard">
                 <img

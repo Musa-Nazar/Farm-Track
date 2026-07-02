@@ -113,7 +113,7 @@ function InventoryHeader() {
         <h2 className="text-[#000] poppins text-[3rem] font-[600] leading-normal  ml-[2.6rem] max-md:text-[2.2rem] max-md:leading-[4.2rem] max-md:ml-[1rem]">
           Inventory
         </h2>
-        <div className="relative flex min-w-[11rem] min-h-[4.2rem] pl-[1.3rem] items-center gap-[1.7rem] outline-0 rounded-[1rem] border border-black pr-[0.85rem] appearance-none mr-[clamp(1rem,6.666666666666667vw,9.6rem)] max-md:mr-[1rem]">
+        <div className="relative flex min-w-[11rem] min-h-[4.2rem] pl-[1.3rem] items-center gap-[1.7rem] outline-0 rounded-[1rem] border border-black pr-[0.85rem] appearance-none mr-[clamp(1rem,6.666666666666667vw,9.6rem)] max-md:mr-[1rem] max-[1281px]:mr-[2.6rem]">
           <select
             name="dataType"
             id="dataType"
@@ -130,7 +130,7 @@ function InventoryHeader() {
         </div>
       </div>
       <div className="w-full h-[0.1rem] bg-[rgba(0,0,0,0.4)] mb-[3.6rem]"></div>
-      <div className="flex justify-between max-md:flex-col max-md:items-center max-md:gap-[2rem] pl-[5.2rem] pr-[8rem] max-md:px-[1rem] items-start mb-[4.4rem]">
+      <div className="flex justify-between max-md:flex-col max-md:items-center max-md:gap-[2rem] pl-[5.2rem] pr-[8rem] max-md:px-[1rem] items-start mb-[4.4rem] max-[1281px]:px-[5rem]">
         <div className="relative flex justify-center items-center mt-[0.4rem]">
           <input
             type="text"

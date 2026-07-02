@@ -98,7 +98,7 @@ function InventoryTableInput() {
   }
   // COMPONENTS STYLE
   let rowStyle =
-      "text-[rgba(0,0,0,0.6)] text-center poppins font-[500] text-[2rem] leading-[150%] mt-[1.8rem] mb-[1.5rem] flex items-center justify-center",
+      "text-[rgba(0,0,0,0.6)] text-center poppins font-[500] text-[2rem] leading-[150%] mt-[1.8rem] mb-[1.5rem] flex items-center justify-center max-[1281px]:text-[1.8rem]",
     buttonStyle =
       "flex justify-center w-[13.3rem] py-[0.5rem] flex-col items-center gap-[1.3589rem] rounded-[0.6777rem] bg-[#61A061] cursor-pointer";
   // METHOD FORMATS

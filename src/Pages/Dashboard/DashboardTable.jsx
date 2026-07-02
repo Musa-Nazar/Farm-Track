@@ -4,7 +4,7 @@ import { useMainContext } from "../../../MainContext";
 
 function DashboardTable({ dashboardData }) {
   let theadStyle =
-    "text-[#000] text-center poppins text-[2.2rem] font-[500] leading-normal mb-[0.6rem] max-md:text-left";
+    "text-[#000] text-center poppins text-[2.2rem] font-[500] leading-normal mb-[0.6rem] max-md:text-left max-[1281px]:text-[1.8rem]";
   const xml = (
     <table className="w-full max-md:w-[80rem] max-md:flex-none mt-[2.5rem] pr-[clamp(2rem,6vw,8.6rem)]">
       <thead className="w-full border-b-[1px] border-b-solid border-b-[rgba(0,0,0,0.60)]">
