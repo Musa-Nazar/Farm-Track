@@ -44,9 +44,15 @@ function SettingPagePrefference() {
     });
     setTimeout(() => setReportState(""), 1000);
   }
-  function logoutUser() {}
+  function logoutUser() {
+    if (token) {
+      cookie.remove("token");
+      cookie.remove("userData");
+    }
+    navigate("/login");
+  }
   const xml = (
-    <div className="mt-[8rem] flex flex-col gap-[4.7rem]">
+    <div className="mt-[8rem] flex flex-col gap-[4.7rem] max-md:mt-[5rem]">
       {/* NOTIFICATIONS */}
       {/* <div className="flex flex-col">
         <div className="flex items-center gap-[2.3rem]">
@@ -119,8 +125,6 @@ function SettingPagePrefference() {
           className="text-[#000] poppins text-[1.6rem] font-[500] leading-[4.5rem] w-[79.6rem] max-w-[100%]
         "
         >
-          {/* Ensure data safety with secure cloud storage and automated backups,
-          protecting your farm’s vital information from loss or breaches. */}
           Generate a monthly report of your farm’s vital information, such as
           total sales, expense and feed consumed in that month up to the current
           date

@@ -1,7 +1,7 @@
 function SalesAndExpenseBox({ head, body }) {
   const xml = (
-    <div className="w-[clamp(10rem,21vw,29.7rem)] min-h-[16.5rem] rounded-[1.5rem] bg-[#F7FBF7] shadow-[0px_4px_25px_-4px_rgba(0,0,0,0.15)] px-[1rem] max-md:flex-none max-md:w-[25rem] max-md:shadow-[0px_1px_2px_rgba(0,0,0,.4)]">
-      <h2 className="text-black poppins text-[2.5rem] font-medium leading-normal pt-[0.9rem] text-center mb-[3.6rem]">
+    <div className="w-[clamp(10rem,21vw,29.7rem)] min-h-[16.5rem] rounded-[1.5rem] bg-[#F7FBF7] shadow-[0px_4px_25px_-4px_rgba(0,0,0,0.15)] px-[1rem] max-md:flex-none max-md:w-[20rem] max-md:shadow-[0px_1px_5px_rgba(0,0,0,.1)] max-md:min-h-[unset] max-md:pb-[1.5rem]">
+      <h2 className="text-black poppins text-[2.5rem] font-medium leading-normal pt-[0.9rem] text-center mb-[3.6rem] max-md:mb-[2rem] max-md:text-[2.2rem]">
         {head}
       </h2>
       <div className="flex justify-center break-all items-center">
@@ -11,13 +11,14 @@ function SalesAndExpenseBox({ head, body }) {
           height="40"
           viewBox="0 0 40 40"
           fill="none"
+          className="max-md:h-[2rem] max-md:w-[2rem]"
         >
           <path
             d="M6.66797 15H10.0013V5H13.3346L19.0346 15H26.668V5H30.0013V15H33.3346V18.3333H30.0013V21.6667H33.3346V25H30.0013V35H26.668L20.9513 25H13.3346V35H10.0013V25H6.66797V21.6667H10.0013V18.3333H6.66797V15ZM13.3346 15H15.218L13.3346 11.7167V15ZM13.3346 18.3333V21.6667H19.0346L17.1346 18.3333H13.3346ZM26.668 28.3333V25H24.7513L26.668 28.3333ZM20.9346 18.3333L22.8513 21.6667H26.668V18.3333H20.9346Z"
             fill="black"
           />
         </svg>
-        <p className="text-black poppins text-[3rem] font-semibold leading-normal text-center break-all">
+        <p className="text-black poppins text-[3rem] font-semibold leading-normal text-center break-all max-md:text-[2rem]">
           {body}
         </p>
       </div>

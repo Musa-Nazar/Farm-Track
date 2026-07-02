@@ -121,19 +121,19 @@ function SettingPageForm() {
 
   let styles = {
     inputField:
-      "flex w-[40.2rem] flex-col items-start start gap-[1.5rem] relative",
+      "flex w-[40.2rem] flex-col items-start start gap-[1.5rem] relative max-md:gap-[0.8rem]",
     label:
       "text-[rgba(0,0,0,0.8)] poppins text-[1.5rem] font-[500] leading-normal",
     input:
-      "w-full h-[5rem] rounded-[0.4rem] border border-[rgba(0,0,0,0.4)] outline-0 text-[1.6rem] poppins indent-[3.2rem] placeholder:text-[#000] placeholder:text-[1.2rem] placeholder:font-[500] peer",
+      "w-full h-[5rem] rounded-[0.4rem] border border-[rgba(0,0,0,0.4)] outline-0 text-[1.6rem] poppins indent-[3.2rem] placeholder:text-[#000] placeholder:text-[1.2rem] placeholder:font-[500] peer max-md:indent-[1.2rem]",
   };
   const xml = (
     <div className="pt-[2.9rem] flex flex-col items-start">
-      <h2 className="text-[#000] poppins font-[600] text-[3.5rem] leading-normal max-md:text-center max-md:w-full">
+      <h2 className="text-[#000] poppins font-[600] text-[3.5rem] leading-normal max-md:text-center max-md:w-full max-md:text-[2.5rem]">
         Settings
       </h2>
-      <section className="flex flex-col mb-[6.4rem] w-full max-md:items-center">
-        <div className="flex gap-[4.3rem] mt-[3.1rem]  items-center max-md:flex-col max-md:w-full">
+      <section className="flex flex-col mb-[6.4rem] w-full max-md:items-center max-md:mb-[3.2rem]">
+        <div className="flex gap-[4.3rem] max-md:gap-[2.3rem] mt-[3.1rem]  items-center max-md:flex-col max-md:w-full">
           <div className="flex w-[12.5rem] h-[12.5rem] p-[1.0417rem] items-center gap-[2.0833rem] bg-[#C6C6C6] rounded-[6.25rem]">
             {imageData?.path ? (
               <img
@@ -146,12 +146,12 @@ function SettingPageForm() {
               </div>
             )}
           </div>
-          <p className="text-[#000] poppins text-[4.1667rem] font-[600] leading-normal">
+          <p className="text-[#000] poppins text-[4.1667rem] font-[600] leading-normal max-md:text-[2.1667rem]">
             {userData?.name || ""}
           </p>
         </div>
         {/* FILE INPUT */}
-        <div className="mt-[1rem] flex gap-[1rem] items-center">
+        <div className="mt-[1rem] flex gap-[1rem] items-center max-md:gap-[.5rem]">
           <label
             htmlFor="file"
             className="border border-[rgba(0,0,0,.1)] inline-block py-[0.4rem] px-[0.8rem] border-dotted text-[1.6rem] poppins rounded-[0.5rem] transition-[opacity,background] hover:opacity-[0.8] hover:bg-[rgba(255,255,255,0.9)] hover:border-black cursor-pointer "
@@ -180,7 +180,7 @@ function SettingPageForm() {
         </div>
       </section>
       <form onSubmit={handleSubmit} className="mt-[2.1rem] w-full">
-        <div className="flex gap-[6.3rem] w-full max-md:gap-[2rem]">
+        <div className="flex gap-[6.3rem] w-full max-md:gap-[.5rem]">
           <div className={`${styles.inputField} max-w-[50%]`}>
             <label htmlFor="firstName" className={`${styles.label}`}>
               FirstName

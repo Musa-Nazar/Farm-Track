@@ -28,8 +28,8 @@ function DashboardNavbar() {
   }
   function activeLink({ isActive }) {
     return isActive
-      ? "bg-[rgba(75,175,71,0.25)] w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem] mask"
-      : "w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem]";
+      ? "bg-[rgba(75,175,71,0.25)] w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem] mask max-md:pl-[5rem]"
+      : "w-full h-[4.7rem] flex items-center pl-[3.25rem] gap-[2.3rem] max-md:pl-[5rem]";
   }
   const [navOpacity, setNavOpacity] = useState(false);
   let tokenIsValid = false;
@@ -162,138 +162,153 @@ function DashboardNavbar() {
         </nav>
       </header>
       {/* MOBILE NAVBAR */}
-      <nav className="shadow-[0px_1px_5px_rgba(0,0,0,0.11)] px-[2rem] hidden max-md:flex top-0  justify-between items-center fixed z-40 w-full bg-white h-[7rem]">
-        <div className="logo flex items-center">
-          <img
-            src={logo}
-            className="object-cover block w-[6rem] aspect-square"
-          />
-          <h2 className="text-[#000] poppins font-[600] text-[1.5rem] leading-normal">
-            FARM TRACK
-          </h2>
-        </div>
-        <div className="d-menu-wrap relative w-[3rem] h-[3rem]">
-          <input
-            type="checkbox"
-            name="dMenu"
-            id="dMenu"
-            checked={checked}
-            onChange={handleChange}
-            className="d-toggle opacity-0 absolute cursor-pointer z-[10000000] w-[3rem] h-[3rem]"
-          />
-          <div className="d-hamburger w-[3rem] h-[3rem] bg-gray absolute flex justify-center items-center px-[0.2rem]">
-            <div className="w-full relative h-[0.35rem] bg-black before:content-[''] before:absolute before:w-full before:h-[0.35rem] before:top-[-0.7rem] before:bg-[#000] after:content-[''] after:absolute after:w-[50%] after:right-0 after:h-[0.35rem] after:top-[0.7rem] after:bg-[#000]"></div>
+      <nav className="shadow-[0px_1px_5px_rgba(0,0,0,0.11)] p hidden max-md:block top-0 fixed z-40 bg-white w-full">
+        <div className="flex justify-between items-center w-[91%] h-[5.5rem] mx-auto">
+          <div className="logo flex items-center">
+            <img
+              src={logo}
+              className="object-cover object-right block w-[4rem] aspect-square"
+            />
+            <h2 className="text-[#000] poppins font-[600] text-[1.5rem] leading-normal ml-[-1rem]">
+              FARM TRACK
+            </h2>
           </div>
-          <div className="d-menu w-[100vw] fixed h-[100vh] bg-[rgba(0,0,0,0.2)] top-0 left-0 overflow-hidden transition-all z-[9999] invisible">
-            <div className="w-[100%]  h-dvh bg-[rgba(0,0,0,0.1)] opacity-0">
-              <div className="w-[24rem] absolute z-[9999] bg-white h-dvh flex flex-col translate-x-[-100%]">
-                <div className="logo flex items-center pl-[3.25rem] mb-[2rem] mt-[0.5rem]">
-                  <img
-                    src={logo}
-                    className="object-cover object-right block w-[7rem] aspect-square"
-                  />
-                  <h2 className="text-[#000] poppins font-[600] text-[1.5rem] leading-normal">
-                    FARM TRACK
-                  </h2>
+          <div className="d-menu-wrap relative w-[3rem] h-[3rem]">
+            <input
+              type="checkbox"
+              name="dMenu"
+              id="dMenu"
+              checked={checked}
+              onChange={handleChange}
+              className="d-toggle opacity-0 absolute cursor-pointer z-[10000000] w-[3rem] h-[3rem]"
+            />
+            <div className="d-hamburger w-[3rem] h-[3rem] bg-gray absolute flex justify-center items-center px-[0.2rem]">
+              <div className="w-full relative h-[0.1rem] bg-black before:content-[''] before:absolute before:w-full before:h-[0.1rem] before:top-[-0.7rem] before:bg-[#000] after:content-[''] after:absolute after:w-[100%] after:right-0 after:h-[0.1rem] after:top-[0.7rem] after:bg-[#000]"></div>
+            </div>
+            <div className="d-menu w-[100vw] fixed h-[100vh] top-0 left-0 overflow-hidden transition-all z-[9999] invisible">
+              <div className="w-[100%]  h-dvh bg-[rgba(0,0,0,0.1)] opacity-0 relative">
+                <label
+                  htmlFor="dMenu"
+                  className="w-[calc(100%-30rem)] absolute bg-[rgba(0,0,0,0.2)] top-0 right-0 h-dvh dMenuOpac block translate-x-[100%] "
+                ></label>
+                <div className="w-[30rem] absolute z-[9999] bg-white h-dvh flex flex-col translate-x-[-100%] overflow-scroll hide-scrollbar">
+                  <div className="logo flex justify-center items-center  mb-[1rem] mt-[2rem]">
+                    <div className="w-[15rem] aspect-square rounded-[50%] bg-[#c6c6c6] grid place-items-center">
+                      {userData?.path ? (
+                        <img
+                          className="w-[80%] aspect-square rounded-[50%]"
+                          src={userData?.path}
+                        />
+                      ) : (
+                        <p className="w-[80%] aspect-square bg-green-300 rounded-[50%] flex items-center justify-center text-white text-[2.5rem]">
+                          {userName?.[0] ?? "T"}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <p className="text-center poppins font-bold text-[2rem] pb-[1.5rem] mb-[1rem] border-b border-dotted border-[rgba(0,0,0,0.1)]">
+                    {userName ?? "Test Test"}
+                  </p>
+
+                  <ul className="flex flex-col gap-[2rem] ">
+                    <li>
+                      <NavLink
+                        className={activeLink}
+                        to="/dashboard"
+                        onClick={handleCheck}
+                      >
+                        <img
+                          src={dashboard}
+                          alt=""
+                          className="w-[3.9rem] aspect-square"
+                        />
+                        <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
+                          Dashboard
+                        </span>
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className={activeLink}
+                        to="/inventory"
+                        onClick={handleCheck}
+                      >
+                        <img
+                          src={inventory}
+                          alt=""
+                          className="w-[3.9rem] aspect-square"
+                        />
+                        <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
+                          Inventory
+                        </span>
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className={activeLink}
+                        to="/analytic"
+                        onClick={handleCheck}
+                      >
+                        <img
+                          src={analytics}
+                          alt=""
+                          className="w-[3.9rem] aspect-square"
+                        />
+                        <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
+                          Analytics
+                        </span>
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className={activeLink}
+                        to="/salesandexpense"
+                        onClick={handleCheck}
+                      >
+                        <img
+                          src={sales}
+                          alt=""
+                          className="w-[3.9rem] aspect-square"
+                        />
+                        <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
+                          Sales & expense
+                        </span>
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className={activeLink}
+                        to="setting"
+                        onClick={handleCheck}
+                      >
+                        <img
+                          src={setting}
+                          alt=""
+                          className="w-[3.9rem] aspect-square"
+                        />
+                        <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
+                          Settings
+                        </span>
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className={activeLink}
+                        to="/notification"
+                        onClick={handleCheck}
+                      >
+                        <img
+                          src={notification}
+                          alt=""
+                          className="w-[3.9rem] aspect-square"
+                        />
+                        <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
+                          Notification
+                        </span>
+                      </NavLink>
+                    </li>
+                  </ul>
                 </div>
-                <ul className="flex flex-col gap-[2rem] ">
-                  <li>
-                    <NavLink
-                      className={activeLink}
-                      to="/dashboard"
-                      onClick={handleCheck}
-                    >
-                      <img
-                        src={dashboard}
-                        alt=""
-                        className="w-[3.9rem] aspect-square"
-                      />
-                      <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
-                        Dashboard
-                      </span>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      className={activeLink}
-                      to="/inventory"
-                      onClick={handleCheck}
-                    >
-                      <img
-                        src={inventory}
-                        alt=""
-                        className="w-[3.9rem] aspect-square"
-                      />
-                      <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
-                        Inventory
-                      </span>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      className={activeLink}
-                      to="/analytic"
-                      onClick={handleCheck}
-                    >
-                      <img
-                        src={analytics}
-                        alt=""
-                        className="w-[3.9rem] aspect-square"
-                      />
-                      <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
-                        Analytics
-                      </span>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      className={activeLink}
-                      to="/salesandexpense"
-                      onClick={handleCheck}
-                    >
-                      <img
-                        src={sales}
-                        alt=""
-                        className="w-[3.9rem] aspect-square"
-                      />
-                      <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
-                        Sales & expense
-                      </span>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      className={activeLink}
-                      to="setting"
-                      onClick={handleCheck}
-                    >
-                      <img
-                        src={setting}
-                        alt=""
-                        className="w-[3.9rem] aspect-square"
-                      />
-                      <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
-                        Settings
-                      </span>
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink
-                      className={activeLink}
-                      to="/notification"
-                      onClick={handleCheck}
-                    >
-                      <img
-                        src={notification}
-                        alt=""
-                        className="w-[3.9rem] aspect-square"
-                      />
-                      <span className="text-[#000] poppins text-[1.6rem] font-[500] leading-normal">
-                        Notification
-                      </span>
-                    </NavLink>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>

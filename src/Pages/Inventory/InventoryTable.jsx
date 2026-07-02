@@ -4,13 +4,16 @@ import { useState, useContext, useEffect } from "react";
 import Context from "../../Auth-context";
 import { useMainContext } from "../../../MainContext";
 import { toast } from "react-toastify";
-import { useLoaderData, useNavigation, useSubmit } from "react-router-dom";
+import {
+  useActionData,
+  useLoaderData,
+  useNavigation,
+  useSubmit,
+} from "react-router-dom";
 function InventoryTable() {
   // STYLES
   let theadStyle =
     "text-[#000] text-center poppins text-[2.2rem] font-[500] leading-normal mb-[0.6rem] ";
-  // MAIN CONTEXT
-  const { token } = useMainContext();
   // CONTEXT
   const {
     current,
@@ -24,6 +27,9 @@ function InventoryTable() {
     searchData,
     searchResults,
   } = useContext(Context);
+  //
+  const data = useActionData();
+
   // SUBMIT
   const submit = useSubmit();
   // PAGE STATE
@@ -70,17 +76,23 @@ function InventoryTable() {
         quantity: parseInt(current.quantity),
       }));
     }
-  }, [current]);
+    if (data?.sucess && data?.method === "delete" && method === "") {
+      setMethod("");
+      setPopup(false);
+    }
+  }, [current, data]);
   // DELETE INVENTORY
   const [popup, setPopup] = useState(false);
   function handlePopup() {
     setPopup(true);
     setMethod("");
   }
-  function deleteInventory() {
+  async function deleteInventory() {
+    if (!current.id)
+      return toast.error("No Entry is focused on", {
+        className: "text-[1.6rem] poppins",
+      });
     submit({ id: current.id, method: "delete" }, { method: "post" });
-    setMethod("");
-    setPopup(false);
   }
   function cancel() {
     setPopup(false);
@@ -243,7 +255,7 @@ function InventoryTable() {
               className="bg-red-700 shadow-[0px_1px_3px_rgba(0,0,0,0.1)] text-[#fff] text-[1.6rem] py-[0.5rem] px-[1.5rem] cursor-pointer rounded-[0.5rem]"
               onMouseDown={deleteInventory}
             >
-              {state !== "loading" ? (
+              {state !== "submitting" ? (
                 "Yes"
               ) : (
                 <span className="w-[1.6rem] block h-[1.6rem] rounded-[50%] border border-white border-t-[transparent] rotate"></span>

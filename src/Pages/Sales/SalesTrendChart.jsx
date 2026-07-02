@@ -9,16 +9,34 @@ import {
   ReferenceLine,
 } from "recharts";
 import { tickFormatter } from "../../../utils/numberFormatter";
+import { useEffect, useState } from "react";
 const SalesTrendChart = ({ data }) => {
+  const [screenSize, setScreenSize] = useState(window.innerWidth);
+
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setScreenSize(window.innerWidth);
+    });
+    return () => {
+      window.addEventListener("resize", () => {
+        setScreenSize(window.innerWidth);
+      });
+    };
+  }, [screenSize]);
   return (
     <>
-      <h2 className="text-black ml-[3.5rem] text-[20px] font-bold sf-bold mb-[3.5rem]">
+      <h2 className="text-black ml-[3.5rem] text-[2rem] font-bold sf-bold mb-[3.5rem] max-md:ml-[2rem] max-md:mb-[2rem]">
         Sales Trends
       </h2>
       <ResponsiveContainer width="100%" height={387} className="">
         <LineChart
           data={data}
-          margin={{ left: 0, right: 0, top: 0, bottom: 0 }}
+          margin={{
+            left: screenSize > 768 ? 0 : -10,
+            right: 0,
+            top: 0,
+            bottom: 0,
+          }}
         >
           <CartesianGrid vertical={false} strokeOpacity={0.7} />
           <Line

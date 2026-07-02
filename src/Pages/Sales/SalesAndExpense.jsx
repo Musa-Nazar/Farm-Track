@@ -27,7 +27,7 @@ function SalesAndExpense() {
               <AnalyticsTileErrorUI />
             ) : (
               <>
-                <SalesAndExpenseContainer>
+                <SalesAndExpenseContainer cs="max-md:min-h-[unset]">
                   <h2 className="text-black poppins text-[3rem] font-semibold leading-normal max-md:text-[2rem]">
                     Sales & Expenses
                   </h2>

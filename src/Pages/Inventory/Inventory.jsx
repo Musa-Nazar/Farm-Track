@@ -103,6 +103,7 @@ export async function action({ request, params }) {
 
     // SUCESS
     toast.success(entry?.data?.message, { className: "poppins text-[1.8rem]" });
+    return { sucess: true, method: "delete" };
   }
 }
 

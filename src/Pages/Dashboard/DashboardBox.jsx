@@ -1,6 +1,6 @@
 function DashboardBox({ head, body, icon, val }) {
   const xml = (
-    <div className="w-[clamp(5rem,17.36111111111111vw,25rem)] min-h-[111px] rounded-[17.096px] bg-white box-shadow pl-[2.45rem] pt-[3.2rem] blur-out max-md:w-[20rem] max-md:shrink-0">
+    <div className="w-[clamp(5rem,17.36111111111111vw,25rem)] min-h-[111px] rounded-[17.096px] bg-white box-shadow pl-[2.45rem] pt-[3.2rem] blur-out max-md:w-[20rem] max-md:shrink-0 !max-md:shadow-[0px_1px_5px_rgba(0,0,0,0.1)]">
       <div
         className="flex gap-[clamp(0.5rem,3.0555555555555554vw,4.4rem)]"
         title={typeof val === "number" && val < 0 && "Its in the negative"}

@@ -80,12 +80,15 @@ input[type="number"] {
 .box-shadow {
   box-shadow: 0px 3.419px 11.967px 0px rgba(0, 0, 0, 0.25);
 }
+@media (max-width: 768px) {
+  .box-shadow {
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  }
+}
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
-/* .recharts-wrapper {
-  z-index: 0 !important;
-} */
+
 .isValid > .tick {
   display: block !important;
 }

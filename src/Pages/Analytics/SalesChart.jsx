@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 
 const renderLegend = () => {
   return (
-    <div className="flex items-center gap-4 mt-4 justify-center max-md:justify-start max-md:pl-[1rem]">
+    <div className="flex items-center gap-4 mt-4 justify-center max-md:justify-start max-md:pl-[1.5rem]">
       <div className="flex items-center gap-2">
         <div className="w-[1.3rem] h-[1.3rem] bg-green-900 rounded-full"></div>
         <span className="text-[1.6rem] text-black text-center poppins">
@@ -52,7 +52,7 @@ const SalesChart = ({ analyticsChartData }) => {
         <ResponsiveContainer
           width={screenSize > 768 ? "100%" : "200%"}
           height={397}
-          style={{ marginLeft: `${screenSize > 768 ? "0" : "-30px"}` }}
+          style={{ marginLeft: `${screenSize > 768 ? "0" : "-35px"}` }}
         >
           <BarChart
             data={analyticsChartData}

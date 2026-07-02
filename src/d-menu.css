@@ -21,10 +21,14 @@
 .d-toggle:checked ~ .d-menu > div {
   opacity: 1;
 }
+.d-toggle:checked ~ .d-menu .dMenuOpac {
+  translate: 0 0;
+}
 .d-toggle:checked ~ .d-menu > div > div {
   translate: 0 0;
 }
 
+.d-toggle:checked ~ .d-menu .dMenuOpac,
 .d-toggle:checked ~ .d-menu,
 .d-toggle:checked ~ .d-menu > div,
 .d-toggle:checked ~ .d-menu > div > div {

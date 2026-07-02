@@ -4,10 +4,10 @@ function InventoryLoaderUI() {
   const xml = (
     <div className="flex flex-col mx-[2.8rem] bg-[#FFF] rounded-[1.5rem] min-h-[89.3dvh]">
       <div className="flex justify-between items-centerb mt-[5.7rem] mb-[2.9rem]">
-        <h2 className="text-[#000] poppins text-[3rem] font-[600] leading-normal  ml-[2.6rem] ">
+        <h2 className="text-[#000] poppins text-[3rem] font-[600] leading-normal  ml-[2.6rem] max-md:text-[2.2rem] max-md:leading-[4.2rem] max-md:ml-[1rem]">
           Inventory
         </h2>
-        <div className="relative flex min-w-[11rem] min-h-[4.2rem] pl-[1.3rem] items-center gap-[1.7rem] outline-0 rounded-[1rem] border border-black pr-[0.85rem] appearance-none mr-[clamp(1rem,6.666666666666667vw,9.6rem)]">
+        <div className="relative flex min-w-[11rem] min-h-[4.2rem] pl-[1.3rem] items-center gap-[1.7rem] outline-0 rounded-[1rem] border border-black pr-[0.85rem] appearance-none mr-[clamp(1rem,6.666666666666667vw,9.6rem)] max-md:mr-[1rem]">
           <select
             name="dataType"
             id="dataType"
@@ -24,7 +24,7 @@ function InventoryLoaderUI() {
         </div>
       </div>
       <div className="w-full h-[0.1rem] bg-[rgba(0,0,0,0.4)] mb-[3.6rem]"></div>
-      <div className="flex justify-between max-md:flex-col max-md:items-center max-md:gap-[2rem] pl-[5.2rem] pr-[8rem] max-md:px-[2.6rem] items-start mb-[4.4rem]">
+      <div className="flex justify-between max-md:flex-col max-md:items-center max-md:gap-[2rem] pl-[5.2rem] pr-[8rem] max-md:px-[1rem] items-start mb-[4.4rem]">
         <div className="relative flex justify-center items-center mt-[0.4rem]">
           <input
             type="text"
@@ -43,7 +43,7 @@ function InventoryLoaderUI() {
             </span>
           </label>
         </div>
-        <div className="flex gap-[5.8rem] max-md:justify-between max-md:w-full">
+        <div className="flex gap-[5.8rem] max-md:justify-between max-md:w-full max-md:gap-[0rem]">
           <button
             className={`flex justify-center  w-[13.3rem] py-0 px-[1.3589rem] flex-col items-center gap-[1.3589rem] rounded-[0.6777rem] bg-[#61A061] cursor-pointer`}
           >

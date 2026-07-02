@@ -54,6 +54,10 @@ function InventoryTableInput() {
   }
   // ADD TO INVENTORY
   async function addToInventory() {
+    if (state === "submitting")
+      return toast.error("Please wait until operation is complete", {
+        className: "text-[1.8rem] poppins",
+      });
     // FORM VALIDATION
     const formIsValid = checkFormData({ ...formData });
     if (!formIsValid)
@@ -70,7 +74,9 @@ function InventoryTableInput() {
   // EDIT INVENTORY
   async function editInventory() {
     if (state === "submitting")
-      return toast.error("Please wait until operation is complete");
+      return toast.error("Please wait until operation is complete", {
+        className: "text-[1.8rem] poppins",
+      });
     // FORM VALIDATION
     const formIsValid = checkFormData({ ...formData });
     if (!formIsValid)
@@ -87,7 +93,7 @@ function InventoryTableInput() {
   // CANCEL ALL
   function cancel() {
     cleanInput();
-    setMethod(null);
+    setMethod("");
     setCurrent({ id: null });
   }
   // COMPONENTS STYLE
@@ -193,10 +199,12 @@ function InventoryTableInput() {
             <span className="w-[2rem] aspect-square border-[white] border-solid border-[0.4rem] rounded-[50%] rotate border-t-transparent inline-block my-[0.5rem]"></span>
           )}
         </button>
-        <button type="button" className={`${buttonStyle} bg-red-400`}>
-          <span className="text-[#fff] " onClick={cancel}>
-            Cancel
-          </span>
+        <button
+          type="button"
+          className={`${buttonStyle} bg-red-400`}
+          onClick={cancel}
+        >
+          <span className="text-[#fff] ">Cancel</span>
         </button>
       </td>
     </tr>

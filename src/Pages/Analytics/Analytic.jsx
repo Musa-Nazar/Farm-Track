@@ -38,14 +38,14 @@ function Analytic() {
         <Await resolve={analyticsData}>
           {(data) =>
             data?.status >= 400 ? (
-              <AnalyticsTileErrorUI />
+              <AnalyticsTileErrorUI message={data?.message} />
             ) : (
               <>
                 <AnalyticContainer cs="max-md:mx-auto max-md:max-w-[91%]">
                   <h2 className="text-black pl-[2.05rem] max-md:text-[2.2rem] max-md:pl-0 poppins text-[3rem] font-semibold leading-normal max-md:pt-[2rem]">
                     Analytics
                   </h2>
-                  <div className="flex justify-between mt-[2.6rem] gap-[2rem] max-md:overflow-scroll hide-scrollbar">
+                  <div className="flex justify-between mt-[2.6rem] gap-[2rem] max-md:overflow-x-scroll hide-scrollbar max-md:pb-[0.1rem]">
                     <AnalyticsCard
                       head="Livestock Sales"
                       unit="count"
