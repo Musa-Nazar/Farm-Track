@@ -151,10 +151,10 @@ function SettingPageForm() {
           </p>
         </div>
         {/* FILE INPUT */}
-        <div className="mt-[1rem] flex gap-[1rem] items-center max-md:gap-[.5rem]">
+        <div className="mt-[1rem] flex gap-[1rem] items-center max-md:gap-[.5rem] max-md:flex-wrap max-md:justify-center w-full">
           <label
             htmlFor="file"
-            className="border border-[rgba(0,0,0,.1)] inline-block py-[0.4rem] px-[0.8rem] border-dotted text-[1.6rem] poppins rounded-[0.5rem] transition-[opacity,background] hover:opacity-[0.8] hover:bg-[rgba(255,255,255,0.9)] hover:border-black cursor-pointer "
+            className="border border-[rgba(0,0,0,.1)] inline-block py-[0.4rem] px-[0.8rem] border-dotted text-[1.6rem] poppins rounded-[0.5rem] transition-[opacity,background] hover:opacity-[0.8] hover:bg-[rgba(255,255,255,0.9)] hover:border-black cursor-pointer max-md:text-[1.4rem] "
           >
             {"Please upload a profile picture"}
           </label>
