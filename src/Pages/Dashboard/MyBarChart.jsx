@@ -84,6 +84,7 @@ function MyBarChart({ dashboardData }) {
             activeDot={false}
             opacity={1}
             fillOpacity={1}
+            type="monotone"
           />
           <XAxis
             dataKey="date"
@@ -113,7 +114,7 @@ function MyBarChart({ dashboardData }) {
               fontWeight: "400",
               lineHeight: "normal",
             }}
-            dx={screenSize > 768 ? 0 : -15}
+            dx={screenSize > 768 ? 0 : -10}
           />
           <Tooltip content={CustomTooltip} />
         </AreaChart>

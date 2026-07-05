@@ -107,7 +107,7 @@ function InventoryTable() {
       ? feedData.map((item) => {
           return (
             <InventoryTableRow
-              key={item.id}
+              key={item._id}
               id={item._id}
               name={item.name}
               action={item.action}
@@ -122,7 +122,7 @@ function InventoryTable() {
       : liveStockData.map((item) => {
           return (
             <InventoryTableRow
-              key={item.id}
+              key={item._id}
               id={item._id}
               name={item.name}
               action={item.action}
@@ -226,7 +226,7 @@ function InventoryTable() {
                 <tbody>
                   {searchResults?.map((item) => (
                     <InventoryTableRow
-                      key={item.id}
+                      key={item._id}
                       id={item._id}
                       name={item.name}
                       action={item.action}

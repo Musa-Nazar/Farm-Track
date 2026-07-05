@@ -24,7 +24,7 @@ function DashboardTable({ dashboardData }) {
             bought={data?.totalBought}
             sold={data?.totalSold}
             died={data?.totalDead}
-            key={index}
+            key={data?._id ?? index}
           />
         ))}
       </tbody>

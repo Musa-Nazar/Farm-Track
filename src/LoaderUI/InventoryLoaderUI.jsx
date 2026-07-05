@@ -15,7 +15,7 @@ function InventoryLoaderUI() {
             disabled={true}
           >
             <option value="feed" className="w-full py-[5rem] block">
-              Feed
+              -----
             </option>
             <option value="livestock" className="w-full py-[5rem] block">
               Livestock

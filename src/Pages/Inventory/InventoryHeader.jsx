@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import search from "../../assets/search.svg";
 import Context from "../../Auth-context";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useNavigation, useSearchParams } from "react-router-dom";
 import { get } from "../../../http";
 import Cookies from "universal-cookie";
 import config from "../../../config";
@@ -15,11 +15,17 @@ function InventoryHeader() {
     setCurrent,
     setSelectedData,
     setSearchData,
+    selectedData,
     searchData,
     setSearchResults,
   } = useContext(Context);
+  // PAGE STATE
+  const { state } = useNavigation();
+  // NAVIGATE OBJECT
   const navigate = useNavigate();
+  // GET TYPE
   const type = useSearchParams()[0].get("type");
+
   function addInventoryUI() {
     setMethod("add");
     cleanInput();
@@ -117,8 +123,9 @@ function InventoryHeader() {
           <select
             name="dataType"
             id="dataType"
-            className="outline-0 w-full text-black font-[Manrope] text-[1.5rem] font-medium leading-[271.789%]"
+            className={`outline-0 w-full text-black font-[Manrope] text-[1.5rem] font-medium leading-[271.789%]`}
             onChange={handleSelectedData}
+            value={selectedData}
           >
             <option value="feed" className="w-full py-[5rem] block">
               Feed

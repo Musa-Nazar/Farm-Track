@@ -63,12 +63,7 @@ function SalesOverallChart({ data }) {
             stroke="#CCCCCC"
             vertical={false}
           />
-          {/* {[
-            50, 150, 250, 350, 450, 550, 650, 750, 850, 950, 1050, 1150, 1250,
-            1350, 1450, 1550,
-          ].map((y) => (
-            <ReferenceLine key={y} y={y} stroke="#000" strokeDasharray="1 1" />
-          ))} */}
+
           <XAxis dataKey="name" className="text-[1.2rem]" />
           <YAxis
             className="text-[1.2rem]"

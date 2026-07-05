@@ -3,10 +3,9 @@ import DashboardBox from "./DashboardBox";
 import DashboardContainer from "./DashboardContainer";
 import DashboardTable from "./DashboardTable";
 import MyBarChart from "./MyBarChart";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense } from "react";
 import { useMainContext } from "../../../MainContext";
 import { jwtDecode } from "jwt-decode";
-import { toast } from "react-toastify";
 import { Await, Navigate, useLoaderData } from "react-router-dom";
 import { get } from "../../../http";
 import config from "../../../config";
@@ -48,8 +47,8 @@ function Dashboard() {
                     }
                     body={
                       type === "fish"
-                        ? Math.abs(dashboardPreviewData?.data?.totalLivestock)
-                        : Math.abs(
+                        ? Math?.abs(dashboardPreviewData?.data?.totalLivestock)
+                        : Math?.abs(
                             dashboardPreviewData?.data?.totalLivestock?.fish,
                           )
                     }
