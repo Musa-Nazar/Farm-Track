@@ -49,7 +49,7 @@ function AnalyticsTileLoaderUI({ state }) {
 function AnalyticsTileErrorUI({ message }) {
   const xml = (
     <>
-      <div className="rounded-[1.5rem] dashboard-shaDow bg-[#fff] pt-[4rem] min-h-[21.5rem] ml-[3.7rem] mr-[6.8rem] flex max-md:mx-[2rem] justify-center items-center max-md:py-[2rem]">
+      <div className="rounded-[1.5rem] dashboard-shaDow bg-[#fff] pt-[4rem] min-h-[21.5rem] ml-[3.7rem] mr-[6.8rem] flex max-md:mx-[2rem] justify-center items-center max-md:py-[2rem] text-center text-red-500 text-[1.8rem] poppins">
         {message}
       </div>
     </>

@@ -117,7 +117,7 @@ export async function loader({ request, params }) {
   const type = searchParams.get("type");
 
   const types = ["livestock", "feed"];
-  if (!types.includes(type)) return redirect("/inventory?type=feed");
+  if (!types.includes(type) || !type) return redirect("/inventory?type=feed");
 
   // MAKE REQUEST
   const entries = get(

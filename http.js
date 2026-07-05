@@ -18,6 +18,9 @@ class http {
         status: err.status ?? 500,
         message: err.message ?? "If problem persists, contact the support team",
       };
+      if (err?.message === "Failed to fetch")
+        error.message =
+          "Unable to perform operation, check internet connection";
       return error;
     }
   }
@@ -41,6 +44,9 @@ class http {
         status: err.status ?? 500,
         message: err.message ?? "If problem persists, contact the support team",
       };
+      if (err?.message === "Failed to fetch")
+        error.message =
+          "Unable to perform operation, check internet connection";
       return error;
     }
   }
@@ -62,6 +68,8 @@ class http {
         status: err.status ?? 500,
         message: err.message ?? "If problem persists, contact the support team",
       };
+      if (err?.message === "Failed to fetch")
+        error.message = "Unable to fetch data";
       return error;
     }
   }
@@ -83,6 +91,8 @@ class http {
         status: err.status ?? 500,
         message: err.message ?? "If problem persists, contact the support team",
       };
+      if (err?.message === "Failed to fetch")
+        error.message = "Unable to delete item, check internet connection";
       return error;
     }
   }
@@ -106,6 +116,8 @@ class http {
         status: err.status ?? 500,
         message: err.message ?? "If problem persists, contact the support team",
       };
+      if (err?.message === "Failed to fetch")
+        error.message = "Unable to update item, check internet connection";
       return error;
     }
   }
@@ -131,6 +143,8 @@ class http {
         status: err.status ?? 500,
         message: err.message ?? "If problem persists, contact the support team",
       };
+      if (err?.message === "Failed to fetch")
+        error.message = "Unable to upload item, check internet connection";
       return error;
     }
   }

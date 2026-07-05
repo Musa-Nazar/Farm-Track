@@ -24,7 +24,7 @@ function SalesAndExpense() {
         <Await resolve={data}>
           {(data) =>
             data?.status >= 400 ? (
-              <AnalyticsTileErrorUI />
+              <AnalyticsTileErrorUI message={data?.message} />
             ) : (
               <>
                 <SalesAndExpenseContainer cs="max-md:min-h-[unset] max-[1281px]:mx-[1rem] max-[1281px]:px-[1rem]">

@@ -14,6 +14,7 @@ import DashboardLoaderUI, {
   ChartLoader,
 } from "../../LoaderUI/DashboardLoaderUI";
 import numberFormatter from "../../../utils/numberFormatter";
+import { AnalyticsTileErrorUI } from "../../LoaderUI/AnalyticsLoaderUI";
 
 function Dashboard() {
   const { cookie } = useMainContext();
@@ -35,6 +36,10 @@ function Dashboard() {
       <Suspense fallback={<DashboardLoaderUI state="loading" />}>
         <Await resolve={dashboardPreviewData}>
           {(dashboardPreviewData) => {
+            if (dashboardPreviewData?.status >= 400)
+              return (
+                <AnalyticsTileErrorUI message={dashboardPreviewData?.message} />
+              );
             return (
               <DashboardContainer gap="gap-[1rem]" p={true} type={type}>
                 {isFish && (
@@ -93,6 +98,7 @@ function Dashboard() {
       <Suspense fallback={<ChartLoader />}>
         <Await resolve={dashboardPreviewData}>
           {(data) => {
+            if (data?.status >= 400) return <></>;
             return (
               <DashboardContainer
                 mt="mt-[3rem] pb-[1rem]"
@@ -106,14 +112,18 @@ function Dashboard() {
       </Suspense>
       <Suspense>
         <Await resolve={dashboardPreviewData}>
-          {(data) => (
-            <DashboardContainer
-              mt="mt-[4.7rem]"
-              cs="mb-[3rem] overflow-x-auto hide-scrollbar"
-            >
-              <DashboardTable dashboardData={data?.data?.livestockSummary} />
-            </DashboardContainer>
-          )}
+          {(data) =>
+            data?.status >= 400 ? (
+              <></>
+            ) : (
+              <DashboardContainer
+                mt="mt-[4.7rem]"
+                cs="mb-[3rem] overflow-x-auto hide-scrollbar"
+              >
+                <DashboardTable dashboardData={data?.data?.livestockSummary} />
+              </DashboardContainer>
+            )
+          }
         </Await>
       </Suspense>
     </div>
