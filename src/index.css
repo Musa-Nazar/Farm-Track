@@ -22,7 +22,7 @@ body {
   font-family: "SF Pro Display", sans-serif;
 }
 .hero {
-  background: url("./assets/Hero.webp") lightgray 50% / cover no-repeat;
+  background: url("./assets/Hero.png") lightgray 50% / cover no-repeat;
 }
 .bg-about {
   background: url("./assets/About-us-preview.jpg") lightgray 0.774px -4px /
