@@ -146,6 +146,13 @@ export async function action({ request, params }) {
   toast.success(user?.data?.message ?? "Fail to login user", {
     className: "poppins text-[1.5rem]",
   });
+
+  // ACTIVE === false
+  if (user?.data?.activated === false) {
+    localStorage.setItem("email", loginBody.email);
+    return redirect("/otp");
+  }
+
   // ONBOARDED === false
   if (user?.data?.onBoarded === false) {
     localStorage.setItem("email", loginBody.email);
