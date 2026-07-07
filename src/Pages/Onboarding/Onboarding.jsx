@@ -1,5 +1,6 @@
 import {
   Link,
+  Navigate,
   redirect,
   useNavigate,
   useNavigation,
@@ -22,14 +23,21 @@ const OnboardingFormValidators = {
 };
 
 function Onboarding() {
+  // CHECK IF PAGE ROUTING IS VALID
+  const passEmail = localStorage.getItem("email");
+  if (!passEmail) return <Navigate to="/login" />;
+
   // SUBMIT
   const submit = useSubmit();
+
   // FORM VARIABLE
   const finalLiveStockCount = {};
   const finalFeedCount = {};
+
   // CONTEXT
   const { state } = useNavigation();
   const [pageNo, setPageNo] = useState(1);
+
   // STATES
   const [notSubmitted, setNotSubmitted] = useState(true);
   const [formData, setformData] = useState({
@@ -61,6 +69,7 @@ function Onboarding() {
     poultry: -1,
   });
   const [liveStockCount, setLiveStockCount] = useState({});
+
   // EVENT FUNCTIONS
   function handleFishFeed(e) {
     const { value } = e.target;
@@ -95,6 +104,7 @@ function Onboarding() {
 
   function handleFirstSubmit(e) {
     e.preventDefault();
+
     // VALIDATE THAT FORM
     const firstNameIsValid = OnboardingFormValidators.firstName.test(
       formData.firstName,
@@ -118,6 +128,7 @@ function Onboarding() {
       return toast.error("Please fill the form appropiately", {
         className: "text-[1.5rem] poppins",
       });
+
     // LIVESTOCK COUNT
     if (formData.livestockType === "fish")
       finalLiveStockCount.fish = parseInt(fishCount.fish);
@@ -136,6 +147,7 @@ function Onboarding() {
       return toast.sucess("Please wait, while being onboarded", {
         className: "poppins text-[1.8rem]",
       });
+
     // VALIDATE FORM
     const formIsValid =
       formData.livestockType === "both"
@@ -147,6 +159,7 @@ function Onboarding() {
       return toast.error("Please fill the form appropiately", {
         className: "text-[1.5rem] poppins",
       });
+
     // FEED COUNT
     if (formData.livestockType === "fish")
       finalFeedCount.fish = parseInt(fishFeed.fish);
@@ -156,6 +169,7 @@ function Onboarding() {
       finalFeedCount.poultry = parseInt(poultryFeed.poultry);
       finalFeedCount.fish = parseInt(fishFeed.fish);
     }
+
     // SUBMIT
     const submittedFormData = {
       ...formData,
@@ -247,6 +261,7 @@ export async function action({ request, params }) {
     return toast.error(user?.message ?? "Failed to onboard user", {
       className: "text-[1.5rem] poppins",
     });
+
   // SUCESS
   toast.success(user?.data?.message, { className: "text-[1.5rem] poppins" });
   localStorage.removeItem("email");

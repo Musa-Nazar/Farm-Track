@@ -19,7 +19,6 @@ import Cookies from "universal-cookie";
 import { post } from "../../../http";
 function Otp() {
   const submit = useSubmit();
-  const { user, setToken, cookie, otpHolder } = useMainContext();
   const [formData, setFormData] = useState({
     input1: "",
     input2: "",

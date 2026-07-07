@@ -23,9 +23,8 @@ import Reset from "./Pages/ResestPassword/Reset.jsx";
 import Otp from "./Pages/OTP/Otp.jsx";
 import ConfirmMail from "./Pages/ConfirmMail/ConfirmMail.jsx";
 import Onboarding from "./Pages/Onboarding/Onboarding.jsx";
-import { lazy } from "react";
 
-const SignUp = lazy(() => import("./Pages/SignUp/SignUp"));
+import SignUp from "./Pages/SignUp/SignUp";
 
 function App() {
   const { otpHolder, setOtpHolder } = useMainContext();
