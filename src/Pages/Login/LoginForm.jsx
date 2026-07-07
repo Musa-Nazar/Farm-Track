@@ -118,7 +118,7 @@ function LoginForm() {
         </button>
       </div>
       <p className="text-[rgba(0,0,0,0.80)] poppins text-[1.6rem] font-medium flex gap-[1.6rem w-[54.1rem] max-w-full text-center justify-center">
-        Already have an account?
+        Don't have an account?
         <Link to="/signup" className={`${formstyle.signup}`}>
           Sign up
         </Link>
