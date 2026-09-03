@@ -6,26 +6,29 @@ import {
 } from "react-router-dom";
 import Layout from "./Layout";
 import DashboardLayout from "../DashboardLayout";
-const HomePage = import("./Pages/HomePage/HomePage");
-const Dashboard = import("./Pages/Dashboard/Dashboard");
-const Inventory = import("./Pages/Inventory/Inventory");
-const SettingPage = import("./Pages/Setting/SettingPage");
-const Notification = import("./Pages/Notification/Notification");
-const Analytic = import("./Pages/Analytics/Analytic");
-const SalesAndExpense = import("./Pages/Sales/SalesAndExpense");
-const Login = import("./Pages/Login/Login");
-const NotFoundPage = import("./Pages/NotFoundPage.jsx");
-const Reset = import("./Pages/ResestPassword/Reset.jsx");
-const Otp = import("./Pages/OTP/Otp.jsx");
-const ConfirmMail = import("./Pages/ConfirmMail/ConfirmMail.jsx");
-const Onboarding = import("./Pages/Onboarding/Onboarding.jsx");
+import { lazy } from "react";
+
+const HomePage = lazy(() => import("./Pages/HomePage/HomePage"));
+const Dashboard = lazy(() => import("./Pages/Dashboard/Dashboard"));
+const Inventory = lazy(() => import("./Pages/Inventory/Inventory"));
+const SettingPage = lazy(() => import("./Pages/Setting/SettingPage"));
+const Notification = lazy(() => import("./Pages/Notification/Notification"));
+const Analytic = lazy(() => import("./Pages/Analytics/Analytic"));
+const SalesAndExpense = lazy(() => import("./Pages/Sales/SalesAndExpense"));
+const Login = lazy(() => import("./Pages/Login/Login"));
+const NotFoundPage = lazy(() => import("./Pages/NotFoundPage.jsx"));
+const Reset = lazy(() => import("./Pages/ResestPassword/Reset.jsx"));
+const Otp = lazy(() => import("./Pages/OTP/Otp.jsx"));
+const ConfirmMail = lazy(() => import("./Pages/ConfirmMail/ConfirmMail.jsx"));
+const Onboarding = lazy(() => import("./Pages/Onboarding/Onboarding.jsx"));
 
 import SignUp from "./Pages/SignUp/SignUp";
+import ErrorPage from "./Pages/HomePage/ErrorPage.jsx";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route>
+      <Route errorElement={ErrorPage}>
         <Route element={<Layout />}>
           <Route index element={<HomePage />}></Route>
           <Route
