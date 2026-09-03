@@ -1,34 +1,28 @@
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  data,
   Route,
   RouterProvider,
 } from "react-router-dom";
 import Layout from "./Layout";
-import HomePage from "./Pages/HomePage/HomePage";
-import Navbar from "./UtilComponents/Navbar";
-import Dashboard from "./Pages/Dashboard/Dashboard";
-import Inventory from "./Pages/Inventory/Inventory";
-import SettingPage from "./Pages/Setting/SettingPage";
 import DashboardLayout from "../DashboardLayout";
-import Notification from "./Pages/Notification/Notification";
-import Analytic from "./Pages/Analytics/Analytic";
-import SalesAndExpense from "./Pages/Sales/SalesAndExpense";
-import { action } from "./Pages/SignUp/SignUp";
-import Login from "./Pages/Login/Login";
-import { useMainContext, ContextWrapper } from "../MainContext.jsx";
-import NotFoundPage from "./Pages/NotFoundPage.jsx";
-import Reset from "./Pages/ResestPassword/Reset.jsx";
-import Otp from "./Pages/OTP/Otp.jsx";
-import ConfirmMail from "./Pages/ConfirmMail/ConfirmMail.jsx";
-import Onboarding from "./Pages/Onboarding/Onboarding.jsx";
+const HomePage = import("./Pages/HomePage/HomePage");
+const Dashboard = import("./Pages/Dashboard/Dashboard");
+const Inventory = import("./Pages/Inventory/Inventory");
+const SettingPage = import("./Pages/Setting/SettingPage");
+const Notification = import("./Pages/Notification/Notification");
+const Analytic = import("./Pages/Analytics/Analytic");
+const SalesAndExpense = import("./Pages/Sales/SalesAndExpense");
+const Login = import("./Pages/Login/Login");
+const NotFoundPage = import("./Pages/NotFoundPage.jsx");
+const Reset = import("./Pages/ResestPassword/Reset.jsx");
+const Otp = import("./Pages/OTP/Otp.jsx");
+const ConfirmMail = import("./Pages/ConfirmMail/ConfirmMail.jsx");
+const Onboarding = import("./Pages/Onboarding/Onboarding.jsx");
 
 import SignUp from "./Pages/SignUp/SignUp";
 
 function App() {
-  const { otpHolder, setOtpHolder } = useMainContext();
-
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
